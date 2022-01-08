@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Cap24Team3.Models.DiemHocPhan>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">Quản Lý Cập Nhật Điểm Sinh Viên</h4>
+            <div class="page-title-right">
+                <form>
+                    <button type="button" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal">
+                        <i class="mdi mdi-microsoft-excel"></i> Import
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Thêm mới Danh Sách Điểm sinh viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UploadDSDiem", "DiemHocPhans", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-wrapper">
+                            <input type="file" value="" id="file_excel" name="UploadedFile" class="dropify" required accept=".xls,.xlsx" onclick="Clearform()" />
+                        </div>
+                        <div id="excel_data" class="table-responsive"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
+                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    function sortTable() {
+        var tables, sort, i, x, y, tableSort;
+        tables = document.getElementById("SortmyTable");
+        sort = true;
+        while (sort) {
+            sort = false;
+            tblrow = tables.rows;
+            for (i = 1; i < (tblrow.length - 1); i++) {
+                tableSort = false;
+                x = tblrow[i].getElementsByTagName("td")[n];
+                y = tblrow[i + 1].getElementsByTagName("td")[n];
+                if (x.innerHTML.toUpperCase() > y.innerHTML.toUpperCase()) {
+                    tableSort = true;
+                    break;
+                }
+            }
+            if (tableSort) {
+                tblrow[i].parentNode.insertBefore(tblrow[i + 1], tblrow[i]);
+                sort = true;
+            }
+        }
+    }
+</script>
