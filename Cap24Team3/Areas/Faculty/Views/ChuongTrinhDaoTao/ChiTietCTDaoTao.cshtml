@@ -4,7 +4,6 @@
     ViewBag.Title = "ChiTietCTDaoTao";
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
     int STT = 0;
-    
 }
 <style>
     th, tr {
@@ -121,7 +120,7 @@
     </div>
 </div>
 <!-- end page title -->
-@foreach (var khoikienthuc in ViewData["KhoiKienThuc"] as List<WebApplication.Models.KhoiKienThuc>)
+@foreach (var khoikienthuc in ViewData["KhoiKienThuc"] as List<Cap24Team3.Models.KhoiKienThuc>)
 {
     <div class="col-xl-12">
         <div class="card-box">
@@ -146,7 +145,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var hocphan in ViewData["HocPhan"] as List<WebApplication.Models.HocPhanDaoTao>)
+                        @foreach (var hocphan in ViewData["HocPhan"] as List<Cap24Team3.Models.HocPhanDaoTao>)
                         {
                             if (hocphan.KhoiKienThuc.ID == khoikienthuc.ID)
                             {
@@ -172,7 +171,7 @@
                                         <td>TC</td>
                                     }
                                     <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<WebApplication.Models.RangBuocHocPhan>)
+                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
                                         {
                                             if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
                                             {
@@ -192,7 +191,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<WebApplication.Models.RangBuocHocPhan>)
+                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
                                         {
                                             if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
                                             {
@@ -212,7 +211,7 @@
                                         }
                                     </td>
                                     <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<WebApplication.Models.RangBuocHocPhan>)
+                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
                                         {
                                             if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
                                             {

@@ -589,6 +589,7 @@
     <Content Include="Faculty_assets\fonts\themify.woff" />
     <Content Include="Faculty_assets\js\app.min.js.map" />
     <Content Include="Faculty_assets\js\vendor.min.js.map" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
