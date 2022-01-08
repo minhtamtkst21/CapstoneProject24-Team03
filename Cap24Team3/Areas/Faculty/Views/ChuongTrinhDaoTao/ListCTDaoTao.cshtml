@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Cap24Team3.Models.ChuongTrinhDaoTao>
+
+@{
+    ViewBag.Title = "ListCTDaoTao";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">&emsp;CHƯƠNG TRÌNH ĐÀO TẠO</h4>
+            <div class="page-title-right">
+                <a href="@Url.Content("~/Models/ChuongTrinhDaoTao.xlsx")">
+                    <button type="submit" id="button" name="button" value="Export" class="btn btn-secondary btn-rounded">
+                        <i class="mdi mdi-microsoft-excel"></i> Template
+                    </button>
+                </a>
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
+                    <i class="mdi mdi-microsoft-excel"></i> Import
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box taskboard-box">
+            <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                @foreach (var item in Model)
+                {
+                    <li style="background-color:lightcyan">
+                        <div class="kanban-box">
+                            <div class="kanban-detail">
+                                <h5 class="mt-0" style="font-family: Roboto"><a href="@Url.Action("ChiTietCTDaoTao", new { id = item.ID })" style="color: black">CTĐT Ngành @item.NganhDaoTao.Nganh - Khóa @item.KhoaDaoTao.Khoa</a></h5>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Thêm mới chương trình đào tạo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UploadCTDaoTao", "ChuongTrinhDaoTao", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Khóa:</label>
+                        <select class="form-control" name="Khoa">
+                            @foreach (var khoa in ViewData["KhoaDaoTao"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                            {
+                                <option value="@khoa.Khoa" selected>Khóa @khoa.Khoa</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Ngành:</label>
+                        <select class="form-control" name="Nganh">
+                            @foreach (var nganh in ViewData["NganhDaoTao"] as List<Cap24Team3.Models.NganhDaoTao>)
+                            {
+                                <option value="@nganh.Nganh">Ngành @nganh.Nganh</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Học kỳ bắt đầu:</label>
+                        <select class="form-control" name="HocKy">
+                            @foreach (var hocky in ViewData["HocKyDaoTao"] as List<Cap24Team3.Models.HocKyDaoTao>)
+                            {
+                                <option value="@hocky.HocKy">@hocky.HocKy</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-wrapper">
+                            <input id="excel_file" type="file" name="UploadedFile" class="dropify" required accept=".xls,.xlsx" onclick="Clearform()" />
+                        </div>
+                        <div id="excel_data" class="table-responsive"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
+                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

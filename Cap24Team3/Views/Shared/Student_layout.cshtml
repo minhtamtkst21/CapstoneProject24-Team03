@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shelly - Website" />
+    <meta name="author" content="merkulove">
+    <meta name="keywords" content="" />
+    <link rel="icon" href="@Url.Content("~/Student_assets/img/VL.png")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/animate.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/main.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/responsive.css")">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+<header>
+    <div class="container">
+        <div class="header-content d-flex flex-wrap align-items-center">
+            <div class="logo">
+                <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
+                    E-Profile
+                </a>
+            </div><!--logo end-->
+            @if (Request.IsAuthenticated)
+            {
+                <div class="social-links ml-auto">
+                    @User.Identity.Name
+                    &ensp;
+                    <button class="btn btn-danger" style="border-radius: 15px; width: 120px;"><a href="@Url.Action("SignOut","Account")">LOGOUT</a></button>
+                </div>
+            }
+            else
+            {
+                <div class="social-links ml-auto">
+                    <button class="btn btn-danger" style="border-radius: 15px; width: 120px;"><a href="@Url.Action("SignIn","Account")">LOGIN</a></button>
+                </div>
+            }
+            <div class="menu-btn">
+                <a href="#">
+                    <span class="bar1"></span>
+                    <span class="bar2"></span>
+                    <span class="bar3"></span>
+                </a>
+            </div><!--menu-btn end-->
+        </div><!--header-content end-->
+        <div class="navigation-bar d-flex flex-wrap align-items-center">
+            <nav>
+                <ul>
+                    <li><a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+                    <li>
+                        <a href="KHHT.html" title="" style="font-family: 'Dongle3'; font-size: 40px;">Kế hoạch học tập</a>
+                    </li>
+                    <li>
+                        <a href="Grades.html" title="" style="font-family: 'Dongle3'; font-size: 40px;">Xem điểm</a>
+                    </li>
+                    <li>
+                        <a class="active" href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                    </li>
+
+                </ul>
+            </nav><!--nav end-->
+            <ul class="social-links ml-auto">
+                <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
+                <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div><!--navigation-bar end-->
+    </div>
+</header><!--header end-->
+<body>
+    <div class="wrapper">
+        <div class="main-section">
+            @RenderBody()
+        </div>
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-sec">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4">
+                            <div class="newsz-ltr-text">
+                                <h2>Join us <br /> and stay tuned!</h2>
+                                <a href="contacts.html" title="" class="btn-default">Send<i class="fa fa-long-arrow-alt-right"></i></a>
+                            </div><!--newsz-ltr-text end-->
+                        </div>
+                        <div class="col-lg-8">
+                            <form class="newsletter-form">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="name" placeholder="Name">
+                                        </div><!--form-group end-->
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="email" name="email" placeholder="Email">
+                                        </div><!--form-group end-->
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group select-tg">
+                                            <select>
+                                                <option>Class</option>
+                                                <option>Class</option>
+                                                <option>Class</option>
+                                                <option>Class</option>
+                                                <option>Class</option>
+                                                <option>Class</option>
+                                            </select>
+                                        </div><!--form-group end-->
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea name="message" placeholder="Message"></textarea>
+                                        </div><!--form-group end-->
+                                    </div>
+                                </div>
+                            </form><!--newsletter-form end-->
+                        </div>
+                    </div>
+                </div><!--newsletter-sec end-->
+            </div>
+        </section><!--newsletter-sec end-->
+        <footer>
+            <div class="container">
+                <div class="top-footer">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget-about">
+                                <img src="@Url.Content("~/Student_assets/img/VLU2.png")" alt="" style="width: 200px;">
+                                <p>.</p>
+                            </div><!--widget-about end-->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget-contact">
+                                <ul class="contact-add">
+                                    <li>
+                                        <div class="contact-info">
+                                            <img src="@Url.Content("~/Student_assets/img/icon1.png")" alt="">
+                                            <div class="contact-tt">
+                                                <h4>Call</h4>
+                                                <span>+84 28 7105 9999</span>
+                                            </div>
+                                        </div><!--contact-info end-->
+                                    </li>
+                                    <li>
+                                        <div class="contact-info">
+                                            <img src="@Url.Content("~/Student_assets/img/email.png")" alt="" style="width: 20px;">
+                                            <div class="contact-tt">
+                                                <h4>Email</h4>
+                                                <span>info@vlu.edu.vn</span>
+                                            </div>
+                                        </div><!--contact-info end-->
+                                    </li>
+                                    <li>
+                                        <div class="contact-info">
+                                            <img src="@Url.Content("~/Student_assets/img/icon3.png")" alt="">
+                                            <div class="contact-tt">
+                                                <h4>Address</h4>
+                                                <span>69/68 Đặng Thùy Trâm</span>
+                                                <span>Phường 13, Q. Bình Thạnh</span>
+                                                <span>TP. Hồ Chí Minh</span>
+                                            </div>
+                                        </div><!--contact-info end-->
+                                    </li>
+                                </ul>
+                            </div><!--widget-contact end-->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget-links">
+                                <h3 class="widget-title" style="font-family: 'Montserrat';font-weight: 600;">Mục khác</h3>
+                                <ul>
+                                    <li><a href="about.html" title="">About Us </a></li>
+                                    <li><a href="classes.html" title="">Our Classes</a></li>
+                                    <li><a href="teachers.html" title="">School Teachers </a></li>
+                                    <li><a href="events.html" title="">Recent Events </a></li>
+                                    <li><a href="blog.html" title="">Our News </a></li>
+                                    <li><a href="schedule.html" title="">Schedule </a></li>
+                                </ul>
+                            </div><!--widget-links end-->
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="widget widget-iframe">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3295.296205813467!2d106.69853734665963!3d10.82740007010417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528f4a62fce9b%3A0xc99902aa1e26ef02!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBWxINuIExhbmcgLSBDxqEgc-G7nyAz!5e0!3m2!1svi!2s!4v1636436896488!5m2!1svi!2s"></iframe>
+                            </div><!--widget-iframe end-->
+                        </div>
+                    </div>
+                </div><!--top-footer end-->
+                <div class="bottom-footer">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <p>© Copyrights 2020 Shelly All rights reserved</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <ul class="social-links">
+                                <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!--bottom-footer end-->
+            </div>
+        </footer><!--footer end-->
+    </div>
+
+
+
+    <script src="@Url.Content("~/Student_assets/js/jquery.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/isotope.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/html5lightbox.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/tweenMax.js")"></script>
+    <script src="@Url.Content("~/Student_assets/js/scripts.js")"></script>
+
+
+</body>
+
+</html>

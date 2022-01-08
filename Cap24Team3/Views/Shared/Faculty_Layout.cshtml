@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Faculty - InformationTechnology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="@Url.Content("~/Faculty_assets/images/VL.png")" />
+    <!-- third party css -->
+    <link href="@Url.Content("~/Faculty_assets/libs/datatables/dataTables.bootstrap4.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Faculty_assets/libs/datatables/responsive.bootstrap4.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Faculty_assets/libs/datatables/buttons.bootstrap4.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Faculty_assets/libs/datatables/select.bootstrap4.css")" rel="stylesheet" type="text/css" />
+    <!-- third party css end -->
+    <link href="@Url.Content("~/Faculty_assets/libs/dropify/dropify.min.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="@Url.Content("~/Faculty_assets/css/bootstrap.min.css")" id="bootstrap-stylesheet" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="@Url.Content("~/Faculty_assets/css/icons.min.css")" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="@Url.Content("~/Faculty_assets/css/app.min.css")" id="app-stylesheet" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Faculty_assets/css/main.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Faculty_assets/css/search.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body data-layout="horizontal" data-topbar="dark" data-menu-align="center">
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <!-- Topbar Start -->
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                        <li class="dropdown notification-list">
+                            <!-- Mobile menu toggle-->
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
+
+                        <li class="d-none d-sm-block">
+                            <form class="app-search">
+                                <div class="app-search-box">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search...">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit">
+                                                <i class="fe-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <i class="fe-bell noti-icon"></i>
+                                <span class="badge badge-danger rounded-circle noti-icon-badge">9</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5 class="m-0">
+                                        <span class="float-right">
+                                            <a href="" class="text-dark">
+                                                <small>Clear All</small>
+                                            </a>
+                                        </span>Notification
+                                    </h5>
+                                </div>
+
+                                <div class="slimscroll noti-scroll">
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                        <div class="notify-icon">
+                                            <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" class="img-fluid rounded-circle" alt="" />
+                                        </div>
+                                        <p class="notify-details">Cristina Pride</p>
+                                        <p class="text-muted mb-0 user-msg">
+                                            <small>Hi, How are you? What about our next meeting</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-primary">
+                                            <i class="mdi mdi-comment-account-outline"></i>
+                                        </div>
+                                        <p class="notify-details">
+                                            Caleb Flakelar commented on Admin
+                                            <small class="text-muted">1 min ago</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="notify-icon">
+                                            <img src="assets/images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                        </div>
+                                        <p class="notify-details">Karen Robinson</p>
+                                        <p class="text-muted mb-0 user-msg">
+                                            <small>Wow ! this admin looks good and awesome design</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-warning">
+                                            <i class="mdi mdi-account-plus"></i>
+                                        </div>
+                                        <p class="notify-details">
+                                            New user registered.
+                                            <small class="text-muted">5 hours ago</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-info">
+                                            <i class="mdi mdi-comment-account-outline"></i>
+                                        </div>
+                                        <p class="notify-details">
+                                            Caleb Flakelar commented on Admin
+                                            <small class="text-muted">4 days ago</small>
+                                        </p>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-secondary">
+                                            <i class="mdi mdi-heart"></i>
+                                        </div>
+                                        <p class="notify-details">
+                                            Carlos Crouch liked
+                                            <b>Admin</b>
+                                            <small class="text-muted">13 days ago</small>
+                                        </p>
+                                    </a>
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                    View all
+                                    <i class="fi-arrow-right"></i>
+                                </a>
+
+                            </div>
+                        </li>
+
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
+                                <span class="pro-user-name ml-1">
+                                    Faculty <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                </div>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-user"></i>
+                                    <span>My Account</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-settings"></i>
+                                    <span>Settings</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-lock"></i>
+                                    <span>Lock Screen</span>
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-log-out"></i>
+                                    <span>Logout</span>
+                                </a>
+
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <!-- LOGO -->
+                    <div class="logo-box">
+                        <a href="@Url.Action("ListCTDaoTao","ChuongTrinhDaoTao")" class="logo logo-light">
+                            <span class="logo-lg">
+                                <img src="@Url.Content("~/Faculty_assets/images/VLU.png")" alt="" height="50">
+                            </span>
+                            <span class="logo-sm">
+                                <img src="@Url.Content("~/Faculty_assets/images/VLU.png")" alt="" height="24">
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div> <!-- end container-fluid-->
+            </div>
+            <!-- end Topbar -->
+
+            <div class="topbar-menu">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+
+                            <li class="has-submenu">
+                                <a href="@Url.Action("ListCTDaoTao","ChuongTrinhDaoTao")" style="font-family:Roboto"> <i class="mdi mdi-text-box-multiple-outline "></i>Quản lý chương trình đào tạo</a>
+                                <ul class="submenu">
+                                    <li class="has-submenu">
+                                        <a href="@Url.Action("ListHocKyDT","ChuongTrinhDaoTao")" style="font-family:Roboto">Quản lý HKĐT</a>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="@Url.Action("ListNganhDT","ChuongTrinhDaoTao")" style="font-family:Roboto">Quản lý ngành học</a>
+                                    </li>
+                                    <li class="has-submenu">
+                                        <a href="@Url.Action("ListKhoaDT","ChuongTrinhDaoTao")" style="font-family:Roboto">Quản lý khóa</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="@Url.Action("KhoaSinhVien","DanhSachSinhVien")" style="font-family:Roboto">
+                                    <i class="mdi mdi-google-classroom"></i>Quản lý danh sách sinh viên
+                                </a>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="@Url.Action("ListLop","DanhSachSinhVien")" style="font-family:Roboto">
+                                    <i class="mdi mdi-format-list-numbered "></i>Quản lý lớp
+                                </a>
+
+
+                            <li class="has-submenu">
+                                <a href="#" style="font-family:Roboto">
+                                    <i class="mdi mdi-format-list-numbered "></i>Quản lý điểm
+                                </a>
+
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#" style="font-family:Roboto">
+                                    <i class="mdi mdi-chart-donut"></i>Thống kê
+                                </a>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#" style="font-family:Roboto">
+                                    <i class="mdi mdi-bell-ring-outline"></i>Thông báo
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- End navigation menu -->
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- end #navigation -->
+                </div>
+                <!-- end container -->
+            </div>
+            <!-- end navbar-custom -->
+
+        </header>
+        <!-- End Navigation Bar-->
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    @if (TempData["Alert"] != null)
+                    {
+                        <div class="alert alert-warning">
+                            @Html.Raw(TempData["Alert"].ToString())
+                        </div>
+                    }
+                    @if (TempData["ThongBao"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @Html.Raw(TempData["ThongBao"].ToString())
+                        </div>
+                    }
+                    @RenderBody()
+                </div>
+            </div> <!-- content -->
+        </div>
+    </div>
+    <!-- END wrapper -->
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+        <div class="rightbar-title">
+            <a href="javascript:void(0);" class="right-bar-toggle float-right">
+                <i class="mdi mdi-close"></i>
+            </a>
+            <h4 class="font-16 m-0 text-white">Theme Customizer</h4>
+        </div>
+        <div class="slimscroll-menu rightbar-content">
+
+            <div class="p-3">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Customize </strong> the overall color scheme, layout, etc.
+                </div>
+                <div class="mb-2">
+                    <img src="assets/images/layouts/light.png" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-3">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="light-mode-switch" checked />
+                    <label class="custom-control-label" for="light-mode-switch">Light Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="assets/images/layouts/dark.png" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-3">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="dark-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css"
+                           data-appStyle="assets/css/app-dark.min.css" />
+                    <label class="custom-control-label" for="dark-mode-switch">Dark Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="assets/images/layouts/rtl.png" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-3">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="rtl-mode-switch" data-appStyle="assets/css/app-rtl.min.css" />
+                    <label class="custom-control-label" for="rtl-mode-switch">RTL Mode</label>
+                </div>
+
+                <div class="mb-2">
+                    <img src="assets/images/layouts/dark-rtl.png" class="img-fluid img-thumbnail" alt="">
+                </div>
+                <div class="custom-control custom-switch mb-5">
+                    <input type="checkbox" class="custom-control-input theme-choice" id="dark-rtl-mode-switch" data-bsStyle="assets/css/bootstrap-dark.min.css"
+                           data-appStyle="assets/css/app-dark-rtl.min.css" />
+                    <label class="custom-control-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+                </div>
+
+                <a href="https://1.envato.market/k0YEM" class="btn btn-danger btn-block mt-3" target="_blank"><i class="mdi mdi-download mr-1"></i> Download Now</a>
+            </div>
+        </div> <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+    <!-- Right bar overlay-->
+    <!-- Vendor js -->
+    <script src="@Url.Content("~/Faculty_assets/js/vendor.min.js")"></script>
+
+    <!-- Table Editable plugin-->
+    <script src="@Url.Content("~/Faculty_assets/libs/jquery-tabledit/jquery.tabledit.min.js")"></script>
+
+    <!-- Table editable init-->
+    <script src="@Url.Content("~/Faculty_assets/js/pages/tabledit.init.js")"></script>
+
+    <script src="@Url.Content("~/Faculty_assets/libs/dropify/dropify.min.js")"></script>
+
+    <!-- form-upload init -->
+    <script src="@Url.Content("~/Faculty_assets/js/pages/form-fileupload.init.js")"></script>
+    <!-- App js -->
+    <script src="@Url.Content("~/Faculty_assets/js/app.min.js")"></script>
+
+    <script src="@Url.Content("~/Faculty_assets/libs/datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Faculty_assets/libs/datatables/dataTables.bootstrap4.js")"></script>
+    <link href="@Url.Content("~/Faculty_assets/libs/datatables/dataTables.bootstrap4.css")" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        function thisFileUpload() {
+            document.getElementById("file").click();
+        };
+    </script>
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+        })
+    </script>
+    <script>
+        function Clearform() {
+            document.getElementById('excel_data').innerHTML = null;
+        }
+    </script>
+    <script>
+        function thisFileUpload() {
+            document.getElementById("file").click();
+        };
+    </script>
+    <script>
+        const excel_file = document.getElementById('excel_file');
+        excel_file.addEventListener('change', (event) => {
+            if (!['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'].includes(event.target.files[0].type)) {
+                document.getElementById('excel_data').innerHTML = '<div class="form-group">Only .xlsx or .xls file format are allowed</div>';
+                return false;
+            }
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(event.target.files[0]);
+            reader.onload = function (event) {
+                var data = new Uint8Array(reader.result);
+                var work_book = XLSX.read(data, { type: 'array' });
+                var sheet_name = work_book.SheetNames;
+                var sheet_data = XLSX.utils.sheet_to_json(work_book.Sheets[sheet_name[0]], { header: 1 });
+                if (sheet_data.length > 0) {
+                    var table_output = '<table class="table table-hover mb-0">';
+                    for (var row = 0; row < sheet_data.length; row++) {
+                        table_output += '<tr>';
+                        for (var cell = 0; cell < sheet_data[0].length; cell++) {
+                            if (row == 0) {
+                                table_output += '<th>' + sheet_data[row][cell] + '</th>';
+                            }
+                            else {
+                                if (sheet_data[row][cell] != null) {
+                                    table_output += '<td>' + sheet_data[row][cell] + '</td>';
+                                } else {
+                                    table_output += '<td></td>';
+                                }
+                            }
+                        }
+                        table_output += '</tr>';
+                    }
+                    table_output += '</table>';
+                    document.getElementById('excel_data').innerHTML = table_output;
+                }
+            }
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

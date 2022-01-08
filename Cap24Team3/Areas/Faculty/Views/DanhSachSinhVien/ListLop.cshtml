@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Cap24Team3.Models.LopQuanLy>
+
+@{
+    ViewBag.Title = "ListLop";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    int STT = 0;
+}
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">DANH SÁCH LỚP</h4>
+            <div class="page-title-right">
+                <!-- <div class="container">
+                    <input type="text" id="search" placeholder="Search..." style="color: black;">
+                    <div class="search"></div>
+                </div> -->
+                <button type="submit" id="button" formaction="@Url.Action("TaoMoiLop")" class="btn btn-secondary btn-rounded">
+                    Tạo mới
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-striped mb-0 dt-responsive">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên lớp</th>
+                                <th>Chủ nhiệm lớp</th>
+                                <th>Khóa</th>
+                                <th>Ngành</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                STT++;
+                                <tr>
+                                    <td>@STT</td>
+                                    <td id="idLop">@item.TenLop</td>
+                                    <td>
+                                        @if (@item.ChuNhiem != null)
+                                        {
+                                            <a href="@Url.Action("LuuChuNhiem", new { id = item.ID})">
+                                                @item.ChuNhiem
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" href="@Url.Action("LuuChuNhiem", new { id = item.ID})">
+                                                Trống
+                                            </a>
+                                        }
+                                        <td>
+                                        <span>K</span>@item.KhoaDaoTao.Khoa
+                                    </td>
+                                    <td>@item.NganhDaoTao.Nganh</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div> <!-- end .table-responsive-->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div> <!-- end col -->
+</div> <!-- end row -->
+<!-- Modal -->
+<div class="modal fade" id="luuChuNhiem" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    @{ var lop = Session["Lop"] as Cap24Team3.Models.LopQuanLy; }
+    @if (lop != null)
+    {
+        <form method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-family: Roboto">Sửa giảng viên lớp @lop.TenLop</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <input hidden type="number" name="idLop" value="@lop.ID" required/>
+                            <input class="form-control" type="email" id="chunhiem" name="chunhiem" value="@lop.ChuNhiem" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" formaction="@Url.Action("LuuChuNhiem")">Lưu</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    }
+</div>
+<script>
+    $('#luuChuNhiem').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        // Use above variables to manipulate the DOM
+
+    });
+</script>
+@if (Session["Lop"] != null)
+{
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#luuChuNhiem').modal('show');
+        });
+    </script>
+    Session["Lop"] = null;
+}
+

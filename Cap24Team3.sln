@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cap24Team3", "Cap24Team3\Cap24Team3.csproj", "{166AED74-C37B-4B59-9AD8-7D1C34D07769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cap24Team3.Tests", "Cap24Team3.Tests\Cap24Team3.Tests.csproj", "{C134BF68-80F2-46E5-8E97-BCAE3ADCEF07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{166AED74-C37B-4B59-9AD8-7D1C34D07769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{166AED74-C37B-4B59-9AD8-7D1C34D07769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{166AED74-C37B-4B59-9AD8-7D1C34D07769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{166AED74-C37B-4B59-9AD8-7D1C34D07769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C134BF68-80F2-46E5-8E97-BCAE3ADCEF07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C134BF68-80F2-46E5-8E97-BCAE3ADCEF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C134BF68-80F2-46E5-8E97-BCAE3ADCEF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C134BF68-80F2-46E5-8E97-BCAE3ADCEF07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D8590FA-9981-4418-AC2A-4FD8093738B1}
+	EndGlobalSection
+EndGlobal

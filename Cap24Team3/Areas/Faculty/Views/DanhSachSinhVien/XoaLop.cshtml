@@ -1,0 +1,56 @@
+﻿@model Cap24Team3.Models.LopQuanLy
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>LopQuanLy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenLop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenLop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChuNhiem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChuNhiem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhoaDaoTao.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhoaDaoTao.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NganhDaoTao.Nganh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NganhDaoTao.Nganh)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "ListLop")
+        </div>
+    }
+</div>

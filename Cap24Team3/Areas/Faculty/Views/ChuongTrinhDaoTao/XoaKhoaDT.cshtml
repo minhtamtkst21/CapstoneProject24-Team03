@@ -1,0 +1,30 @@
+﻿@model Cap24Team3.Models.KhoaDaoTao
+
+@{
+    ViewBag.Title = "DeleteKhoa";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+
+<h2 class="page-title" style="font-family:Roboto">
+    Xóa Khóa @Model.Khoa
+</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Khóa: @Html.DisplayFor(model => model.Khoa)
+        </dt>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa Khóa" class="btn btn-secondary btn-rounded" />
+            <input type="submit" value="Trở về" class="btn btn-secondary btn-rounded" formaction="@Url.Action("ListKhoaDT")" />
+        </div>
+    }
+</div>

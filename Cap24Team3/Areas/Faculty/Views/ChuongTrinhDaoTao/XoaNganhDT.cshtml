@@ -1,0 +1,24 @@
+﻿@model Cap24Team3.Models.NganhDaoTao
+
+@{
+    ViewBag.Title = "DeleteNganh";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<h2 class="page-title" style="font-family:Roboto">Xóa ngành @Model.Nganh</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên ngành: @Model.Nganh
+        </dt>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa Ngành" class="btn btn-secondary btn-rounded" />
+            <input type="submit" value="Trở về" class="btn btn-secondary btn-rounded" formaction="@Url.Action("ListNganhDT")" />
+        </div>
+    }
+</div>

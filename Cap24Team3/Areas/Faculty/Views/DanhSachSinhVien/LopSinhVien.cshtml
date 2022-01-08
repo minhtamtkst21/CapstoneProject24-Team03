@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Cap24Team3.Models.LopQuanLy>
+
+@{
+    ViewBag.Title = "LopSinhVien";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    var nganh = ViewData["NganhDaoTao"] as WebApplication.Models.NganhDaoTao;
+    var khoa = ViewData["KhoaDaoTao"] as WebApplication.Models.KhoaDaoTao;
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">DANH SÁCH SINH VIÊN NGÀNH @Model.First().NganhDaoTao.Nganh.ToUpper() - KHÓA @Model.First().KhoaDaoTao.Khoa</h4>
+            <div class="page-title-right">
+                <form>
+                    <input type="number" value="@Model.First().ID_Khoa" name="idkhoa" hidden />
+                    <input type="number" value="@Model.First().ID_Nganh" name="idnganh" hidden />
+                    <button type="submit" formaction="@Url.Action("XuatDSSV")" id="button" name="button" value="" class="btn btn-secondary btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card-box taskboard-box">
+            @foreach (var item in Model)
+            {
+                <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                    <li>
+                        <div class="kanban-box">
+                            <div class="kanban-detail">
+                                <a class="badge badge-danger float-right" href="@Url.Action("XacNhanXoaLop", new { idlop = item.ID })" style="color: white;"><i class="fas fa-times"></i></a>
+                                <h4 class="mt-0" style="font-family: Roboto;"><a href="@Url.Action("ListSinhVien", new { id = item.ID })" style="color: black;">Danh sách sinh viên lớp @item.TenLop </a></h4>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            }
+            <!-- Modal -->
+            <div class="modal fade" id="ModelXoaLopSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" style="font-family: Roboto;">Xóa danh sách sinh viên</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid text-center">
+                                Xác nhận xóa Danh sách sinh viên lớp @Session["LopSV"]
+                            </div>
+                            <label for="recipient-name" class="col-form-label">Nhập "Danh sách sinh viên lớp @Session["LopSV"]" để xác nhận xóa:</label>
+                            <input type="text" class="form-control" id="text" onchange="GetText(this.value)" placeholder="Danh sách sinh viên lớp @Session["LopSV"]">
+                            <input id="textXacNhan" value="Danh sách sinh viên lớp @Session["LopSV"]" hidden />
+                        </div>
+                        <div class="modal-footer">
+                            <form method="post">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" formaction="@Url.Action("XoaLopSV", new { idlop = Session["LopSV"] })" id="XacNhanBtn" class="btn btn-primary" disabled>Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $('#exampleModal').on('show.bs.modal', event => {
+                    var button = $(event.relatedTarget);
+                    var modal = $(this);
+                    // Use above variables to manipulate the DOM
+
+                });
+                function GetText(val) {
+                    var text = document.getElementById("textXacNhan").value;
+                    if (val == text) {
+                        document.getElementById("XacNhanBtn").disabled = false;
+                    } else {
+                        document.getElementById("XacNhanBtn").disabled = true;
+                    }
+                }
+            </script>
+        </div>
+    </div><!-- end col -->
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+@if (Session["LopSV"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#ModelXoaLopSV').modal('show');
+        });
+    </script>
+    Session["LopSV"] = null;
+}

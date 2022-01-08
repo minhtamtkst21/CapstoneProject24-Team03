@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Cap24Team3.Models.NganhDaoTao>
+
+@{
+    ViewBag.Title = "NganhSinhVien";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    var khoa = ViewData["KhoaDaoTao"] as WebApplication.Models.KhoaDaoTao;
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">DANH SÁCH SINH VIÊN KHÓA @khoa.Khoa</h4>
+            <div class="page-title-right">
+                <form>
+                    <input type="number" value="@khoa.ID" name="idkhoa" hidden />
+                    <button type="submit" formaction="@Url.Action("XuatDSSV")" id="button" name="button" value="" class="btn btn-secondary btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card-box taskboard-box">
+            @foreach (var item in Model)
+            {
+                <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                    <li>
+                        <div class="kanban-box">
+                            <div class="kanban-detail">
+                                <form>
+                                    <a class="badge badge-danger float-right" href="@Url.Action("XacNhanXoaNganh", new { idnganh = item.ID })" style="color: white;"><i class="fas fa-times"></i></a>
+                                    <h4 class="mt-0" style="font-family: Roboto;"><a href="@Url.Action("LopSinhVien", new { idnganh = item.ID, idkhoa = khoa.ID })" style="color: black;">Danh sách sinh viên Ngành @item.Nganh </a></h4>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            }
+            <!-- Modal -->
+            @foreach (var item in Model)
+            {
+                <div class="modal fade" id="ModelXoaNganhSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: Roboto;">Xóa danh sách sinh viên</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid text-center">
+                                    Xác nhận xóa danh sách sinh viên Ngành @Session["NganhSV"] - Khóa @khoa.Khoa
+                                </div>
+                                <label for="recipient-name" class="col-form-label">Nhập "@Session["NganhSV"] - Khóa @khoa.Khoa" để xác nhận xóa:</label>
+                                <input type="text" class="form-control" id="text" onchange="GetText(this.value)" value="" placeholder="@Session["NganhSV"] - Khóa @khoa.Khoa">
+                                <input id="textXacNhan" value="@Session["NganhSV"] - Khóa @khoa.Khoa" hidden />
+                            </div>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" id="XacNhanBtn" formaction="@Url.Action("XoaNganhSV",new { idnganh = Session["NganhSV"], idkhoa = khoa.ID})" class="btn btn-primary" disabled>Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div><!-- end col -->
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+@if (Session["NganhSV"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#ModelXoaNganhSV').modal('show');
+        });
+    </script>
+    Session["NganhSV"] = null;
+}
+<script>
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        // Use above variables to manipulate the DOM
+
+    });
+
+    function GetText(val) {
+        var text = document.getElementById("textXacNhan").value;
+        if (val == text) {
+            document.getElementById("XacNhanBtn").disabled = false;
+        } else {
+            document.getElementById("XacNhanBtn").disabled = true;
+        }
+    }
+</script>

@@ -1,0 +1,237 @@
+﻿@model IEnumerable<Cap24Team3.Models.SinhVien>
+
+@{
+    ViewBag.Title = "ListSinhVien";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    int STT = 0;
+}
+<link href="@Url.Content("~/Faculty_assets/css/main.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Faculty_assets/css/search.css")" rel="stylesheet" type="text/css" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-sinhviens-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">TÌM KIẾM SINH VIÊN</h4>
+            <div class="page-title-right">
+                <form>
+                    <br />
+                    <input type="text" class="btn btn-primary btn-rounded" value="@ViewBag.Keyword" name="texttimkiem" style="background-color:white; color: black" />
+                    <button type="submit" class="btn btn-secondary btn-rounded" formaction="@Url.Action("TimKiemSinhVien")"><i class="fas fa-search"></i>Tìm kiếm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-striped mb-0 dt-responsive dataTable" id="table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>MSSV</th>
+                                <th>Họ</th>
+                                <th>Tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Giới tính</th>
+                                <th>Tình trạng</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                STT++;
+                                <tr>
+                                    <td>@STT</td>
+                                    <td>@s.MSSV</td>
+                                    <td>@s.Ho</td>
+                                    <td>@s.Ten</td>
+                                    <td>@s.NgaySinh</td>
+                                    <td>@s.GioiTinh</td>
+                                    <td>@s.TinhTrang.TenTinhTrang</td>
+                                    <td>
+                                        <a href="@Url.Action("XemChiTiet", new { id = s.ID })">Xem chi tiết</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div> <!-- end .table-responsive-->
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div> <!-- end col -->
+</div> <!-- end row -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    @{ var sinhvien = Session["sinhvien"] as WebApplication.Models.SinhVien; }
+    @if (sinhvien != null)
+    {
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-1"></div>
+                    <div class="col-10 text-center">
+                        <h4 class="modal-title" style="font-family: Roboto;"> Thông tin sinh viên</h4>
+                    </div>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                        <div class="mt-3">
+                            <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@sinhvien.Ho @sinhvien.Ten</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body text-wrap">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mã số sinh viên:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.MSSV
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Họ sinh viên:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.Ho
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Tên sinh viên:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.Ten
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngày sinh:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.NgaySinh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Giới tính:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.GioiTinh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Tình trạng:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Session["tinhtrang"]
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email 1:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.Email_1
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email 2:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.Email_2
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.DTDD
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.DTCha
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.DTMe
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @sinhvien.DiaChi
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+
+    });
+</script>
+@if (Session["sinhvien"] != null)
+{
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#modelId').modal('show');
+        });
+    </script>
+    Session["sinhvien"] = null;
+}
+<script>
+    var $rows = $('#table tr');
+    $('#search').keyup(function () {
+        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+        $rows.show().filter(function () {
+            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+            return !~text.indexOf(val);
+        }).hide();
+    });
+</script>
