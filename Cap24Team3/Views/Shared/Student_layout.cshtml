@@ -1,3 +1,5 @@
+@using Microsoft.Owin.Security
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,15 +29,28 @@
             @if (Request.IsAuthenticated)
             {
                 <div class="social-links ml-auto">
-                    @User.Identity.Name
-                    &ensp;
-                    <button class="btn btn-danger" style="border-radius: 15px; width: 120px;"><a href="@Url.Action("SignOut","Account")">LOGOUT</a></button>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        <button class="btn btn-danger" style="border-radius: 15px; width: 120px;">
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                        </button>
+
+                    }
                 </div>
             }
             else
             {
                 <div class="social-links ml-auto">
-                    <button class="btn btn-danger" style="border-radius: 15px; width: 120px;"><a href="@Url.Action("SignIn","Account")">LOGIN</a></button>
+                    <form action="@Url.Action("ExternalLogin","Account")" method="post">
+                        <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
+                        <div>
+                            <p>
+                                <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
+                            </p>
+                        </div>
+                    </form>
                 </div>
             }
             <div class="menu-btn">

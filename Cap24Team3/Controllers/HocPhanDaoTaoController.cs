@@ -59,7 +59,7 @@ namespace WebApplication.Controllers
             }
             else
             {
-                TempData["Alert"] = "Bạn chưa đăng nhập! <a href=Account/SignIn><u>Nhấn vào đây</u></a> để đăng nhập";
+                TempData["Alert"] = "Bạn chưa đăng nhập!";
                 return View("Index");
             }
         }
