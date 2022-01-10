@@ -186,6 +186,7 @@
     <Compile Include="Areas\Faculty\Controllers\ChuongTrinhDaoTaoController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DanhSachSinhVienController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DiemHocPhansController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\DotChinhSuaThongTinsController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HocPhanDaoTaoController.cs" />
@@ -596,6 +597,11 @@
     <Content Include="Areas\Faculty\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Faculty\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Faculty\Views\DiemHocPhans\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\Create.cshtml" />
+    <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\Delete.cshtml" />
+    <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\Edit.cshtml" />
+    <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\ListDotChinhSua.cshtml" />
+    <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\CreateDotChinhSua.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

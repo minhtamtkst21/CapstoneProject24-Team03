@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Cap24Team3.Models.DotChinhSuaThongTin>
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DotChinhSuaThongTin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DotChinhSua)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DotChinhSua)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayBatDau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayBatDau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayKetThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayKetThuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiTao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiTao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lop)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
