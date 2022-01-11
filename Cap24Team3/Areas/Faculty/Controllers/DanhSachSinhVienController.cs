@@ -514,7 +514,14 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         SinhVien SaveSV = new SinhVien();
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            SaveSV.MSSV = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            var mssv = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            SaveSV.MSSV = mssv;
+                                            int hk;
+                                            var HocKyBatDau = int.TryParse(mssv.Substring(0, 2), out hk);
+                                            if (HocKyBatDau)
+                                                SaveSV.HocKyBatDau = hk * 10 + 1;
+                                            else
+                                                SaveSV.HocKyBatDau = 171;
                                         }
                                         if (workSheet.Cells[rowIterator, 2].Value != null)
                                         {
@@ -672,11 +679,11 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 {
                     item.TinhTrang = db.TinhTrangs.FirstOrDefault(s => s.TenTinhTrang == item.TinhTrang.TenTinhTrang);
                     db.SinhViens.Add(item);
-                    db.Configuration.AutoDetectChangesEnabled = false;
-                    db.Configuration.ValidateOnSaveEnabled = false;
-                    db.SaveChanges();
                 }
             }
+            db.Configuration.AutoDetectChangesEnabled = false;
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
         }

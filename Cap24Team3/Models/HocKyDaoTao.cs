@@ -21,6 +21,7 @@ namespace Cap24Team3.Models
         }
     
         public int ID { get; set; }
+        public int STT { get; set; }
         public int HocKy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

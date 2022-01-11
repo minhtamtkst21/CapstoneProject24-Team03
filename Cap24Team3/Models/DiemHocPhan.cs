@@ -15,12 +15,11 @@ namespace Cap24Team3.Models
     public partial class DiemHocPhan
     {
         public int ID { get; set; }
-        public int ID_SinhVien { get; set; }
+        public string MSSV { get; set; }
         public string HocPhan { get; set; }
         public string TenHocPhan { get; set; }
         public Nullable<int> HocKy { get; set; }
         public Nullable<int> SoTinChi { get; set; }
-        public string MaHocTap { get; set; }
         public string Diem10 { get; set; }
         public string Diem4 { get; set; }
         public string DiemChu { get; set; }
@@ -28,6 +27,5 @@ namespace Cap24Team3.Models
         public Nullable<int> LichSu { get; set; }
     
         public virtual LichSuUpLoad LichSuUpLoad { get; set; }
-        public virtual SinhVien SinhVien { get; set; }
     }
 }
