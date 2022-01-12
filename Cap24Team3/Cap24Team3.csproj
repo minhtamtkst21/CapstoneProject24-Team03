@@ -190,6 +190,7 @@
     <Compile Include="Areas\Faculty\Controllers\DotChinhSuaThongTinsController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChuNhiemLopController.cs" />
     <Compile Include="Controllers\HocPhanDaoTaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -959,6 +960,8 @@
     <Content Include="Views\Shared\Student_layout.cshtml" />
     <Content Include="Views\HocPhanDaoTao\ChuongTrinhDaoTao.cshtml" />
     <Content Include="Views\HocPhanDaoTao\Index.cshtml" />
+    <Content Include="Views\ChuNhiemLop\Index.cshtml" />
+    <Content Include="Views\ChuNhiemLop\DanhSachSV.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

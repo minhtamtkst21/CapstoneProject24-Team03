@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Cap24Team3.Models.LopQuanLy>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+}
+
+@*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenLop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChuNhiem)
+        </th>
+        <th>
+            Khoa
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NganhDaoTao.Nganh)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChuNhiem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhoaDaoTao.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NganhDaoTao.Nganh)
+            </td>
+        </tr>
+    }*@
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 90px; ">Quản lý lớp chủ nhiệm</h2>
+            <ul>
+                <li><a href="#" title="">Home</a></li>
+                <li><span>Quản lý lớp chủ nhiệm</span></li>
+            </ul>
+        </div><!--pager-content end-->
+        <h4 class="page-titlee">E-Profile</h4>
+    </div>
+</section><!--pager-section end-->
+<section class="page-content">
+    @foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="blog-section p-0 posts-page">
+                        <div class="blog-posts">
+                            <div class="blog-post">
+                                <div class="blog-post quote-post">
+                                    <div class="blog-info">
+                                        <span class="category"><a href="@Url.Action("DanhSachSV", new { idLop = item.ID })" class="text-dark">Danh sách sinh viên lớp @item.TenLop</a></span>
+                                        <ul class="meta">
+                                            <li><a href="#" title="">Sỉ số: </a></li>
+                                        </ul>
+                                    </div>
+                                </div><!--blog-post end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    </section>
+
