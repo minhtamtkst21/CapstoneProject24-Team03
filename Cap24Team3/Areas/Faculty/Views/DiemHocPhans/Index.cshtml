@@ -38,14 +38,15 @@
                             @foreach (var item in Model)
                             {
                                 STT++;
+                                var file = item.ID + ".xlsx";
+                                var tenfile = item.NguoiUpload + item.ThoiGian + ".xlsx";
                                 <tr>
                                     <td>@STT</td>
                                     <td>@item.NguoiUpload</td>
                                     <td>@item.ThoiGian</td>
-                                    <td></td>
+                                    <td><a href="~/FileUpLoad/@file">@tenfile</a></td>
                                 </tr>
                             }
-
                         </tbody>
                     </table>
                 </div> <!-- end .table-responsive-->
@@ -73,7 +74,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                        <input type="submit" class="btn btn-primary" value="Xem trước" />
                     </div>
                 }
             </div>
@@ -96,7 +97,7 @@
                 <div class="modal-footer">
                     <form action="@Url.Action("TaiLenDiem")" method="post">
                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                        <input type="submit" class="btn btn-primary" value="Xem trước" />
+                        <input type="submit" class="btn btn-primary" value="Tải lên" />
                     </form>
                 </div>
             </div>

@@ -634,8 +634,17 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["tinhtrang"] = db.SinhViens.Find(id).TinhTrang.TenTinhTrang;
             return Redirect(Request.UrlReferrer.ToString());
         }
+        public ActionResult XemDiemSinhVien(int id)
+        {
+            var sinhvien = db.SinhViens.Find(id);
+            Session["sinhvien"] = sinhvien;
+            Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         public ActionResult TaiLenSinhVien()
         {
+            db.Configuration.AutoDetectChangesEnabled = false;
+            db.Configuration.ValidateOnSaveEnabled = false;
             var listMoiSV = Session["LuuSinhVien"] as List<SinhVien>;
             var listMoiLop = Session["LuuLop"] as List<LopQuanLy>;
             var listMoiTinhTrang = Session["LuuTinhTrang"] as List<TinhTrang>;
@@ -662,17 +671,17 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     TinhTrangMoi.DoUuTien = douutien + 1;
                     db.TinhTrangs.Add(TinhTrangMoi);
                     listTinhTrang.Add(item.TenTinhTrang);
-                    db.SaveChanges();
                 }
             }
+            db.SaveChanges();
             foreach (var item in listMoiLop)
             {
                 if (!CheckTonTai(item.TenLop, listLop))
                 {
                     db.LopQuanLies.Add(item);
-                    db.SaveChanges();
                 }
             }
+            db.SaveChanges();
             foreach (var item in listMoiSV)
             {
                 if (!CheckTonTai(item.MSSV, listSV))
@@ -681,8 +690,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     db.SinhViens.Add(item);
                 }
             }
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.Configuration.ValidateOnSaveEnabled = false;
             db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());

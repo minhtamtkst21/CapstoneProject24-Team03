@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using Cap24Team3.Models;
@@ -157,18 +158,24 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         }
         public ActionResult TaiLenDiem()
         {
+            db.Configuration.AutoDetectChangesEnabled = false;
+            db.Configuration.ValidateOnSaveEnabled = false;
             var listDiem = Session["LuuDiem"] as List<DiemHocPhan>;
             var LichSu = Session["LuuLichSu"] as LichSuUpLoad;
             var File = Session["File"] as HttpPostedFileBase;
             db.LichSuUpLoads.Add(LichSu);
             foreach (var item in listDiem)
                 db.DiemHocPhans.Add(item);
-            db.Configuration.AutoDetectChangesEnabled = false;
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
+            using (var scope = new TransactionScope())
+            {
+                var path = Server.MapPath(UPLOAD_PATH);
+                File.SaveAs(path + "" + LichSu.ID + ".xlsx");
+                scope.Complete();
+            }            db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
         }
+        private const string UPLOAD_PATH = "~/FileUpLoad/";
         [HttpPost]
         public ActionResult UploadDSDiem(FormCollection formCollection)
         {

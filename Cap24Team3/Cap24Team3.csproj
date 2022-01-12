@@ -71,6 +71,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -602,6 +603,9 @@
     <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\Edit.cshtml" />
     <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\ListDotChinhSua.cshtml" />
     <Content Include="Areas\Faculty\Views\DotChinhSuaThongTins\CreateDotChinhSua.cshtml" />
+    <Content Include="FileUpLoad\26" />
+    <Content Include="FileUpLoad\27.xlsx" />
+    <Content Include="Models\ChuongTrinhDaoTao.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
