@@ -637,7 +637,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         public ActionResult XemDiemSinhVien(int id)
         {
             var sinhvien = db.SinhViens.Find(id);
-            Session["sinhvien"] = sinhvien;
+            Session["sinhvien1"] = sinhvien;
             Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             return Redirect(Request.UrlReferrer.ToString());
         }
