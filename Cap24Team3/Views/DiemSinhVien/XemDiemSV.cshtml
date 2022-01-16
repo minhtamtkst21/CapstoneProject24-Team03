@@ -3,6 +3,11 @@
     ViewBag.Title = "XemDiemSV";
     Layout = "~/Views/Shared/Student_layout.cshtml";
     int STT = 0;
+    var diemtb = ViewData["DiemTB"] as double[];
+    var diemtbchung = ViewData["DiemTBChung"] as double[];
+    var listHK = ViewData["listHK"] as List<string>;
+    int tongtinchi = 0;
+    int tongtinchi1 = 0;
 }
 <section class="pager-section">
     <div class="container">
@@ -41,34 +46,35 @@
                 </div>
             </div>
             <br>
-            <div class="row">
-                <div class="col-xl-6">
-                    <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
-                        <tr>
-                            <th>Tổng số tín chỉ</th>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <th>Số tín chỉ đã hoàn thành</th>
-                            <td>25</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-xl-6">
-                    <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
-                        <tr>
-                            <th>Điểm trung bình</th>
-                            <td>10 | 4 | A+</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            @{
-                var listHK = ViewData["listHK"] as List<string>;
-                int tongtinchi = 0;
-            }
             @if (listHK != null)
             {
+                <div class="row">
+                    <div class="col-xl-6">
+                        <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                            <tr>
+                                <th>Tổng số tín chỉ</th>
+                                <td>100</td>
+                            </tr>
+                            <tr>
+                                <th>Số tín chỉ đã hoàn thành</th>
+                                @for (int i = 0; i < listHK.Count; i++)
+                                {
+                                    var tinchi = ViewData["SoTC"] as int[];
+                                    tongtinchi1 = tongtinchi1 + tinchi[i];
+                                }
+                                <td>@tongtinchi1</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-xl-6">
+                        <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                            <tr>
+                                <th>Điểm trung bình chung</th>
+                                <td>@diemtbchung[diemtbchung.Length - 1]</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 for (int i = 0; i < listHK.Count; i++)
                 {
                     var tinchi = ViewData["SoTC"] as int[];
@@ -139,10 +145,6 @@
                             <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
                                 <tr>
                                     <th>Số trung bình học kỳ</th>
-                                    @{ 
-                                        var diemtb = ViewData["DiemTB"] as double[];
-                                        var diemtbchung = ViewData["DiemTBChung"] as double[];
-                                    }
                                     <td>@diemtb[i]</td>
                                 </tr>
                                 <tr>
