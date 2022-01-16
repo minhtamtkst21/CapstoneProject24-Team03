@@ -12,16 +12,6 @@
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">DANH SÁCH LỚP</h4>
-            <div class="page-title-right">
-                <!-- <div class="container">
-                    <input type="text" id="search" placeholder="Search..." style="color: black;">
-                    <div class="search"></div>
-                </div> -->
-                <button type="submit" id="button" formaction="@Url.Action("TaoMoiLop")" class="btn btn-secondary btn-rounded">
-                    Tạo mới
-                </button>
-            </div>
-
         </div>
     </div>
 </div>
@@ -60,7 +50,7 @@
                                                 Trống
                                             </a>
                                         }
-                                        <td>
+                                    <td>
                                         <span>K</span>@item.KhoaDaoTao.Khoa
                                     </td>
                                     <td>@item.NganhDaoTao.Nganh</td>
@@ -89,7 +79,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <input hidden type="number" name="idLop" value="@lop.ID" required/>
+                            <input hidden type="number" name="idLop" value="@lop.ID" required />
                             <input class="form-control" type="email" id="chunhiem" name="chunhiem" value="@lop.ChuNhiem" required />
                         </div>
                     </div>

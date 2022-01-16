@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChinhSuaThongTinsvController.cs" />
     <Compile Include="Controllers\ChuNhiemLopController.cs" />
+    <Compile Include="Controllers\DiemSinhVienController.cs" />
     <Compile Include="Controllers\HocPhanDaoTaoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -968,6 +969,7 @@
     <Content Include="Views\ChinhSuaThongTinsv\Details.cshtml" />
     <Content Include="Views\ChinhSuaThongTinsv\Edit.cshtml" />
     <Content Include="Views\ChinhSuaThongTinsv\Index.cshtml" />
+    <Content Include="Views\DiemSinhVien\XemDiemSV.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Cap24Team3.Models.DiemHocPhan>
+@{
+    ViewBag.Title = "XemDiemSV";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+    int STT = 0;
+}
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 100px;">Xem điểm</h2>
+            <ul>
+                <li><a href="index.html" title="">Home</a></li>
+                <li><span>Xem điểm</span></li>
+            </ul>
+        </div><!--pager-content end-->
+        <h2 class="page-titlee">E-Profile</h2>
+    </div>
+</section><!--pager-section end-->
+<hr>
+<div class="page-content">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="page-title" style="font-family: 'Dongle2'; color: black; font-size: 50px;">BẢNG ĐIỂM CHI TIẾT</h4>
+                        <div class="page-title-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <div class="col-12">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%;" aria-valuemin="0" aria-valuemax="200">30%</div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xl-6">
+                    <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                        <tr>
+                            <th>Tổng số tín chỉ</th>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <th>Số tín chỉ đã hoàn thành</th>
+                            <td>25</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xl-6">
+                    <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                        <tr>
+                            <th>Điểm trung bình</th>
+                            <td>10 | 4 | A+</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            @{
+                var listHK = ViewData["listHK"] as List<string>;
+                int tongtinchi = 0;
+            }
+            @if (listHK != null)
+            {
+                for (int i = 0; i < listHK.Count; i++)
+                {
+                    var tinchi = ViewData["SoTC"] as int[];
+                    tongtinchi = tongtinchi + tinchi[i];
+                    <div class="col-xl-12">
+                        <div class="card-box">
+                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                            <div class="table-responsive" style="overflow: auto">
+                                <table class="table table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên môn</th>
+                                            <th>Mã môn</th>
+                                            <th>Tín chỉ</th>
+                                            <th>Điểm hệ số 10</th>
+                                            <th>Điểm hệ số 4</th>
+                                            <th>Điểm chữ</th>
+                                            <th>Kết quả</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.HocKy.ToString() == listHK[i])
+                                            {
+                                                STT++;
+                                                <tr>
+                                                    <td>@STT</td>
+                                                    <td>@item.TenHocPhan</td>
+                                                    <td>@item.HocPhan</td>
+                                                    <td>@item.SoTinChi</td>
+                                                    <td>@item.Diem10</td>
+                                                    <td>@item.Diem4</td>
+                                                    <td>@item.DiemChu</td>
+                                                    @if (item.QuaMon == true)
+                                                    {
+                                                        <td><i class="fa fa-check" style="color: green;"></i></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
+                                                    }
+                                                </tr>
+                                            }
+                                        }
+                                        @*<td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>*@
+                                    </tbody>
+                                </table>
+                            </div> <!-- end .table-responsive-->
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                <tr>
+                                    <th>Tổng số tín chỉ</th>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <th>Số tín chỉ đã hoàn thành</th>
+                                    <td>@tongtinchi</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-xl-6">
+                            <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                <tr>
+                                    <th>Số trung bình học kỳ</th>
+                                    @{ 
+                                        var diemtb = ViewData["DiemTB"] as double[];
+                                        var diemtbchung = ViewData["DiemTBChung"] as double[];
+                                    }
+                                    <td>@diemtb[i]</td>
+                                </tr>
+                                <tr>
+                                    <th>Điểm trung bình chung</th>
+                                    <td>@diemtbchung[i]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                }
+            }
+

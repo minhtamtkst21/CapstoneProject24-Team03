@@ -352,9 +352,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             if (workSheet.Cells[rowIterator, 4].Value != null)
                             {
                                 savediem.HocPhan = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                if (savediem.HocPhan.Length > 7)
+                                if (savediem.HocPhan.Length > 20)
                                 {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 7 ký tự, số ký tự của " + savediem.HocPhan + " là " + savediem.HocPhan.Length + "<p>";
+                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 20 ký tự, số ký tự của " + savediem.HocPhan + " là " + savediem.HocPhan.Length + "<p>";
                                 }
                                 if (savediem.HocPhan.Replace(" ", string.Empty) == null)
                                 {
@@ -390,9 +390,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             if (workSheet.Cells[rowIterator, 8].Value != null)
                             {
                                 savediem.Diem10 = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                if (savediem.Diem10.Length > 3)
+                                if (savediem.Diem10.Length > 4)
                                 {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được quá 3 ký tự, số ký tự của " + savediem.Diem10 + " là " + savediem.Diem10.Length + "<p>";
+                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được quá 4 ký tự, số ký tự của " + savediem.Diem10 + " là " + savediem.Diem10.Length + "<p>";
                                 }
 
                             }
