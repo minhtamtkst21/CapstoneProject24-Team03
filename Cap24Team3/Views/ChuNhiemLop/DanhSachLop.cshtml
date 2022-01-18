@@ -1,43 +1,13 @@
-﻿@model IEnumerable<Cap24Team3.Models.LopQuanLy>
+﻿
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "DanhSachLop";
     Layout = "~/Views/Shared/Student_layout.cshtml";
+    var LopQuanLy = ViewData["DanhSachLop"] as string[];
+    var SiSo = ViewData["SiSo"] as int[];
+    var idLop = ViewData["idLop"] as int[];
 }
 
-@*<tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TenLop)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChuNhiem)
-        </th>
-        <th>
-            Khoa
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NganhDaoTao.Nganh)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenLop)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChuNhiem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KhoaDaoTao.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NganhDaoTao.Nganh)
-            </td>
-        </tr>
-    }*@
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
@@ -51,7 +21,7 @@
     </div>
 </section><!--pager-section end-->
 <section class="page-content">
-    @foreach (var item in Model)
+    @for(int i = 0; i < LopQuanLy.Length; i++)
     {
         <div class="container">
             <div class="row">
@@ -61,9 +31,10 @@
                             <div class="blog-post">
                                 <div class="blog-post quote-post">
                                     <div class="blog-info">
-                                        <span class="category"><a href="@Url.Action("DanhSachSV", new { idLop = item.ID })" class="text-dark">Danh sách sinh viên lớp @item.TenLop</a></span>
+                                        <span class="category"><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" class="text-dark">Danh sách sinh viên lớp @LopQuanLy[i]</a></span>
                                         <ul class="meta">
-                                            <li><a href="#" title="">Sỉ số: </a></li>
+                                            
+                                            <li><a href="#" title="">Sỉ số: @SiSo[i]</a></li>
                                         </ul>
                                     </div>
                                 </div><!--blog-post end-->
