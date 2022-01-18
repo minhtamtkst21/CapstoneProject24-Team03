@@ -32,7 +32,7 @@
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "CapNhatThongTin", "CapNhatThongTin", routeValues: null, htmlAttributes: new { title = "Manage" })
                         <button class="btn btn-danger" style="border-radius: 15px; width: 120px;">
                             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                         </button>

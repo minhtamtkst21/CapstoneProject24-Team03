@@ -78,10 +78,28 @@ namespace Cap24Team3.Controllers
                         DiemTong += diemtong[i];
                         diemtbchung[i] = Math.Round(DiemTong / Somon, 2);
                     }
+                    var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                    var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                    var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
+                    var khoikienthucmoi = new List<string>();
+                    foreach(var item in db.KhoiKienThucs.Where(s=>s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                        if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
+                            khoikienthucmoi.Add(item.MaKhoiKienThuc);
+                    var tongsotinchi = 0;
+                    foreach(var item in khoikienthucmoi)
+                    {
+                        var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
+                        foreach(var hocphan in db.HocPhanDaoTaos.Where(s=>s.ID_KhoiKienThuc == ktt.ID).ToList())
+                        {
+                            if(hocphan.ID_HocPhanTuChon == null)
+                            tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
+                        }
+                    }
                     ViewData["listHK"] = listHK;
                     ViewData["DiemTB"] = diemtb;
                     ViewData["DiemTBChung"] = diemtbchung;
                     ViewData["SoTC"] = sotinchi;
+                    ViewData["Tongsotinchi"] = tongsotinchi;
                 }
             }
             return View(listdiem);

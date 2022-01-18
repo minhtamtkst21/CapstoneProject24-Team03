@@ -67,23 +67,45 @@
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Chỉnh sửa chương trình đào tạo</h5>
+                                <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Thêm mới chương trình đào tạo</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                @using (Html.BeginForm("ChinhSuaCTDaoTao", "ChuongTrinhDaoTao", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                @using (Html.BeginForm("XemTruocThongKe", "ChuongTrinhDaoTao", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
-                                    <input hidden type="number" name="CTDT" value="@Model.ID" />
-                                    <input hidden type="text" name="Nganh" value="@Model.NganhDaoTao.Nganh" />
-                                    <input hidden type="text" name="Khoa" value="@Model.KhoaDaoTao.Khoa.ToString()" />
-                                    <input hidden type="text" name="HK" value="@Model.HocKyDaoTao.HocKy.ToString()"/>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Khóa:</label>
+                                        <select class="form-control" name="Khoa">
+                                            @foreach (var khoa in ViewData["KhoaDaoTao"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                                            {
+                                                <option value="@khoa.Khoa" selected>Khóa @khoa.Khoa</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Ngành:</label>
+                                        <select class="form-control" name="Nganh">
+                                            @foreach (var nganh in ViewData["NganhDaoTao"] as List<Cap24Team3.Models.NganhDaoTao>)
+                                            {
+                                                <option value="@nganh.Nganh">Ngành @nganh.Nganh</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Học kỳ bắt đầu:</label>
+                                        <select class="form-control" name="HocKy">
+                                            @foreach (var hocky in ViewData["HocKyDaoTao"] as List<Cap24Team3.Models.HocKyDaoTao>)
+                                            {
+                                                <option value="@hocky.HocKy">@hocky.HocKy</option>
+                                            }
+                                        </select>
+                                    </div>
                                     <div class="file-upload-wrapper">
                                         <div class="file-upload-wrapper">
-                                            <input id="excel_file" type="file" name="UploadedFile" class="dropify" accept=".xls,.xlsx" onclick="Clearform()" />
+                                            <input id="excel_file" type="file" name="UploadedFile" class="dropify" required accept=".xls,.xlsx" onclick="Clearform()" />
                                         </div>
-                                        <div id="excel_data" class="table-responsive"></div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
@@ -94,29 +116,51 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="modal fade" id="ModelCheckFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Xem trước chương trình đào tạo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    @Html.Raw(Session["ThongBao"])
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="@Url.Action("ChinhSuaCTDaoTao")">
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
+                                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <script>
-                $('#exampleModal').on('show.bs.modal', event => {
-                    var button = $(event.relatedTarget);
-                    var modal = $(this);
-                });
-                function GetText(val) {
-                    var text = document.getElementById("textXacNhan").value;
-                    if (val == text) {
-                        document.getElementById("XacNhanBtn").disabled = false;
-                    } else {
-                        document.getElementById("XacNhanBtn").disabled = true;
+                <script>
+                    $('#exampleModal').on('show.bs.modal', event => {
+                        var button = $(event.relatedTarget);
+                        var modal = $(this);
+                    });
+                    function GetText(val) {
+                        var text = document.getElementById("textXacNhan").value;
+                        if (val == text) {
+                            document.getElementById("XacNhanBtn").disabled = false;
+                        } else {
+                            document.getElementById("XacNhanBtn").disabled = true;
+                        }
                     }
-                }
 
-                function PrintCTDT() {
-                    document.getElementById("btnFunction").style.display = "none";
-                    window.print();
-                    document.getElementById("btnFunction").style.display = "block";
-                }
-            </script>
-        </div>
+                    function PrintCTDT() {
+                        document.getElementById("btnFunction").style.display = "none";
+                        window.print();
+                        document.getElementById("btnFunction").style.display = "block";
+                    }
+                </script>
+            </div>
     </div>
 </div>
 <!-- end page title -->

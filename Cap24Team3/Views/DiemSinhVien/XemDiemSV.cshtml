@@ -8,6 +8,15 @@
     var listHK = ViewData["listHK"] as List<string>;
     int tongtinchi = 0;
     int tongtinchi1 = 0;
+    for (int i = 0; i < listHK.Count; i++)
+    {
+        var tinchi = ViewData["SoTC"] as int[];
+        tongtinchi1 = tongtinchi1 + tinchi[i];
+    }
+    int tongsotinchi = int.Parse(ViewData["Tongsotinchi"].ToString());
+    var diemtrungbinh = Math.Round((double)tongtinchi1 / (double)tongsotinchi, 3) * 100;
+    var textdiemtb = diemtrungbinh + "%";
+
 }
 <section class="pager-section">
     <div class="container">
@@ -29,39 +38,31 @@
         <div class="container">
 
             <!-- start page title -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="page-title" style="font-family: 'Dongle2'; color: black; font-size: 50px;">BẢNG ĐIỂM CHI TIẾT</h4>
-                        <div class="page-title-right">
-
+            @if (listHK != null)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <h4 class="page-title" style="font-family: 'Dongle2'; color: black; font-size: 50px;">BẢNG ĐIỂM CHI TIẾT</h4>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- end page title -->
-            <div class="col-12">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 10%;" aria-valuemin="0" aria-valuemax="200">30%</div>
+                <!-- end page title -->
+                <div class="col-12">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: @textdiemtb;" aria-valuemin="0" aria-valuemax="200">@textdiemtb</div>
+                    </div>
                 </div>
-            </div>
-            <br>
-            @if (listHK != null)
-            {
+                <br>
                 <div class="row">
                     <div class="col-xl-6">
                         <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
                             <tr>
                                 <th>Tổng số tín chỉ</th>
-                                <td>100</td>
+                                <td>@tongsotinchi</td>
                             </tr>
                             <tr>
                                 <th>Số tín chỉ đã hoàn thành</th>
-                                @for (int i = 0; i < listHK.Count; i++)
-                                {
-                                    var tinchi = ViewData["SoTC"] as int[];
-                                    tongtinchi1 = tongtinchi1 + tinchi[i];
-                                }
                                 <td>@tongtinchi1</td>
                             </tr>
                         </table>
@@ -70,7 +71,14 @@
                         <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
                             <tr>
                                 <th>Điểm trung bình chung</th>
-                                <td>@diemtbchung[diemtbchung.Length - 1]</td>
+                                @if (diemtbchung.Length > 1)
+                                {
+                                    <td>@diemtbchung[diemtbchung.Length - 1]</td>
+                                }
+                                else
+                                {
+                                    <td>0</td>
+                                }
                             </tr>
                         </table>
                     </div>
@@ -133,7 +141,7 @@
                             <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
                                 <tr>
                                     <th>Tổng số tín chỉ</th>
-                                    <td>100</td>
+                                    <td>@tongsotinchi</td>
                                 </tr>
                                 <tr>
                                     <th>Số tín chỉ đã hoàn thành</th>
