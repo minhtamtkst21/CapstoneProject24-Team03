@@ -963,7 +963,7 @@
     <Content Include="Views\Shared\Student_layout.cshtml" />
     <Content Include="Views\HocPhanDaoTao\ChuongTrinhDaoTao.cshtml" />
     <Content Include="Views\HocPhanDaoTao\Index.cshtml" />
-    <Content Include="Views\ChuNhiemLop\Index.cshtml" />
+    <Content Include="Views\ChuNhiemLop\DanhSachLop.cshtml" />
     <Content Include="Views\ChuNhiemLop\DanhSachSV.cshtml" />
     <Content Include="Views\DiemSinhVien\XemDiemSV.cshtml" />
     <Content Include="Views\CapNhatThongTin\CapNhatThongTin.cshtml" />
