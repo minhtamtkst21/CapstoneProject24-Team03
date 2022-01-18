@@ -24,7 +24,7 @@ namespace Cap24Team3.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult CapNhatThongTin(string mail, int sdt, int? dtcha, int? dtme, string diachi)
+        public ActionResult CapNhatThongTin(string mail, int? sdt, int? dtcha, int? dtme, string diachi)
         {
             var email = User.Identity.Name;
             if (email != null)
