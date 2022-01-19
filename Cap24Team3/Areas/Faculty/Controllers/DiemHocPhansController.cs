@@ -60,10 +60,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 if (sinhvien != null)
                                     foreach (var item in db.HocKyDaoTaos.ToList())
                                     {
-                                        if (item.HocKy == sinhvien.HocKyBatDau)
-                                            hockysv = item.STT;
-                                        if (item.HocKy == HocKy)
-                                            hockyhp = item.STT;
+                                        {
+                                            if (item.HocKy == sinhvien.HocKyBatDau)
+                                                hockysv = item.STT;
+                                            if (item.HocKy == HocKy)
+                                                hockyhp = item.STT;
+                                        }
                                     }
                                 savediem.HocKy = hockyhp - hockysv + 1;
                                 savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();

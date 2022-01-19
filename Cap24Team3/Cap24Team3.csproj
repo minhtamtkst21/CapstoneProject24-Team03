@@ -610,6 +610,7 @@
     <Content Include="FileUpLoad\26" />
     <Content Include="FileUpLoad\27.xlsx" />
     <Content Include="Models\ChuongTrinhDaoTao.xlsx" />
+    <Content Include="Areas\Faculty\Views\DanhSachSinhVien\DSSV.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

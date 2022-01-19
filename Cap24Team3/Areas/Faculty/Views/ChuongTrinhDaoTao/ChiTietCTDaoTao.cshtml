@@ -75,33 +75,6 @@
                             <div class="modal-body">
                                 @using (Html.BeginForm("XemTruocThongKe", "ChuongTrinhDaoTao", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Khóa:</label>
-                                        <select class="form-control" name="Khoa">
-                                            @foreach (var khoa in ViewData["KhoaDaoTao"] as List<Cap24Team3.Models.KhoaDaoTao>)
-                                            {
-                                                <option value="@khoa.Khoa" selected>Khóa @khoa.Khoa</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Ngành:</label>
-                                        <select class="form-control" name="Nganh">
-                                            @foreach (var nganh in ViewData["NganhDaoTao"] as List<Cap24Team3.Models.NganhDaoTao>)
-                                            {
-                                                <option value="@nganh.Nganh">Ngành @nganh.Nganh</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Học kỳ bắt đầu:</label>
-                                        <select class="form-control" name="HocKy">
-                                            @foreach (var hocky in ViewData["HocKyDaoTao"] as List<Cap24Team3.Models.HocKyDaoTao>)
-                                            {
-                                                <option value="@hocky.HocKy">@hocky.HocKy</option>
-                                            }
-                                        </select>
-                                    </div>
                                     <div class="file-upload-wrapper">
                                         <div class="file-upload-wrapper">
                                             <input id="excel_file" type="file" name="UploadedFile" class="dropify" required accept=".xls,.xlsx" onclick="Clearform()" />
