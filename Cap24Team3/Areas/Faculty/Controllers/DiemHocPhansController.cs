@@ -50,39 +50,41 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         {
                             for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                             {
-                                DiemHocPhan savediem = new DiemHocPhan();
-                                savediem.MSSV = (workSheet.Cells[rowIterator, 1].Value == null) ? "" : workSheet.Cells[rowIterator, 1].Value.ToString();
-                                var HocKy = int.Parse(workSheet.Cells[rowIterator, 5].Value.ToString().Substring(0, 3));
-                                var sinhvien = db.SinhViens.FirstOrDefault(s => s.MSSV == savediem.MSSV);
-                                var listhk = new List<HocKyDaoTao>();
-                                var hockysv = 0;
-                                var hockyhp = 0;
-                                if (sinhvien != null)
-                                    foreach (var item in db.HocKyDaoTaos.ToList())
-                                    {
-                                        {
-                                            if (item.HocKy == sinhvien.HocKyBatDau)
-                                                hockysv = item.STT;
-                                            if (item.HocKy == HocKy)
-                                                hockyhp = item.STT;
-                                        }
-                                    }
-                                savediem.HocKy = hockyhp - hockysv + 1;
-                                savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
-                                savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
-                                savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());
-                                savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString();
-                                savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString();
-                                savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
-                                savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null && workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
-                                savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
-                                if (savediem.MSSV == null || savediem.HocPhan == null || savediem.TenHocPhan == null || savediem.SoTinChi == -1)
+                                try
                                 {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + " Dữ liệu không được để trống <p>";
+                                    DiemHocPhan savediem = new DiemHocPhan();
+                                    savediem.MSSV = (workSheet.Cells[rowIterator, 1].Value == null) ? "" : workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    var HocKy = int.Parse(workSheet.Cells[rowIterator, 5].Value.ToString().Substring(0, 3));
+                                    var sinhvien = db.SinhViens.FirstOrDefault(s => s.MSSV == savediem.MSSV);
+                                    var listhk = new List<HocKyDaoTao>();
+                                    var hockysv = 0;
+                                    var hockyhp = 0;
+                                    if (sinhvien != null)
+                                        foreach (var item in db.HocKyDaoTaos.ToList())
+                                        {
+                                            {
+                                                if (item.HocKy == sinhvien.HocKyBatDau)
+                                                    hockysv = item.STT;
+                                                if (item.HocKy == HocKy)
+                                                    hockyhp = item.STT;
+                                            }
+                                        }
+                                    savediem.HocKy = hockyhp - hockysv + 1;
+                                    savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
+                                    savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
+                                    savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());
+                                    savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString();
+                                    savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString();
+                                    savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
+                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null && workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
+                                    savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
+                                    if (!CheckTonTai(savediem.MSSV.ToLower(), ListSinhVien))
+                                        ListSinhVien.Add(savediem.MSSV.ToLower());
+                                    (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
+                                } catch
+                                {
+
                                 }
-                                if (!CheckTonTai(savediem.MSSV, ListSinhVien))
-                                    ListSinhVien.Add(savediem.MSSV);
-                                (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
                             }
                         }
                         else if (noOfCol != 11)
