@@ -56,6 +56,13 @@ namespace Cap24Team3.Controllers
             Session["tinhtrang"] = db.SinhViens.Find(id).TinhTrang.TenTinhTrang;
             return Redirect(Request.UrlReferrer.ToString());
         }
+        public ActionResult XemDiemSinhVien(int id)
+        {
+            var sinhvien = db.SinhViens.Find(id);
+            Session["sinhvien1"] = sinhvien;
+            Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         public ActionResult XoaSVKhoiLop(int id)
         {           
             var sv = db.SinhViens.Find(id);

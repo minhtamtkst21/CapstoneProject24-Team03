@@ -34,7 +34,7 @@
                             <div class="kanban-detail">
                                 <form>
                                     <a value="@item.Khoa" type="button" class="badge badge-danger float-right" href="@Url.Action("XacNhanXoaKhoa", new { id = item.ID })" style="color: white;"><i class="fas fa-times"></i></a>
-                                    <h4 class="mt-0"><a href="@Url.Action("NganhSinhVien", new { id = item.ID })" class="text-dark">Danh sách sinh viên Khóa @item.Khoa</a></h4>
+                                    <h4 class="mt-0" style="font-family: Roboto;"><a href="@Url.Action("NganhSinhVien", new { id = item.ID })" class="text-dark">Danh sách sinh viên Khóa @item.Khoa</a></h4>
                                 </form>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                                    <input type="submit" class="btn btn-primary" value="Xem trước" formmethod="post" formaction="@Url.Action("XemTruocThongKe", "DanhSachSinhVien", new { enctype = "multipart/form-data" })" />
+                                    <input type="submit" class="btn btn-primary" value="Tải lên" formmethod="post" formaction="@Url.Action("XemTruocThongKe", "DanhSachSinhVien", new { enctype = "multipart/form-data" })" />
                                 </div>
                             }
                         </div>
