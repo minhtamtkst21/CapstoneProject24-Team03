@@ -19,32 +19,35 @@ namespace Cap24Team3.Controllers
             {
                 var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
                 if (sinhvien != null)
-                    return View(sinhvien);
+                return View(sinhvien);
             }
             return View();
         }
         [HttpPost]
         public ActionResult CapNhatThongTin(string mail, int? sdt, int? dtcha, int? dtme, string diachi)
         {
-            var email = User.Identity.Name;
-            if (email != null)
+            var user = User.Identity.Name;
+            if (user != null)
             {
-                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == user);
+                var thongtin = new ChinhSuaThongTin();
                 if (sinhvien != null)
                 {
-                    if(mail != null)
-                    sinhvien.Email_2 = mail;
-                    if(sdt != null)
-                    sinhvien.DTDD = sdt.ToString();
-                    if(dtcha != null)
-                    sinhvien.DTCha = dtcha.ToString();
-                    if(dtme != null)
-                    sinhvien.DTMe = dtme.ToString();
-                    if(diachi != null)
-                    sinhvien.DiaChi = diachi;
-                    db.Entry(sinhvien).State = EntityState.Modified;
+                    if (mail != null)
+                        thongtin.MailCaNhan = mail;
+                    if (sdt != null)
+                        thongtin.DTDD = sdt.ToString();
+                    if (dtcha != null)
+                        thongtin.DTCha = dtcha.ToString();
+                    if (dtme != null)
+                        thongtin.DTMe = dtme.ToString();
+                    if (diachi != null)
+                        thongtin.DiaChi = diachi;
+                    thongtin.SinhVien = sinhvien;
+                    db.Entry(thongtin).State = EntityState.Added;
                     db.SaveChanges();
-                    return View(sinhvien);
+                    ViewData["sinhvien"] = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                    return View();
                 }
             }
             return View();

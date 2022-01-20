@@ -78,9 +78,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString();
                                     savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString();
                                     savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
-                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null && workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
+                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null || workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
                                     savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
-                                    if (mssvmoi == savediem.MSSV.ToLower())
+                                    if (mssvmoi != savediem.MSSV.ToLower())
                                     {
                                         dem++;
                                         mssvmoi = savediem.MSSV.ToLower();

@@ -7,78 +7,6 @@
     var SiSo = ViewData["SiSo"] as int[];
     var idLop = ViewData["idLop"] as int[];
 }
-<header>
-    <div class="container">
-        <div class="header-content d-flex flex-wrap align-items-center">
-            <div class="logo">
-                <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
-                    E-Profile
-                </a>
-            </div><!--logo end-->
-            @if (Request.IsAuthenticated)
-            {
-                <div class="social-links ml-auto">
-                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "CapNhatThongTin", "CapNhatThongTin", routeValues: null, htmlAttributes: new { title = "Manage" })
-                        <button class="btn btn-danger" style="border-radius: 15px; width: 120px;">
-                            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                        </button>
-
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="social-links ml-auto">
-                    <form action="@Url.Action("ExternalLogin","Account")" method="post">
-                        <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
-                        <div>
-                            <p>
-                                <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            }
-            <div class="menu-btn">
-                <a href="#">
-                    <span class="bar1"></span>
-                    <span class="bar2"></span>
-                    <span class="bar3"></span>
-                </a>
-            </div><!--menu-btn end-->
-        </div><!--header-content end-->
-        <div class="navigation-bar d-flex flex-wrap align-items-center">
-            <nav>
-                <ul>
-                    <li><a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
-                    <li>
-                        <a href="KHHT.html" title="" style="font-family: 'Dongle3'; font-size: 40px;">Kế hoạch học tập</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("XemDiemSV","DiemSinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Xem điểm</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Create","ChinhSuaThongTinsv")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chỉnh sửa thông tin</a>
-                    </li>
-                    <li>
-                        <a class="active" href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
-                    </li>
-                </ul>
-            </nav><!--nav end-->
-            <ul class="social-links ml-auto">
-                <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
-                <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
-            </ul>
-        </div><!--navigation-bar end-->
-    </div>
-</header><!--header end-->
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
@@ -104,8 +32,7 @@
                                     <div class="blog-info">
                                         <span class="category" style="font-size: 20px;"><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" class="text-dark">Danh sách sinh viên lớp @LopQuanLy[i]</a></span>
                                         <ul class="meta">
-                                            
-                                            <li><a href="#" title="">Sỉ số: @SiSo[i]</a></li>
+                                            <li><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" title="">Sỉ số: @SiSo[i]</a></li>
                                         </ul>
                                     </div>
                                 </div><!--blog-post end-->

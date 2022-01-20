@@ -968,11 +968,6 @@
     <Content Include="Views\ChuNhiemLop\DanhSachSV.cshtml" />
     <Content Include="Views\DiemSinhVien\XemDiemSV.cshtml" />
     <Content Include="Views\CapNhatThongTin\CapNhatThongTin.cshtml" />
-    <Content Include="Views\ChinhSuaThongTinsv\Create.cshtml" />
-    <Content Include="Views\ChinhSuaThongTinsv\Delete.cshtml" />
-    <Content Include="Views\ChinhSuaThongTinsv\Details.cshtml" />
-    <Content Include="Views\ChinhSuaThongTinsv\Edit.cshtml" />
-    <Content Include="Views\ChinhSuaThongTinsv\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
