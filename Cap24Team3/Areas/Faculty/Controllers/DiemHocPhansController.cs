@@ -19,6 +19,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult ThongKe(FormCollection formCollection)
         {
+            int dem = 0;
             var ListSinhVien = new List<string>();
             Session["LuuDiem"] = new List<DiemHocPhan>();
             Session["LuuLichSu"] = new LichSuUpLoad();
@@ -26,6 +27,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
                 string DanhSachLoi = "";
+                string mssvmoi = "";
                 using (var package = new ExcelPackage(file.InputStream))
                 {
                     var currentSheet = package.Workbook.Worksheets;
@@ -78,12 +80,16 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
                                     savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null && workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
                                     savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
-                                    if (!CheckTonTai(savediem.MSSV.ToLower(), ListSinhVien))
-                                        ListSinhVien.Add(savediem.MSSV.ToLower());
-                                    (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
+                                    if (mssvmoi == savediem.MSSV.ToLower())
+                                    {
+                                        dem++;
+                                        mssvmoi = savediem.MSSV.ToLower();
+                                    }
+                                   (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
                                 } catch
                                 {
-
+                                    TempData["Alert"] = "Lỗi, vui lòng thử lại!!";
+                                    return Redirect(Request.UrlReferrer.ToString());
                                 }
                             }
                         }
@@ -111,7 +117,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["File"] = file;
             string thongbao = "<table class='table table-hover mb-0'>";
             thongbao += "<tr>";
-            thongbao += "<td>Số lượng sinh viên: " + ListSinhVien.Count + "</td>";
+            thongbao += "<td>Số lượng sinh viên: " + dem + "</td>";
             thongbao += "</tr>";
             thongbao += "<tr>";
             thongbao += "<td>Số lượng điểm được lưu: " + (Session["LuuDiem"] as List<DiemHocPhan>).Count + "</td>";

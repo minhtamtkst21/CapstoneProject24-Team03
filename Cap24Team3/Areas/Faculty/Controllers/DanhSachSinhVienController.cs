@@ -671,22 +671,24 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     TinhTrangMoi.DoUuTien = douutien + 1;
                     db.TinhTrangs.Add(TinhTrangMoi);
                     listTinhTrang.Add(item.TenTinhTrang);
+                    db.SaveChanges();
                 }
             }
-            db.SaveChanges();
             foreach (var item in listMoiLop)
             {
                 if (!CheckTonTai(item.TenLop, listLop))
                 {
                     db.LopQuanLies.Add(item);
+                    listLop.Add(item.TenLop);
+                    db.SaveChanges();
                 }
             }
-            db.SaveChanges();
             foreach (var item in listMoiSV)
             {
                 if (!CheckTonTai(item.MSSV, listSV))
                 {
                     item.TinhTrang = db.TinhTrangs.FirstOrDefault(s => s.TenTinhTrang == item.TinhTrang.TenTinhTrang);
+                    listSV.Add(item.MSSV);
                     db.SinhViens.Add(item);
                 }
             }
