@@ -135,7 +135,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         }
         public ActionResult KhoaSinhVien()
         {
-            var lop = db.LopQuanLies.ToList();
+            var lop = db.LopQuanLies.OrderByDescending(l => l.ID_Khoa).ToList();
             var khoa = new List<KhoaDaoTao>();
             var stringkhoa = new List<string>();
             foreach (var item in lop)
@@ -171,7 +171,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         {
             var khoa = db.KhoaDaoTaos.Find(idkhoa);
             var nganh = db.NganhDaoTaos.Find(idnganh);
-            var lop = db.LopQuanLies.Where(s => s.NganhDaoTao.ID == idnganh).Where(s => s.KhoaDaoTao.ID == idkhoa).ToList();
+            var lop = db.LopQuanLies.Where(s => s.NganhDaoTao.ID == idnganh).Where(s => s.KhoaDaoTao.ID == idkhoa).OrderBy(l => l.TenLop).ToList();
             return View(lop);
         }
         // GET: Faculty/DanhSachSinhVien
