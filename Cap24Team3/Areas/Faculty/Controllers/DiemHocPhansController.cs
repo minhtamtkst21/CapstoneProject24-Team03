@@ -71,6 +71,10 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                                     hockyhp = item.STT;
                                             }
                                         }
+                                    else
+                                    {
+                                        TempData["Alert"] = "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
+                                    }
                                     savediem.HocKy = hockyhp - hockysv + 1;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
                                     savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
@@ -86,7 +90,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         mssvmoi = savediem.MSSV.ToLower();
                                     }
                                    (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
-                                } catch
+                                }
+                                catch
                                 {
                                     TempData["Alert"] = "Lỗi, vui lòng thử lại!!";
                                     return Redirect(Request.UrlReferrer.ToString());
@@ -138,7 +143,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 db.DiemHocPhans.Add(item);
             try
             {
-                if (File.ContentLength > 0) 
+                if (File.ContentLength > 0)
                 {
                     string _path = Path.Combine(Server.MapPath("~/FileUpLoad"), LichSu.ID + ".xlsx");
                     File.SaveAs(_path);

@@ -162,7 +162,7 @@ namespace Cap24Team3.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "HocPhanDaoTao");
+                    return RedirectToAction("XemHocPhanDT", "SinhVien");
                 }
                 AddErrors(result);
             }
@@ -418,7 +418,7 @@ namespace Cap24Team3.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "HocPhanDaoTao");
+            return RedirectToAction("XemHocPhanDT", "SinhVien");
         }
 
         //
@@ -475,7 +475,7 @@ namespace Cap24Team3.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "HocPhanDaoTao");
+            return RedirectToAction("XemHocPhanDT", "SinhVien");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

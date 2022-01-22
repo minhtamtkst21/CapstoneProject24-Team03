@@ -112,8 +112,9 @@
           <Property Name="DotChinhSua" Type="nvarchar(max)" Nullable="false" />
           <Property Name="NgayBatDau" Type="datetime" Nullable="false" />
           <Property Name="NgayKetThuc" Type="datetime" Nullable="false" />
-          <Property Name="NguoiTao" Type="nvarchar" MaxLength="50" />
-          <Property Name="Lop" Type="nvarchar" MaxLength="50" />
+          <Property Name="NguoiTao" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lop" Type="int" Nullable="false" />
+          <Property Name="TinhTrang" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="HocKyDaoTao">
           <Key>
@@ -207,16 +208,6 @@
           <Property Name="ID_Khoa" Type="int" />
           <Property Name="ID_Nganh" Type="int" />
           <Property Name="HocKyBatDau" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -351,6 +342,18 @@
             </Principal>
             <Dependent Role="DiemHocPhan">
               <PropertyRef Name="LichSu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DotChinhSuaThongTin_LopQuanLy">
+          <End Role="LopQuanLy" Type="Self.LopQuanLy" Multiplicity="1" />
+          <End Role="DotChinhSuaThongTin" Type="Self.DotChinhSuaThongTin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopQuanLy">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DotChinhSuaThongTin">
+              <PropertyRef Name="Lop" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -506,7 +509,6 @@
           <EntitySet Name="NganhDaoTao" EntityType="Self.NganhDaoTao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RangBuocHocPhan" EntityType="Self.RangBuocHocPhan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhTrang" EntityType="Self.TinhTrang" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ChinhSuaThongTin_DotChinhSuaThongTin" Association="Self.FK_ChinhSuaThongTin_DotChinhSuaThongTin">
             <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTin" />
@@ -547,6 +549,10 @@
           <AssociationSet Name="FK_DiemHocPhan_LichSuUpLoad" Association="Self.FK_DiemHocPhan_LichSuUpLoad">
             <End Role="LichSuUpLoad" EntitySet="LichSuUpLoad" />
             <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DotChinhSuaThongTin_LopQuanLy" Association="Self.FK_DotChinhSuaThongTin_LopQuanLy">
+            <End Role="LopQuanLy" EntitySet="LopQuanLy" />
+            <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTin" />
           </AssociationSet>
           <AssociationSet Name="FK_HocPhanBatBuoc_KhoiKienThuc" Association="Self.FK_HocPhanBatBuoc_KhoiKienThuc">
             <End Role="KhoiKienThuc" EntitySet="KhoiKienThuc" />
@@ -616,7 +622,6 @@
           <EntitySet Name="NganhDaoTaos" EntityType="CP24Team03Model.NganhDaoTao" />
           <EntitySet Name="RangBuocHocPhans" EntityType="CP24Team03Model.RangBuocHocPhan" />
           <EntitySet Name="SinhViens" EntityType="CP24Team03Model.SinhVien" />
-          <EntitySet Name="sysdiagrams" EntityType="CP24Team03Model.sysdiagram" />
           <EntitySet Name="TinhTrangs" EntityType="CP24Team03Model.TinhTrang" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -653,6 +658,10 @@
           <AssociationSet Name="FK_DiemHocPhan_LichSuUpLoad" Association="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad">
             <End Role="LichSuUpLoad" EntitySet="LichSuUpLoads" />
             <End Role="DiemHocPhan" EntitySet="DiemHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DotChinhSuaThongTin_LopQuanLy" Association="CP24Team03Model.FK_DotChinhSuaThongTin_LopQuanLy">
+            <End Role="LopQuanLy" EntitySet="LopQuanLies" />
+            <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTins" />
           </AssociationSet>
           <AssociationSet Name="FK_HocPhanBatBuoc_KhoiKienThuc" Association="CP24Team03Model.FK_HocPhanBatBuoc_KhoiKienThuc">
             <End Role="KhoiKienThuc" EntitySet="KhoiKienThucs" />
@@ -811,9 +820,11 @@
           <Property Name="DotChinhSua" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NgayBatDau" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NgayKetThuc" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NguoiTao" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Lop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NguoiTao" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lop" Type="Int32" Nullable="false" />
+          <Property Name="TinhTrang" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ChinhSuaThongTins" Relationship="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin" FromRole="DotChinhSuaThongTin" ToRole="ChinhSuaThongTin" />
+          <NavigationProperty Name="LopQuanLy" Relationship="CP24Team03Model.FK_DotChinhSuaThongTin_LopQuanLy" FromRole="DotChinhSuaThongTin" ToRole="LopQuanLy" />
         </EntityType>
         <EntityType Name="HocKyDaoTao">
           <Key>
@@ -880,6 +891,7 @@
           <Property Name="ChuNhiem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ID_Nganh" Type="Int32" />
           <Property Name="ID_Khoa" Type="Int32" />
+          <NavigationProperty Name="DotChinhSuaThongTins" Relationship="CP24Team03Model.FK_DotChinhSuaThongTin_LopQuanLy" FromRole="LopQuanLy" ToRole="DotChinhSuaThongTin" />
           <NavigationProperty Name="KhoaDaoTao" Relationship="CP24Team03Model.FK_LopQuanLy_KhoaDaoTao" FromRole="LopQuanLy" ToRole="KhoaDaoTao" />
           <NavigationProperty Name="NganhDaoTao" Relationship="CP24Team03Model.FK_LopQuanLy_NganhDaoTao" FromRole="LopQuanLy" ToRole="NganhDaoTao" />
           <NavigationProperty Name="SinhViens" Relationship="CP24Team03Model.FK_SinhVien_LopQuanLy" FromRole="LopQuanLy" ToRole="SinhVien" />
@@ -932,16 +944,6 @@
           <NavigationProperty Name="LopQuanLy" Relationship="CP24Team03Model.FK_SinhVien_LopQuanLy" FromRole="SinhVien" ToRole="LopQuanLy" />
           <NavigationProperty Name="NganhDaoTao" Relationship="CP24Team03Model.FK_SinhVien_NganhDaoTao" FromRole="SinhVien" ToRole="NganhDaoTao" />
           <NavigationProperty Name="TinhTrang" Relationship="CP24Team03Model.FK_SinhVien_TinhTrang" FromRole="SinhVien" ToRole="TinhTrang" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -1061,6 +1063,18 @@
             </Principal>
             <Dependent Role="DiemHocPhan">
               <PropertyRef Name="LichSu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DotChinhSuaThongTin_LopQuanLy">
+          <End Type="CP24Team03Model.LopQuanLy" Role="LopQuanLy" Multiplicity="1" />
+          <End Type="CP24Team03Model.DotChinhSuaThongTin" Role="DotChinhSuaThongTin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LopQuanLy">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DotChinhSuaThongTin">
+              <PropertyRef Name="Lop" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1293,6 +1307,7 @@
           <EntitySetMapping Name="DotChinhSuaThongTins">
             <EntityTypeMapping TypeName="CP24Team03Model.DotChinhSuaThongTin">
               <MappingFragment StoreEntitySet="DotChinhSuaThongTin">
+                <ScalarProperty Name="TinhTrang" ColumnName="TinhTrang" />
                 <ScalarProperty Name="Lop" ColumnName="Lop" />
                 <ScalarProperty Name="NguoiTao" ColumnName="NguoiTao" />
                 <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
@@ -1401,17 +1416,6 @@
                 <ScalarProperty Name="Ho" ColumnName="Ho" />
                 <ScalarProperty Name="MSSV" ColumnName="MSSV" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CP24Team03Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

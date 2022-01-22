@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Cap24Team3.Models.DotChinhSuaThongTin>
+
+@{
+    ViewBag.Title = "ListDotChinhSua";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+    int STT = 0;
+}
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 80px;">Đợt Chỉnh Sửa Thông Tin Sinh Viên</h2>
+            <ul>
+                <li><a href="#" title="">Home</a></li>
+                <li><span>Đợt Chỉnh Sửa Thông Tin Sinh Viên</span></li>
+            </ul>
+        </div><!--pager-content end-->
+        <h3 class="page-titlee">E-Profile</h3>
+    </div>
+</section><!--pager-section end-->
+<hr>
+<div class="page-content">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container">
+            <div class="col-xl-12">
+                <div class="card-box">
+                    <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 40px;">Danh sách các đợt chỉnh sửa thông tin sinh viên</h4>
+                    <a href="@Url.Action("TaoDotChinhSua")">
+                        <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
+                            <i class="mdi mdi-microsoft-excel"></i> Tạo mới
+                        </button>
+                    </a>
+                    <hr />
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên đợt chỉnh sửa</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Lớp chỉnh sửa</th>
+                                    <th>Tên người tạo</th>
+                                    <th>Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    STT++;
+                                    <tr>
+                                        <td>@STT</td>
+                                        <td>@item.DotChinhSua</td>
+                                        <td>@item.NgayBatDau.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td>@item.NgayKetThuc.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td>@item.LopQuanLy.TenLop</td>
+                                        <td>@item.NguoiTao</td>
+                                        @if (item.TinhTrang == true)
+                                        {
+                                            <td style="color: green;">Đang mở</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="color: red;">Đã đóng</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- end col -->
+        </div>
+    </div> <!-- content -->
+</div>
+<hr>

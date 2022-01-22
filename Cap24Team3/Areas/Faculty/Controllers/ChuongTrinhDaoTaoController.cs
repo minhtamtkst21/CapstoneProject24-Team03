@@ -585,303 +585,311 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             {
                 return RedirectToAction("ListCTDaoTao");
             }
-            var LuuCtdt = new ChuongTrinhDaoTao();
-            var LuuKhoikienthuc = new List<KhoiKienThuc>();
-            var LuuHocPhan = new List<HocPhanDaoTao>();
-            var LuuRangBuoc = new List<RangBuocHocPhan>();
-            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.KhoaDaoTao.Khoa.ToString() == Khoa.ToString()).FirstOrDefault(s => s.NganhDaoTao.Nganh == Nganh);
-            if (Request != null && ctdt == null)
+            try
             {
-                ChuongTrinhDaoTao chuongTrinhDaoTao = new ChuongTrinhDaoTao();
-                chuongTrinhDaoTao.ID_Khoa = db.KhoaDaoTaos.ToList().FirstOrDefault(s => s.Khoa.ToString() == Khoa.ToString()).ID;
-                chuongTrinhDaoTao.ID_Nganh = db.NganhDaoTaos.ToList().FirstOrDefault(s => s.Nganh == Nganh).ID;
-                chuongTrinhDaoTao.ID_HocKyBatDau = db.HocKyDaoTaos.ToList().FirstOrDefault(s => s.HocKy.ToString() == HocKy).ID;
-                HttpPostedFileBase file = Request.Files["UploadedFile"];
-                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                var LuuCtdt = new ChuongTrinhDaoTao();
+                var LuuKhoikienthuc = new List<KhoiKienThuc>();
+                var LuuHocPhan = new List<HocPhanDaoTao>();
+                var LuuRangBuoc = new List<RangBuocHocPhan>();
+                var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.KhoaDaoTao.Khoa.ToString() == Khoa.ToString()).FirstOrDefault(s => s.NganhDaoTao.Nganh == Nganh);
+                if (Request != null && ctdt == null)
                 {
-                    var listError = KiemTraFile(file);
-                    if (listError != "")
+                    ChuongTrinhDaoTao chuongTrinhDaoTao = new ChuongTrinhDaoTao();
+                    chuongTrinhDaoTao.ID_Khoa = db.KhoaDaoTaos.ToList().FirstOrDefault(s => s.Khoa.ToString() == Khoa.ToString()).ID;
+                    chuongTrinhDaoTao.ID_Nganh = db.NganhDaoTaos.ToList().FirstOrDefault(s => s.Nganh == Nganh).ID;
+                    chuongTrinhDaoTao.ID_HocKyBatDau = db.HocKyDaoTaos.ToList().FirstOrDefault(s => s.HocKy.ToString() == HocKy).ID;
+                    HttpPostedFileBase file = Request.Files["UploadedFile"];
+                    if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                     {
-                        TempData["Alert"] = listError;
-                        return RedirectToAction("ListCTDaoTao");
-                    }
-                    LuuCtdt = chuongTrinhDaoTao;
-                    string fileName = file.FileName;
-                    string fileContentType = file.ContentType;
-                    byte[] fileBytes = new byte[file.ContentLength];
-                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-                    using (var package = new ExcelPackage(file.InputStream))
-                    {
-                        var currentSheet = package.Workbook.Worksheets;
-                        var workSheet = currentSheet.First();
-                        if (workSheet.Dimension != null)
+                        var listError = KiemTraFile(file);
+                        if (listError != "")
                         {
-                            var noOfCol = workSheet.Dimension.End.Column;
-                            var noOfRow = workSheet.Dimension.End.Row;
-                            if (noOfCol == 9 && noOfRow > 1)
+                            TempData["Alert"] = listError;
+                            return RedirectToAction("ListCTDaoTao");
+                        }
+                        LuuCtdt = chuongTrinhDaoTao;
+                        string fileName = file.FileName;
+                        string fileContentType = file.ContentType;
+                        byte[] fileBytes = new byte[file.ContentLength];
+                        var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                        using (var package = new ExcelPackage(file.InputStream))
+                        {
+                            var currentSheet = package.Workbook.Worksheets;
+                            var workSheet = currentSheet.First();
+                            if (workSheet.Dimension != null)
                             {
-                                string KHOIKIENTHUC = "";
-                                string HPBATBUOC = "";
-                                string khoikienthuc = "";
-                                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                                var noOfCol = workSheet.Dimension.End.Column;
+                                var noOfRow = workSheet.Dimension.End.Row;
+                                if (noOfCol == 9 && noOfRow > 1)
                                 {
-                                    if (workSheet.Cells[rowIterator, 1].Value != null)
+                                    string KHOIKIENTHUC = "";
+                                    string HPBATBUOC = "";
+                                    string khoikienthuc = "";
+                                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                                     {
-                                        khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
-                                    }
-                                    if (int.TryParse(khoikienthuc, out int stt))
-                                    {
-                                        HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
-                                        if (workSheet.Cells[rowIterator, 2].Value != null)
+                                        if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
                                         }
-                                        if (workSheet.Cells[rowIterator, 3].Value != null)
+                                        if (int.TryParse(khoikienthuc, out int stt))
                                         {
-                                            hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 4].Value != null)
-                                        {
-                                            hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 5].Value != null)
-                                        {
-                                            var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
-                                            if (LoaiHP == "TC")
+                                            HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
+                                            if (workSheet.Cells[rowIterator, 2].Value != null)
                                             {
-                                                hocPhanDaoTao.HocPhanDaoTao2 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
+                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            }
+                                            if (workSheet.Cells[rowIterator, 3].Value != null)
+                                            {
+                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            }
+                                            if (workSheet.Cells[rowIterator, 4].Value != null)
+                                            {
+                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                            }
+                                            if (workSheet.Cells[rowIterator, 5].Value != null)
+                                            {
+                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                                if (LoaiHP == "TC")
+                                                {
+                                                    hocPhanDaoTao.HocPhanDaoTao2 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
+                                                }
+                                                else
+                                                {
+                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                }
                                             }
                                             else
                                             {
                                                 HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
                                             }
+                                            if (workSheet.Cells[rowIterator, 9].Value != null)
+                                            {
+                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                            }
+                                            hocPhanDaoTao.KhoiKienThuc = LuuKhoikienthuc.FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
+                                            LuuHocPhan.Add(hocPhanDaoTao);
                                         }
                                         else
                                         {
-                                            HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            KhoiKienThuc taoKKT = new KhoiKienThuc();
+                                            taoKKT.MaKhoiKienThuc = khoikienthuc;
+                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            taoKKT.ChuongTrinhDaoTao = LuuCtdt;
+                                            LuuKhoikienthuc.Add(taoKKT);
+                                            KHOIKIENTHUC = taoKKT.TenKhoiKienThuc;
                                         }
-                                        if (workSheet.Cells[rowIterator, 9].Value != null)
-                                        {
-                                            hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
-                                        }
-                                        hocPhanDaoTao.KhoiKienThuc = LuuKhoikienthuc.FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
-                                        LuuHocPhan.Add(hocPhanDaoTao);
                                     }
-                                    else
+                                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                                     {
-                                        KhoiKienThuc taoKKT = new KhoiKienThuc();
-                                        taoKKT.MaKhoiKienThuc = khoikienthuc;
-                                        taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
-                                        taoKKT.ChuongTrinhDaoTao = LuuCtdt;
-                                        LuuKhoikienthuc.Add(taoKKT);
-                                        KHOIKIENTHUC = taoKKT.TenKhoiKienThuc;
-                                    }
-                                }
-                                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-                                {
-                                    if (workSheet.Cells[rowIterator, 6].Value != null)
-                                    {
-                                        RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                        string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                        string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
-                                        foreach (string HP in ListHP)
+                                        if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
-                                            var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
-                                            if (mahocphan == null)
+                                            RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
+                                            foreach (string HP in ListHP)
                                             {
-                                                var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
-                                                if (tenhocphan != null)
+                                                var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
+                                                if (mahocphan == null)
                                                 {
-                                                    rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                    var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
+                                                    if (tenhocphan != null)
+                                                    {
+                                                        rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                        rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
+                                                        rangBuocHocPhan.LoaiRangBuoc = "Tiên quyết";
+                                                        LuuRangBuoc.Add(rangBuocHocPhan);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    rangBuocHocPhan.HocPhanDaoTao = mahocphan;
                                                     rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
                                                     rangBuocHocPhan.LoaiRangBuoc = "Tiên quyết";
                                                     LuuRangBuoc.Add(rangBuocHocPhan);
                                                 }
                                             }
-                                            else
-                                            {
-                                                rangBuocHocPhan.HocPhanDaoTao = mahocphan;
-                                                rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
-                                                rangBuocHocPhan.LoaiRangBuoc = "Tiên quyết";
-                                                LuuRangBuoc.Add(rangBuocHocPhan);
-                                            }
                                         }
-                                    }
-                                    if (workSheet.Cells[rowIterator, 7].Value != null)
-                                    {
-                                        RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                        string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                        string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
-                                        foreach (string HP in ListHP)
+                                        if (workSheet.Cells[rowIterator, 7].Value != null)
                                         {
-                                            var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
-                                            if (mahocphan == null)
+                                            RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
+                                            foreach (string HP in ListHP)
                                             {
-                                                var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
-                                                if (tenhocphan != null)
+                                                var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
+                                                if (mahocphan == null)
                                                 {
-                                                    rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                    var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
+                                                    if (tenhocphan != null)
+                                                    {
+                                                        rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                        rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
+                                                        rangBuocHocPhan.LoaiRangBuoc = "Học trước";
+                                                        LuuRangBuoc.Add(rangBuocHocPhan);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    rangBuocHocPhan.HocPhanDaoTao = mahocphan;
                                                     rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
                                                     rangBuocHocPhan.LoaiRangBuoc = "Học trước";
                                                     LuuRangBuoc.Add(rangBuocHocPhan);
                                                 }
                                             }
-                                            else
-                                            {
-                                                rangBuocHocPhan.HocPhanDaoTao = mahocphan;
-                                                rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
-                                                rangBuocHocPhan.LoaiRangBuoc = "Học trước";
-                                                LuuRangBuoc.Add(rangBuocHocPhan);
-                                            }
                                         }
-                                    }
-                                    if (workSheet.Cells[rowIterator, 8].Value != null)
-                                    {
-                                        RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                        string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                        string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
-                                        foreach (string HP in ListHP)
+                                        if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
-                                            var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
-                                            if (mahocphan == null)
+                                            RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
+                                            foreach (string HP in ListHP)
                                             {
-                                                var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
-                                                if (tenhocphan != null)
+                                                var mahocphan = LuuHocPhan.FirstOrDefault(s => s.MaHocPhan == HP);
+                                                if (mahocphan == null)
                                                 {
-                                                    rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                    var tenhocphan = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan.Contains(HP));
+                                                    if (tenhocphan != null)
+                                                    {
+                                                        rangBuocHocPhan.HocPhanDaoTao = tenhocphan;
+                                                        rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
+                                                        rangBuocHocPhan.LoaiRangBuoc = "Song hành";
+                                                        LuuRangBuoc.Add(rangBuocHocPhan);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    rangBuocHocPhan.HocPhanDaoTao = mahocphan;
                                                     rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
                                                     rangBuocHocPhan.LoaiRangBuoc = "Song hành";
                                                     LuuRangBuoc.Add(rangBuocHocPhan);
                                                 }
                                             }
-                                            else
-                                            {
-                                                rangBuocHocPhan.HocPhanDaoTao = mahocphan;
-                                                rangBuocHocPhan.HocPhanDaoTao1 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HocPhan);
-                                                rangBuocHocPhan.LoaiRangBuoc = "Song hành";
-                                                LuuRangBuoc.Add(rangBuocHocPhan);
-                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        TempData["ThongBao"] = "Thêm mới thành công chương trình đào tạo";
                     }
-                    TempData["ThongBao"] = "Thêm mới thành công chương trình đào tạo";
+                    else
+                    {
+                        TempData["Alert"] = "File bị trống, vui lòng thử lại!!";
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
                 }
                 else
                 {
-                    TempData["Alert"] = "File bị trống, vui lòng thử lại!!";
+                    TempData["Alert"] = "Chương trình đào tạo bị trùng, vui lòng thử lại!!";
                     return Redirect(Request.UrlReferrer.ToString());
                 }
-            }
-            else
-            {
-                TempData["Alert"] = "Chương trình đào tạo bị trùng, vui lòng thử lại!!";
+                Session["CTDT"] = LuuCtdt;
+                Session["Khoikienthuc"] = LuuKhoikienthuc;
+                Session["HocPhan"] = LuuHocPhan;
+                Session["RangBuoc"] = LuuRangBuoc;
+                string thongbao = "";
+                int STT = 0;
+                foreach (var khoikt in LuuKhoikienthuc)
+                {
+                    thongbao += "<table class='table table-hover mb-0'>";
+                    thongbao += "<h4>" + khoikt.TenKhoiKienThuc + "</h4>";
+                    thongbao += "<table class='table table-hover mb-0'><tr style='background-color:lightblue'>";
+                    thongbao += "<th>STT</th>";
+                    thongbao += "<th>Mã học phần</th>";
+                    thongbao += "<th>Tên học phần</th>";
+                    thongbao += "<th>Số tín chỉ</th>";
+                    thongbao += "<th>BB/TC</th>";
+                    thongbao += "<th>Tiên quyết</th>";
+                    thongbao += "<th>Học trước</th>";
+                    thongbao += "<th>Song hành</th>";
+                    thongbao += "<th>Học kỳ</th></tr>";
+                    foreach (var hocphan in LuuHocPhan)
+                    {
+                        if (hocphan.KhoiKienThuc.TenKhoiKienThuc == khoikt.TenKhoiKienThuc)
+                        {
+                            thongbao += "<tr>";
+                            if (hocphan.HocPhanDaoTao2 == null)
+                            {
+                                STT++;
+                                thongbao += "<td>" + STT + "</td>";
+                            }
+                            else
+                            {
+                                thongbao += "<td></td>";
+                            }
+                            thongbao += "<td>" + hocphan.MaHocPhan + "</td>";
+                            thongbao += "<td>" + hocphan.TenHocPhan + "</td>";
+                            thongbao += "<td>" + hocphan.SoTinChi + "</td>";
+                            if (hocphan.HocPhanDaoTao2 == null)
+                            {
+                                thongbao += "<td>BB</td>";
+                            }
+                            else
+                            {
+                                thongbao += "<td>TC</td>";
+                            }
+                            thongbao += "<td>";
+                            foreach (var rangbuoc in LuuRangBuoc)
+                            {
+                                if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1 == hocphan)
+                                {
+                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
+                                    }
+                                    else
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
+                                    }
+                                }
+                            }
+                            thongbao += "</td><td>";
+                            foreach (var rangbuoc in LuuRangBuoc)
+                            {
+                                if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1 == hocphan)
+                                {
+                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
+                                    }
+                                    else
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
+                                    }
+                                }
+                            }
+                            thongbao += "</td><td>";
+                            foreach (var rangbuoc in LuuRangBuoc)
+                            {
+                                if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1 == hocphan)
+                                {
+                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
+                                    }
+                                    else
+                                    {
+                                        thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
+                                    }
+                                }
+                            }
+                            thongbao += "</td>";
+                            thongbao += "<td>" + hocphan.HocKy + "</td>";
+                            thongbao += "</tr>";
+                        }
+                    }
+                    thongbao += "</table>";
+                }
+                Session["Thongbao"] = thongbao;
                 return Redirect(Request.UrlReferrer.ToString());
             }
-            Session["CTDT"] = LuuCtdt;
-            Session["Khoikienthuc"] = LuuKhoikienthuc;
-            Session["HocPhan"] = LuuHocPhan;
-            Session["RangBuoc"] = LuuRangBuoc;
-            string thongbao = "";
-            int STT = 0;
-            foreach (var khoikt in LuuKhoikienthuc)
+            catch
             {
-                thongbao += "<table class='table table-hover mb-0'>";
-                thongbao += "<h4>" + khoikt.TenKhoiKienThuc + "</h4>";
-                thongbao += "<table class='table table-hover mb-0'><tr style='background-color:lightblue'>";
-                thongbao += "<th>STT</th>";
-                thongbao += "<th>Mã học phần</th>";
-                thongbao += "<th>Tên học phần</th>";
-                thongbao += "<th>Số tín chỉ</th>";
-                thongbao += "<th>BB/TC</th>";
-                thongbao += "<th>Tiên quyết</th>";
-                thongbao += "<th>Học trước</th>";
-                thongbao += "<th>Song hành</th>";
-                thongbao += "<th>Học kỳ</th></tr>";
-                foreach (var hocphan in LuuHocPhan)
-                {
-                    if (hocphan.KhoiKienThuc.TenKhoiKienThuc == khoikt.TenKhoiKienThuc)
-                    {
-                        thongbao += "<tr>";
-                        if (hocphan.HocPhanDaoTao2 == null)
-                        {
-                            STT++;
-                            thongbao += "<td>" + STT + "</td>";
-                        }
-                        else
-                        {
-                            thongbao += "<td></td>";
-                        }
-                        thongbao += "<td>" + hocphan.MaHocPhan + "</td>";
-                        thongbao += "<td>" + hocphan.TenHocPhan + "</td>";
-                        thongbao += "<td>" + hocphan.SoTinChi + "</td>";
-                        if (hocphan.HocPhanDaoTao2 == null)
-                        {
-                            thongbao += "<td>BB</td>";
-                        }
-                        else
-                        {
-                            thongbao += "<td>TC</td>";
-                        }
-                        thongbao += "<td>";
-                        foreach (var rangbuoc in LuuRangBuoc)
-                        {
-                            if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1 == hocphan)
-                            {
-                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
-                                }
-                                else
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
-                                }
-                            }
-                        }
-                        thongbao += "</td><td>";
-                        foreach (var rangbuoc in LuuRangBuoc)
-                        {
-                            if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1 == hocphan)
-                            {
-                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
-                                }
-                                else
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
-                                }
-                            }
-                        }
-                        thongbao += "</td><td>";
-                        foreach (var rangbuoc in LuuRangBuoc)
-                        {
-                            if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1 == hocphan)
-                            {
-                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.MaHocPhan;
-                                }
-                                else
-                                {
-                                    thongbao += rangbuoc.HocPhanDaoTao.TenHocPhan;
-                                }
-                            }
-                        }
-                        thongbao += "</td>";
-                        thongbao += "<td>" + hocphan.HocKy + "</td>";
-                        thongbao += "</tr>";
-                    }
-                }
-                thongbao += "</table>";
+                TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
+                return Redirect(Request.UrlReferrer.ToString());
             }
-            Session["Thongbao"] = thongbao;
-            return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult TaiLenCTDT()
         {

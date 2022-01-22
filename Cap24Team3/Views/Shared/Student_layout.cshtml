@@ -21,7 +21,7 @@
     <div class="container">
         <div class="header-content d-flex flex-wrap align-items-center">
             <div class="logo">
-                <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
+                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
                     E-Profile
                 </a>
             </div><!--logo end-->
@@ -31,7 +31,7 @@
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "CapNhatThongTin", "CapNhatThongTin", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "CapNhatThongTin", "SinhVien", routeValues: null, htmlAttributes: new { title = "Manage" })
                         <button class="btn btn-danger" style="border-radius: 15px; width: 120px;">
                             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                         </button>
@@ -62,21 +62,21 @@
         <div class="navigation-bar d-flex flex-wrap align-items-center">
             <nav>
                 <ul>
-                    <li><a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+                    <li><a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
                     <li>
                         <a href="KHHT.html" title="" style="font-family: 'Dongle3'; font-size: 40px;">Kế hoạch học tập</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("XemDiemSV","DiemSinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Xem điểm</a>
+                        <a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Xem điểm</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Create","ChinhSuaThongTinsv")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chỉnh sửa thông tin</a>
+                        <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
                     </li>
                     <li>
                         <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                    </li>
+                    <li>
+                    <a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý đợt chỉnh sửa</a>
                     </li>
                 </ul>
             </nav><!--nav end-->
