@@ -151,7 +151,7 @@
                             <div class="modal-header">
                                 <div class="col-1"></div>
                                 <div class="col-10 text-center">
-                                    <h4 class="modal-title" style="font-family: Roboto;"> Thông tin sinh viên</h4>
+                                    <h4 class="modal-title" style="font-family: Roboto; color: black;"> Thông tin sinh viên</h4>
                                 </div>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -270,7 +270,7 @@
                 <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Thêm sinh viên vào lớp</h5>
+                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto; color: black;">Thêm sinh viên vào lớp</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -279,7 +279,8 @@
                             @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
-                                <input type="text" name="SinhVien" id="SinhVien" />
+                                <p style="font-family: 'Montserrat'; color: black">Mã số sinh viên</p>
+                                <input type="text" class="col-6 form-control" name="SinhVien" id="SinhVien" placeholder="Nhập mã số sinh viên" />
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
                                     <input type="submit" class="btn btn-primary" value="Thêm" />
@@ -299,7 +300,7 @@
                             <div class="modal-header">
                                 <div class="col-1"></div>
                                 <div class="col-10 text-center">
-                                    <h4 class="modal-title" style="font-family: Roboto;"> Thông tin sinh viên</h4>
+                                    <h4 class="modal-title" style="font-family: Roboto;" color: black;> Thông tin sinh viên</h4>
                                 </div>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -317,7 +318,7 @@
                             <div class="card-body text-wrap">
                                 <div class="row">
                                     <table>
-                                        <tr>
+                                        <tr style="">
                                             <th>Mã học phần</th>
                                             <th>Tên học phần</th>
                                             <th>Số tín chỉ</th>
@@ -357,6 +358,38 @@
                     </div>
                 }
             </div>
+            <!-- xác nhận xóa -->
+            <div class="modal fade" id="xacNhanXoa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                @{ var sv = Session["sinhvien2"] as Cap24Team3.Models.SinhVien; }
+                @if (sv != null)
+                {
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="col-1"></div>
+                                <div class="col-10 text-center">
+                                    <h4 class="modal-title" style="font-family: Roboto; color: black;">Xác nhận xóa sinh viên:</h4>
+                                </div>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <span style="font-family: 'Montserrat'; color: black; font-weight: 600 ">Xác nhận chắc chắn xóa sinh viên @sv.Ho @sv.Ten</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanXoaSV", new { ID = Session["XoaSV"] })">Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
@@ -367,6 +400,18 @@
 
     });
 </script>
+@if (Session["sinhvien2"] != null)
+{
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#xacNhanXoa').modal('show');
+        });
+    </script>
+    Session["sinhvien2"] = null;
+}
 @if (Session["sinhvien"] != null)
 {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -381,6 +426,9 @@
 }
 @if (Session["sinhvien1"] != null)
 {
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             $('#XemDiemSo').modal('show');
