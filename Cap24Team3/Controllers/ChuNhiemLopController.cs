@@ -94,9 +94,15 @@ namespace Cap24Team3.Controllers
             Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             return Redirect(Request.UrlReferrer.ToString());
         }
+        public ActionResult XacNhanXoaSV(int id)
+        {
+            Session["XoaSV"] = db.SinhViens.Find(id).ID;
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         public ActionResult XoaSVKhoiLop(int id)
         {
             var sv = db.SinhViens.Find(id);
+            Session["sinhvien2"] = sv;
             //ViewBag.TinhTrang = db.TinhTrangs.ToList();
             if (sv.TinhTrang.TenTinhTrang == "Còn học")
             {
@@ -117,6 +123,17 @@ namespace Cap24Team3.Controllers
                 sv.ID_Lop = idLop;
                 db.SaveChanges();
             }
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult CapNhatDCS(string txt, int id)
+        {
+            var dcs = db.DotChinhSuaThongTins.Find(id);
+            if (txt == "Dong")
+                dcs.TinhTrang = false;
+            else
+                dcs.TinhTrang = true;
+            db.Entry(dcs).State = EntityState.Modified;
+            db.SaveChanges();
             return Redirect(Request.UrlReferrer.ToString());
         }
         protected override void Dispose(bool disposing)

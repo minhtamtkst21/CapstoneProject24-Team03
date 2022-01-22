@@ -42,6 +42,7 @@
                                     <th>Lớp chỉnh sửa</th>
                                     <th>Tên người tạo</th>
                                     <th>Tình trạng</th>
+                                    <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +59,12 @@
                                         @if (item.TinhTrang == true)
                                         {
                                             <td style="color: green;">Đang mở</td>
+                                            <td><a href="@Url.Action("CapNhatDCS", new { txt = "Dong", id = item.ID })">Đóng</a></td>
                                         }
                                         else
                                         {
                                             <td style="color: red;">Đã đóng</td>
+                                            <td><a href="@Url.Action("CapNhatDCS", new { txt = "Mo", id = item.ID })">Mở</a></td>
                                         }
                                     </tr>
                                 }
