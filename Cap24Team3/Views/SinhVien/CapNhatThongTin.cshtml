@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "CapNhatThongTin";
     Layout = "~/Views/Shared/Student_layout.cshtml";
+    var cn = ViewData["CN"] as Cap24Team3.Models.DotChinhSuaThongTin;
 }
 <section class="pager-section">
     <div class="container">
@@ -23,26 +24,28 @@
             <!-- start page title -->
             <!-- end page title -->
             <div class="col-12">
+                <h3>@cn.DotChinhSua</h3>
                 <form action="@Url.Action("CapNhatThongTin")" method="post">
+                    <input name="capnhat" type="number" value="@cn.ID" hidden/>
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Email 2</p>
                     <br>
                     <input type="email" class="form-control" name="mail" value="@Model.Email_2" placeholder="Nhập mail" />
                     <br>
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">SĐT</p>
                     <br>
-                    <input type="tel" class="form-control"  name="sdt" value="@Model.DTDD" placeholder="Nhập sđt" pattern="[0-9]{}" required />
+                    <input type="tel" class="form-control" name="sdt" value="@Model.DTDD" placeholder="Nhập sđt" pattern="[0-9]{}" required />
                     <br>
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">SĐT cha</p>
                     <br>
-                    <input type="tel" class="form-control"  name="dtcha" value="@Model.DTCha" placeholder="Nhập sđt cha" pattern="[0-9]{}" />
+                    <input type="tel" class="form-control" name="dtcha" value="@Model.DTCha" placeholder="Nhập sđt cha" pattern="[0-9]{}" />
                     <br>
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">SĐT mẹ</p>
                     <br>
-                    <input type="tel" class="form-control"  name="dtme" value="@Model.DTMe" placeholder="Nhập sđt mẹ" pattern="[0-9]{}" />
+                    <input type="tel" class="form-control" name="dtme" value="@Model.DTMe" placeholder="Nhập sđt mẹ" pattern="[0-9]{}" />
                     <br>
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Địa chỉ</p>
                     <br>
-                    <input type="text" class="form-control"  name="diachi" value="@Model.DiaChi" placeholder="Nhập địa chỉ" />
+                    <input type="text" class="form-control" name="diachi" value="@Model.DiaChi" placeholder="Nhập địa chỉ" />
                     <br>
                     <input type="submit" class="btn btn-primary" style="font-size: 20px;" value="Cập Nhật" />
                 </form>

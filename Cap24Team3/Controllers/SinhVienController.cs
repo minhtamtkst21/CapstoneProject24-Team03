@@ -18,12 +18,26 @@ namespace Cap24Team3.Controllers
             {
                 var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
                 if (sinhvien != null)
-                    return View(sinhvien);
+                {
+                    var deadline = db.DotChinhSuaThongTins.Where(s => s.Lop == sinhvien.ID_Lop).Where(s => s.TinhTrang == true).ToList();
+                    if (deadline.Count != 0)
+                    {
+                        foreach (var item in deadline)
+                        {
+                            if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                            {
+                                ViewData["CN"] = item;
+                                return View(sinhvien);
+                            }
+                        }
+                    }
+                }
             }
-            return View();
+            TempData["Alert"] = "Chưa đến thời gian đăng ký";
+            return Redirect(Request.UrlReferrer.ToString());
         }
         [HttpPost]
-        public ActionResult CapNhatThongTin(string mail, int? sdt, int? dtcha, int? dtme, string diachi)
+        public ActionResult CapNhatThongTin(int? capnhat, string mail, int? sdt, int? dtcha, int? dtme, string diachi)
         {
             var user = User.Identity.Name;
             if (user != null)
@@ -43,13 +57,13 @@ namespace Cap24Team3.Controllers
                     if (diachi != null)
                         thongtin.DiaChi = diachi;
                     thongtin.SinhVien = sinhvien;
+                    thongtin.DotChinhSuaThongTin = db.DotChinhSuaThongTins.Find(capnhat);
                     db.Entry(thongtin).State = EntityState.Added;
                     db.SaveChanges();
-                    ViewData["sinhvien"] = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
-                    return View();
+                    return RedirectToAction("XemHocPhanDT");
                 }
             }
-            return View();
+            return RedirectToAction("XemHocPhanDT");
         }
         public ActionResult XemHocPhanDT()
         {

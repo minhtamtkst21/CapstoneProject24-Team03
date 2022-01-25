@@ -91,6 +91,12 @@
 <body>
     <div class="wrapper">
         <div class="main-section">
+            @if (TempData["Alert"] != null)
+            {
+                <div class="alert alert-warning">
+                    @Html.Raw(TempData["Alert"].ToString())
+                </div>
+            }
             @RenderBody()
         </div>
         <section class="newsletter-section">
