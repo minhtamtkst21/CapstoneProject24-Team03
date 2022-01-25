@@ -58,6 +58,7 @@ namespace Cap24Team3.Controllers
             var danhSachSV = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
             return View(danhSachSV);
         }
+        //ahihi
         public ActionResult DanhSachDotChinhSua()
         {
             var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
