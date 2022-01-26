@@ -306,7 +306,8 @@
                                 @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
                                     <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
-                                    <input type="text" name="SinhVien" id="SinhVien" />
+                                    <p style="font-family: 'Montserrat'; color: black;">MSSV</p>
+                                    <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
                                         <input type="submit" class="btn btn-primary" value="Thêm" />

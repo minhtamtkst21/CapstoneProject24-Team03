@@ -562,7 +562,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         }
         public ActionResult ListCTDaoTao()
         {
-            var ListChuongTrinhDaoTao = db.ChuongTrinhDaoTaos.Include(h => h.NganhDaoTao).Include(h => h.KhoaDaoTao).Include(h => h.HocKyDaoTao);
+            var ListChuongTrinhDaoTao = db.ChuongTrinhDaoTaos.OrderByDescending(h => h.KhoaDaoTao.Khoa).Include(h => h.NganhDaoTao).Include(h => h.KhoaDaoTao).Include(h => h.HocKyDaoTao);
             ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
             ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
