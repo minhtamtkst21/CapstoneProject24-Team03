@@ -475,7 +475,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     }
                                     for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                                     {
-                                        SinhVien SaveSV = new SinhVien();                                       
+                                        SinhVien SaveSV = new SinhVien();
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
                                             var mssv = workSheet.Cells[rowIterator, 1].Value.ToString();
@@ -502,7 +502,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             else
                                             {
                                                 SaveSV.HocKyBatDau = 171;
-                                            }                                                
+                                            }
                                         }
                                         else
                                         {
@@ -631,7 +631,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             var nganh = workSheet.Cells[rowIterator, 11].Value.ToString();
                                             var listNganh = db.NganhDaoTaos.ToList();
-                                            var listNganhMoi = new List<string>();                                            
+                                            var listNganhMoi = new List<string>();
                                             foreach (var item in listNganh)
                                             {
                                                 listNganhMoi.Add(item.MaNganh.ToString());
@@ -738,7 +738,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         LuuSinhVien.Add(SaveSV);
                                     }
                                 }
-                                else if(noOfCol != 15)
+                                else if (noOfCol != 15)
                                 {
                                     TempData["Alert"] += "<p> File bị sai định dạng, vui lòng thử lại!!</p>";
                                 }
@@ -754,38 +754,41 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         }
                     }
                 }
-                Session["LuuSinhVien"] = LuuSinhVien;
-                Session["LuuLop"] = LuuLop;
-                Session["LuuTinhTrang"] = LuuTinhTrang;
-                //Session["ThongBao"]
-                string thongbao = "<table class='table table-hover mb-0'>";
-                thongbao += "<tr>";
-                thongbao += "<td>Số lượng sinh viên: " + soluong + "</td>";
-                thongbao += "</tr>";
-                foreach (var khoa in db.KhoaDaoTaos)
+                if (TempData["Alert"].ToString() != "")
                 {
+                    Session["LuuSinhVien"] = LuuSinhVien;
+                    Session["LuuLop"] = LuuLop;
+                    Session["LuuTinhTrang"] = LuuTinhTrang;
+                    //Session["ThongBao"]
+                    string thongbao = "<table class='table table-hover mb-0'>";
                     thongbao += "<tr>";
-                    thongbao += "<td>Lớp thuộc khóa " + khoa.Khoa + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Count() + "</td>";
-                    thongbao += "<td></td><td>Sinh viên khóa " + khoa.Khoa + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Count() + "</td>";
-                    thongbao += "<td></td></tr>";
-                    foreach (var nganh in db.NganhDaoTaos)
+                    thongbao += "<td>Số lượng sinh viên: " + soluong + "</td>";
+                    thongbao += "</tr>";
+                    foreach (var khoa in db.KhoaDaoTaos)
                     {
                         thongbao += "<tr>";
-                        thongbao += "<td></td><td>Lớp thuộc ngành " + nganh.Nganh + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID).Count() + "</td>";
-                        thongbao += "<td></td><td>Sinh viên ngành " + nganh.Nganh + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Count() + "</td>";
-                        thongbao += "</tr>";
-                        foreach (var lop in LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID))
+                        thongbao += "<td>Lớp thuộc khóa " + khoa.Khoa + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Count() + "</td>";
+                        thongbao += "<td></td><td>Sinh viên khóa " + khoa.Khoa + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Count() + "</td>";
+                        thongbao += "<td></td></tr>";
+                        foreach (var nganh in db.NganhDaoTaos)
                         {
                             thongbao += "<tr>";
-                            thongbao += "<td></td><td></td><td></td><td>Sinh viên lớp " + lop.TenLop + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Where(s => s.LopQuanLy.TenLop == lop.TenLop).Count() + "</td>";
+                            thongbao += "<td></td><td>Lớp thuộc ngành " + nganh.Nganh + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID).Count() + "</td>";
+                            thongbao += "<td></td><td>Sinh viên ngành " + nganh.Nganh + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Count() + "</td>";
                             thongbao += "</tr>";
+                            foreach (var lop in LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID))
+                            {
+                                thongbao += "<tr>";
+                                thongbao += "<td></td><td></td><td></td><td>Sinh viên lớp " + lop.TenLop + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Where(s => s.LopQuanLy.TenLop == lop.TenLop).Count() + "</td>";
+                                thongbao += "</tr>";
+                            }
                         }
                     }
+                    thongbao += "</table>";
+                    Session["ThongBao"] = thongbao;
                 }
-                thongbao += "</table>";
-                Session["ThongBao"] = thongbao;
                 return Redirect(Request.UrlReferrer.ToString());
-            }
+            }           
             catch (Exception)
             {
                 TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
