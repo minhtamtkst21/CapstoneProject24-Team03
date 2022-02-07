@@ -55,6 +55,7 @@ namespace Cap24Team3.Controllers
         }
         public ActionResult DanhSachSV(int idLop)
         {
+            ViewData["DSTT"] = db.TinhTrangs.ToList();
             var danhSachSV = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
             return View(danhSachSV);
         }
@@ -233,6 +234,29 @@ namespace Cap24Team3.Controllers
                 dcs.TinhTrang = true;
             db.Entry(dcs).State = EntityState.Modified;
             db.SaveChanges();
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult DoiTinhTrang(int id)
+        {
+            Session["SinhVienTT"] = db.SinhViens.Find(id);            
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpPost]
+        public ActionResult XacNhanDoiTinhTrang(int? tinhtrang, int? idSV)
+        {
+            if(idSV == null)
+            {
+                return HttpNotFound();
+            }
+            if(tinhtrang == null)
+            {
+                return HttpNotFound();
+            }
+            var sinhvien = db.SinhViens.Find(idSV);
+            sinhvien.ID_TinhTrang = tinhtrang;
+            db.Entry(sinhvien).State = EntityState.Modified;
+            db.SaveChanges();
+            Session["SinhVienTT"] = null;
             return Redirect(Request.UrlReferrer.ToString());
         }
         protected override void Dispose(bool disposing)

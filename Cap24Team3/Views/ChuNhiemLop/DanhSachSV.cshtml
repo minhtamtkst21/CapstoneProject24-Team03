@@ -78,7 +78,9 @@
                                         <td>@s.Ten</td>
                                         <td>@s.NgaySinh</td>
                                         <td>@s.GioiTinh</td>
-                                        <td>@s.TinhTrang.TenTinhTrang</td>
+                                        <td>
+                                            <a style="color:cornflowerblue" href="@Url.Action("DoiTinhTrang", new {id = s.ID })">@s.TinhTrang.TenTinhTrang</a>
+                                        </td>
                                         <td>@s.Email_1</td>
                                         <td>
                                             <a href="@Url.Action("XemChiTietSV", new { id = s.ID })">Xem chi tiết</a> |
@@ -92,6 +94,41 @@
                     </div> <!-- end .table-responsive-->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
+        </div>
+            <div class="modal fade" id="DoiTinhTrangSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                @{ var svien = Session["SinhVienTT"] as Cap24Team3.Models.SinhVien; }
+                @if (svien != null)
+                {
+                    <form method="post">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="font-family: Roboto">Thay đổi tình trạng sinh viên @svien.Ho @svien.Ten: </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <input type="number" name="idSV" value="@svien.ID" required hidden/>
+                                        <select class="form-control" name="tinhtrang">
+                                            @foreach (var tinhtrang in ViewData["DSTT"] as List<Cap24Team3.Models.TinhTrang>)
+                                            {
+                                                <option value="@tinhtrang.ID"> @tinhtrang.TenTinhTrang</option>
+                                            }
+                                        </select>
+                                    </div>                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanDoiTinhTrang")">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                }
+            </div>
             <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                 @if (sinhvien != null)
                 {
@@ -677,3 +714,24 @@
             }).hide();
         });
     </script>
+
+    <script>
+        $('#DoiTinhTrang').on('show.bs.modal', event => {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            // Use above variables to manipulate the DOM
+
+        });
+    </script>
+    @if (Session["SinhVienTT"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $('#DoiTinhTrangSV').modal('show');
+            });
+        </script>
+        Session["SinhVienTT"] = null;
+    }
