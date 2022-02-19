@@ -126,7 +126,7 @@ namespace Cap24Team3.Controllers
             if (dcn.Count != 0)
                 foreach (var item in dcn)
                 {
-                    var cn = db.ChinhSuaThongTins.Where(s => s.ID_DotChinhSua == item.ID).Where(s=>s.ID_SinhVien == sv.ID).ToList().OrderByDescending(s=>s.ID);
+                    var cn = db.ChinhSuaThongTins.Where(s => s.ID_DotChinhSua == item.ID).Where(s => s.ID_SinhVien == sv.ID).ToList().OrderByDescending(s => s.ID);
                     if (cn.Count() != 0)
                         capnhattt.Add(cn.First());
                 }
@@ -148,9 +148,19 @@ namespace Cap24Team3.Controllers
             var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             var listHK = new List<string>();
             var listHP = db.HocPhanDaoTaos.ToList();
-            foreach (var item in list)
+            var diemso2 = new List<DiemHocPhan>();
+            var l = new List<string>();
+            foreach (var item in list.OrderByDescending(s => s.ID))
+            {
                 if (!CheckTonTai(item.HocKy.ToString(), listHK))
                     listHK.Add(item.HocKy.ToString());
+                string s = item.HocPhan + item.MSSV + item.HocKy;
+                if (!CheckTonTai(s, l))
+                {
+                    l.Add(s);
+                    diemso2.Add(item);
+                };
+            }
 
             Session["sinhvien1"] = sinhvien;
             Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
@@ -169,7 +179,7 @@ namespace Cap24Team3.Controllers
             }
             for (int i = 0; i < listHK.Count; i++)
             {
-                foreach (var item in list)
+                foreach (var item in diemso2)
                 {
                     if (item.HocKy.ToString() == listHK[i])
                     {
