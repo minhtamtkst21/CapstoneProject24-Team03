@@ -55,10 +55,33 @@ namespace Cap24Team3.Controllers
         }
         public ActionResult DanhSachSV(int idLop)
         {
+            ViewData["DSTT"] = db.TinhTrangs.ToList();
             var danhSachSV = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
             return View(danhSachSV);
         }
-        //ahihi
+        public ActionResult DoiTinhTrang(int id)
+        {
+            Session["SinhVienTT"] = db.SinhViens.Find(id);
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpPost]
+        public ActionResult XacNhanDoiTinhTrang(int? tinhtrang, int? idSV)
+        {
+            if (idSV == null)
+            {
+                return HttpNotFound();
+            }
+            if (tinhtrang == null)
+            {
+                return HttpNotFound();
+            }
+            var sinhvien = db.SinhViens.Find(idSV);
+            sinhvien.ID_TinhTrang = tinhtrang;
+            db.Entry(sinhvien).State = EntityState.Modified;
+            db.SaveChanges();
+            Session["SinhVienTT"] = null;
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         public ActionResult DanhSachDotChinhSua()
         {
             var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
@@ -128,6 +151,7 @@ namespace Cap24Team3.Controllers
             foreach (var item in list)
                 if (!CheckTonTai(item.HocKy.ToString(), listHK))
                     listHK.Add(item.HocKy.ToString());
+
             Session["sinhvien1"] = sinhvien;
             Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             var listdiem = new List<DiemHocPhan>();

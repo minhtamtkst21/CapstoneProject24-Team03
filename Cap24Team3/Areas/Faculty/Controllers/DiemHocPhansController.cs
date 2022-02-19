@@ -24,6 +24,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["LuuDiem"] = new List<DiemHocPhan>();
             Session["LuuLichSu"] = new LichSuUpLoad();
             HttpPostedFileBase file = Request.Files["UploadedFile"];
+            System.IO.File.Create(UPLOAD_PATH + "0.xlxs");
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
                 string DanhSachLoi = "";
@@ -150,6 +151,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 }
             }
             catch { }
+            System.IO.File.Move(UPLOAD_PATH + "0.xlsx", UPLOAD_PATH + LichSu.ID + ".xlsx");
             db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
