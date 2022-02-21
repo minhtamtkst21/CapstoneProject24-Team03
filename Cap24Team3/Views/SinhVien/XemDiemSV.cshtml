@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Cap24Team3.Models.DiemHocPhan>
+@using Microsoft.Owin.Security
 @{
     ViewBag.Title = "XemDiemSV";
     Layout = "~/Views/Shared/Student_layout.cshtml";
@@ -8,105 +9,23 @@
     var listHK = ViewData["listHK"] as List<string>;
     int tongtinchi = 0;
     int tongtinchi1 = 0;
-    for (int i = 0; i < listHK.Count; i++)
+    if (listHK != null)
     {
-        var tinchi = ViewData["SoTC"] as int[];
-        tongtinchi1 = tongtinchi1 + tinchi[i];
+        for (int i = 0; i < listHK.Count; i++)
+        {
+            var tinchi = ViewData["SoTC"] as int[];
+            tongtinchi1 = tongtinchi1 + tinchi[i];
+        }
     }
-    int tongsotinchi = int.Parse(ViewData["Tongsotinchi"].ToString());
-    var diemtrungbinh = Math.Round((double)tongtinchi1 / (double)tongsotinchi, 3) * 100;
-    var textdiemtb = diemtrungbinh + "%";
-
+    var textdiemtb = "";
+    int tongsotinchi = 0;
+    if (ViewData["Tongsotinchi"] != null)
+    {
+        tongsotinchi = int.Parse(ViewData["Tongsotinchi"].ToString());
+        var diemtrungbinh = Math.Round((double)tongtinchi1 / (double)tongsotinchi, 3) * 100;
+        textdiemtb = diemtrungbinh + "%";
+    }
 }
-@*<script src='https://cdn.plot.ly/plotly-2.8.3.min.js'></script>*@
-<script nonce="undefined" src="https://cdn.zingchart.com/zingchart.min.js"></script>
-<style>
-    .zc-body {
-        background-color: #fff;
-    }
-
-    .chart--container {
-        width: 100%;
-        height: 100%;
-        min-height: 530px;
-    }
-
-    .zc-ref {
-        display: none;
-    }
-</style>
-<header>
-    <div class="container">
-        <div class="header-content d-flex flex-wrap align-items-center">
-            <div class="logo">
-                <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
-                    E-Profile
-                </a>
-            </div><!--logo end-->
-            @if (Request.IsAuthenticated)
-            {
-                <div class="social-links ml-auto">
-                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ActionLink("Chào " + User.Identity.Name + "!", "CapNhatThongTin", "CapNhatThongTin", routeValues: null, htmlAttributes: new { title = "Manage" })
-                        <button class="btn btn-danger" style="border-radius: 15px; width: 120px;">
-                            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                        </button>
-
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="social-links ml-auto">
-                    <form action="@Url.Action("ExternalLogin","Account")" method="post">
-                        <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
-                        <div>
-                            <p>
-                                <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            }
-            <div class="menu-btn">
-                <a href="#">
-                    <span class="bar1"></span>
-                    <span class="bar2"></span>
-                    <span class="bar3"></span>
-                </a>
-            </div><!--menu-btn end-->
-        </div><!--header-content end-->
-        <div class="navigation-bar d-flex flex-wrap align-items-center">
-            <nav>
-                <ul>
-                    <li><a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
-                    <li>
-                        <a href="KHHT.html" title="" style="font-family: 'Dongle3'; font-size: 40px;">Kế hoạch học tập</a>
-                    </li>
-                    <li>
-                        <a class="active" href="@Url.Action("XemDiemSV","DiemSinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Xem điểm</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","HocPhanDaoTao")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Create","ChinhSuaThongTinsv")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chỉnh sửa thông tin</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
-                    </li>
-                </ul>
-            </nav><!--nav end-->
-            <ul class="social-links ml-auto">
-                <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
-                <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
-            </ul>
-        </div><!--navigation-bar end-->
-    </div>
-</header><!--header end-->
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
@@ -116,7 +35,7 @@
                 <li><span>Xem điểm</span></li>
             </ul>
         </div><!--pager-content end-->
-        <h2 class="page-titlee">E-Profile</h2>
+        <h3 class="page-titlee">E-Profile</h3>
     </div>
 </section><!--pager-section end-->
 <hr>
@@ -172,10 +91,6 @@
                         </table>
                     </div>
                 </div>
-                <div id="myChart" class="chart--container">
-                    <a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a>
-                </div>
-                @*<div id='myDiv'></div>*@
                 for (int i = 0; i < listHK.Count; i++)
                 {
                     var tinchi = ViewData["SoTC"] as int[];
@@ -258,97 +173,4 @@
                     <hr>
                 }
             }
-        </div>
-    </div>
-</div>
-<!-- Chart JS -->
-<script>
-    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
-    var myConfig = {
-        type: 'radar',
-        plot: {
-            aspect: 'area',
-            animation: {
-                effect: 3,
-                sequence: 1,
-                speed: 700
-            }
-        },
-        scaleV: {
-            visible: true
-        },
-        scaleK: {
-            values: '0:6:1',
-            labels: ['Kiến thức giáo dục đại cương', 'Cơ sở ngành', 'CN Công nghệ phần mềm', 'CN Công nghệ dữ liệu', 'CN An ninh mạng và IoT', 'CN Tin học quản trị','Thực tập/Đồ án tốt nghiệp'],
-            item: {
-                fontColor: '#607D8B',
-                backgroundColor: "white",
-                borderColor: "#aeaeae",
-                borderWidth: 1,
-                padding: '5 10',
-                borderRadius: 10
-            },
-            refLine: {
-                lineColor: '#c10000'
-            },
-            tick: {
-                lineColor: '#59869c',
-                lineWidth: 2,
-                lineStyle: 'dotted',
-                size: 20
-            },
-            guide: {
-                lineColor: "#607D8B",
-                lineStyle: 'solid',
-                alpha: 0.3,
-                backgroundColor: "#c5c5c5 #718eb4"
-            }
-        },
-        series: [{
-            values: [100, 100, 100, 100, 100, 100, 100],
-            text: 'farm'
-        },
-        {
-            values: [70, 70, 70, 70, 70, 70, 70],
-            lineColor: '#ff3333',
-            backgroundColor: '#ff4d4d'
-        }
-        ]
-    };
 
-    zingchart.render({
-        id: 'myChart',
-        data: myConfig,
-        height: '100%',
-        width: '100%'
-    });
-</script>
-@*<script>
-        data = [
-          {
-          type: 'scatterpolar',
-          r: [100, 100, 100, 100, 100, 100],
-          theta: ['A','B','C', 'D', 'E', 'F'],
-          fill: 'toself',
-          name: 'Group A'
-          },
-          {
-          type: 'scatterpolar',
-          r: [30, 40, 50, 55, 80, 55],
-          theta: ['A','B','C', 'D', 'E', 'F'],
-          fill: 'toself',
-          name: 'Group B'
-          }
-        ]
-
-        layout = {
-          polar: {
-            radialaxis: {
-              visible: true,
-              range: [0, 100]
-            }
-          }
-        }
-
-        Plotly.newPlot("myDiv", data, layout)
-</script>*@

@@ -112,7 +112,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         }
         public ActionResult ListLop()
         {
-            var lopQuanLies = db.LopQuanLies.Include(l => l.KhoaDaoTao).Include(l => l.NganhDaoTao);
+            var lopQuanLies = db.LopQuanLies.OrderByDescending(l => l.KhoaDaoTao.Khoa).ThenBy(l => l.TenLop).Include(l => l.KhoaDaoTao).Include(l => l.NganhDaoTao);
             return View(lopQuanLies.ToList());
         }
         // GET: Faculty/LopQuanLies/Create

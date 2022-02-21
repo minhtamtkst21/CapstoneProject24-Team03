@@ -17,6 +17,7 @@ namespace Cap24Team3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LopQuanLy()
         {
+            this.DotChinhSuaThongTins = new HashSet<DotChinhSuaThongTin>();
             this.SinhViens = new HashSet<SinhVien>();
         }
     
@@ -26,6 +27,8 @@ namespace Cap24Team3.Models
         public Nullable<int> ID_Nganh { get; set; }
         public Nullable<int> ID_Khoa { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DotChinhSuaThongTin> DotChinhSuaThongTins { get; set; }
         public virtual KhoaDaoTao KhoaDaoTao { get; set; }
         public virtual NganhDaoTao NganhDaoTao { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

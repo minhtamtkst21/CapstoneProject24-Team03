@@ -17,10 +17,82 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/responsive.css")">
     <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
-
 <body>
+    <header>
+        <div class="container">
+            <div class="header-content d-flex flex-wrap align-items-center">
+                <div class="logo">
+                    <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
+                        E-Profile
+                    </a>
+                </div><!--logo end-->
+                @if (Request.IsAuthenticated)
+                {
+                <div class="social-links ml-auto">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black">Chào @User.Identity.Name!</a>
+                        <a href="javascript:document.getElementById('logoutForm').submit()" style="color: red"><i class="fa fa-sign-out"></i></a>
+                    }
+                </div>
+                }
+                else
+                {
+                    <div class="social-links ml-auto">
+                        <form action="@Url.Action("ExternalLogin","Account")" method="post">
+                            <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
+                            <div>
+                                <p>
+                                    <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                }
+                <div class="menu-btn">
+                    <a href="#">
+                        <span class="bar1"></span>
+                        <span class="bar2"></span>
+                        <span class="bar3"></span>
+                    </a>
+                </div><!--menu-btn end-->
+            </div><!--header-content end-->
+            <div class="navigation-bar d-flex flex-wrap align-items-center">
+                <nav>
+                    <ul>
+                        <li><a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+                        <li>
+                            <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                            <ul>
+                                <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
+                                <li><a href="KHHT.html" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                            <ul>
+                                <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav><!--nav end-->
+                <ul class="social-links ml-auto">
+                    <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div><!--navigation-bar end-->
+        </div>
+    </header><!--header end-->
     <div class="wrapper">
         <div class="main-section">
+            @*@if (TempData["Alert"] != null)
+                {
+                    <div class="alert alert-warning">
+                        @Html.Raw(TempData["Alert"].ToString())
+                    </div>
+                }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">
@@ -146,7 +218,45 @@
         </footer><!--footer end-->
     </div>
 
-    
+    <script>
+        $(document).ready(function () {
+            $('th').each(function (col) {
+                $(this).hover(
+                    function () {
+                        $(this).addClass('focus');
+                    },
+                    function () {
+                        $(this).removeClass('focus');
+                    }
+                );
+                $(this).click(function () {
+                    if ($(this).is('.asc')) {
+                        $(this).removeClass('asc');
+                        $(this).addClass('desc selected');
+                        sortOrder = -1;
+                    } else {
+                        $(this).addClass('asc selected');
+                        $(this).removeClass('desc');
+                        sortOrder = 1;
+                    }
+                    $(this).siblings().removeClass('asc selected');
+                    $(this).siblings().removeClass('desc selected');
+                    var arrData = $('table').find('tbody >tr:has(td)').get();
+                    arrData.sort(function (a, b) {
+                        var val1 = $(a).children('td').eq(col).text().toUpperCase();
+                        var val2 = $(b).children('td').eq(col).text().toUpperCase();
+                        if ($.isNumeric(val1) && $.isNumeric(val2))
+                            return sortOrder == 1 ? val1 - val2 : val2 - val1;
+                        else
+                            return (val1 < val2) ? -sortOrder : (val1 > val2) ? sortOrder : 0;
+                    });
+                    $.each(arrData, function (index, row) {
+                        $('tbody').append(row);
+                    });
+                });
+            });
+        });
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="@Url.Content("~/Student_assets/js/jquery.js")"></script>
     <script src="@Url.Content("~/Student_assets/js/bootstrap.min.js")"></script>
@@ -155,9 +265,7 @@
     <script src="@Url.Content("~/Student_assets/js/slick.min.js")"></script>
     <script src="@Url.Content("~/Student_assets/js/tweenMax.js")"></script>
     <script src="@Url.Content("~/Student_assets/js/scripts.js")"></script>
-    
-
-
+    <script src="https://kit.fontawesome.com/30492122d1.js" crossorigin="anonymous"></script>
 
 </body>
 

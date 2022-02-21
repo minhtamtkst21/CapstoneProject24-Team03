@@ -24,6 +24,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["LuuDiem"] = new List<DiemHocPhan>();
             Session["LuuLichSu"] = new LichSuUpLoad();
             HttpPostedFileBase file = Request.Files["UploadedFile"];
+            System.IO.File.Create(UPLOAD_PATH + "0.xlxs");
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
                 string DanhSachLoi = "";
@@ -71,6 +72,10 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                                     hockyhp = item.STT;
                                             }
                                         }
+                                    else
+                                    {
+                                        TempData["Alert"] = "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
+                                    }
                                     savediem.HocKy = hockyhp - hockysv + 1;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
                                     savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
@@ -78,15 +83,16 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString();
                                     savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString();
                                     savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
-                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null && workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
+                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null || workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
                                     savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
-                                    if (mssvmoi == savediem.MSSV.ToLower())
+                                    if (mssvmoi != savediem.MSSV.ToLower())
                                     {
                                         dem++;
                                         mssvmoi = savediem.MSSV.ToLower();
                                     }
                                    (Session["LuuDiem"] as List<DiemHocPhan>).Add(savediem);
-                                } catch
+                                }
+                                catch
                                 {
                                     TempData["Alert"] = "Lỗi, vui lòng thử lại!!";
                                     return Redirect(Request.UrlReferrer.ToString());
@@ -138,13 +144,14 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 db.DiemHocPhans.Add(item);
             try
             {
-                if (File.ContentLength > 0) 
+                if (File.ContentLength > 0)
                 {
                     string _path = Path.Combine(Server.MapPath("~/FileUpLoad"), LichSu.ID + ".xlsx");
                     File.SaveAs(_path);
                 }
             }
             catch { }
+            System.IO.File.Move(UPLOAD_PATH + "0.xlsx", UPLOAD_PATH + LichSu.ID + ".xlsx");
             db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
