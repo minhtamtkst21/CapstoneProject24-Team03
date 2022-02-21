@@ -232,11 +232,7 @@ namespace Cap24Team3.Controllers
             Session["XoaSV"] = db.SinhViens.Find(id).ID;
             return Redirect(Request.UrlReferrer.ToString());
         }
-        public ActionResult XacNhanXoaSV(int id)
-        {
-            Session["XoaSV"] = db.SinhViens.Find(id).ID;
-            return Redirect(Request.UrlReferrer.ToString());
-        }
+
         public ActionResult XoaSVKhoiLop(int id)
         {
             var sv = db.SinhViens.Find(id);
