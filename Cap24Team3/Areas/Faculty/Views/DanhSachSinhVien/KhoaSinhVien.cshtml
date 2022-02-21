@@ -13,7 +13,7 @@
                     <input type="text" class="btn btn-primary btn-rounded" placeholder="Tìm kiếm..." name="texttimkiem" style="background-color:white; color: black" />
                     <button type="submit" class="btn btn-secondary btn-rounded" formaction="@Url.Action("TimKiemSinhVien")"><i class="fas fa-search"></i>Tìm kiếm</button>
                     <input type="file" id="file" style="display:none;" />
-                    <button type="button" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
                         <i class="mdi mdi-microsoft-excel"></i> Import
                     </button>
                     <button type="submit" formaction="@Url.Action("XuatDSSV")" value="" class="btn btn-secondary btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
