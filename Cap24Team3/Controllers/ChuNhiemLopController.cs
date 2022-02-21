@@ -145,16 +145,18 @@ namespace Cap24Team3.Controllers
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
             ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
             Session["HocPhan"] = db.HocPhanDaoTaos.ToList();
-            var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            var list = new List<DiemHocPhan>();
+            if (db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
+                list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             var listHK = new List<string>();
             var listHP = db.HocPhanDaoTaos.ToList();
             var diemso2 = new List<DiemHocPhan>();
             var l = new List<string>();
             foreach (var item in list.OrderByDescending(s => s.ID))
             {
-                if (!CheckTonTai(item.HocKy.ToString(), listHK))
-                    listHK.Add(item.HocKy.ToString());
-                string s = item.HocPhan + item.MSSV + item.HocKy;
+                if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
+                    listHK.Add(item.HocKyChinhThuc.ToString());
+                string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
                 if (!CheckTonTai(s, l))
                 {
                     l.Add(s);
@@ -163,7 +165,7 @@ namespace Cap24Team3.Controllers
             }
 
             Session["sinhvien1"] = sinhvien;
-            Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            Session["diemso"] = list;
             var listdiem = new List<DiemHocPhan>();
             var diemtb = new double[listHK.Count];
             var diemtbchung = new double[listHK.Count];
@@ -181,7 +183,7 @@ namespace Cap24Team3.Controllers
             {
                 foreach (var item in diemso2)
                 {
-                    if (item.HocKy.ToString() == listHK[i])
+                    if (item.HocKyChinhThuc.ToString() == listHK[i])
                     {
                         if (double.TryParse(item.Diem10, out double diem10))
                         {
@@ -224,7 +226,6 @@ namespace Cap24Team3.Controllers
             ViewData["DiemTBChung"] = diemtbchung;
             Session["SoTC"] = sotinchi;
             ViewData["Tongsotinchi"] = tongsotinchi;
-            Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult XacNhanXoaSV(int id)

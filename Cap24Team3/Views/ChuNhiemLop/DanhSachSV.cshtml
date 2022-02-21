@@ -49,7 +49,7 @@
         <!-- Start Content-->
         <div class="container">
             <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
-                Thêm sinh viên
+                <i class="mdi mdi-microsoft-excel"></i> Thêm sinh viên
             </button>
             <hr />
             <div class="col-xl-12">
@@ -83,10 +83,9 @@
                                         </td>
                                         <td>@s.Email_1</td>
                                         <td>
-                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })"><i class="fa fa-address-book"></i> Chi tiết</a>
-                                            <br />
-                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"><i class="fa fa-clipboard"></i> Xem điểm</a>
-                                            @*<a href="@Url.Action("XoaSVKhoiLop", new { id = s.ID })"> Xóa</a>*@
+                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })">Xem chi tiết</a> |
+                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"> Xem điểm</a> |
+                                            <a href="@Url.Action("XoaSVKhoiLop", new { id = s.ID })"> Xóa</a>
                                         </td>
                                     </tr>
                                 }
@@ -96,31 +95,6 @@
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>
-        <!-- Thêm sinh viên -->
-        <div class="modal fade" id="ThemSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto; color: black; font-weight: 600;">Thêm sinh viên vào lớp</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
-                            <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
-                        }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-primary" value="Thêm" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Đổi tình trạng -->
         <div class="modal fade" id="DoiTinhTrangSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             @{ var svien = Session["SinhVienTT"] as Cap24Team3.Models.SinhVien; }
             @if (svien != null)
@@ -129,7 +103,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;">Thay đổi tình trạng sinh viên @svien.Ho @svien.Ten: </h5>
+                                <h5 class="modal-title" style="font-family: Roboto">Thay đổi tình trạng sinh viên @svien.Ho @svien.Ten: </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -140,7 +114,7 @@
                                     <select class="form-control" name="tinhtrang">
                                         @foreach (var tinhtrang in ViewData["DSTT"] as List<Cap24Team3.Models.TinhTrang>)
                                         {
-                                            <option value="@tinhtrang.ID" style="font-family: Roboto; color: black;"> @tinhtrang.TenTinhTrang</option>
+                                            <option value="@tinhtrang.ID"> @tinhtrang.TenTinhTrang</option>
                                         }
                                     </select>
                                 </div>
@@ -244,16 +218,31 @@
                                                             <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email 2:</h5>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.First(s => s.ID_DotChinhSua == dcn.ID).MailCaNhan
+                                                            @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).MailCaNhan
                                                         </div>
                                                     </div>
                                                     <hr>
+                                                    @{
+                                                        string dtdd = "", dtcha = "", dtme = "";
+                                                        if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD != null)
+                                                        {
+                                                            dtdd = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD;
+                                                        }
+                                                        if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha != null)
+                                                        {
+                                                            dtcha = "'0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha;
+                                                        }
+                                                        if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTMe != null)
+                                                        {
+                                                            dtme = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTMe;
+                                                        }
+                                                    }
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.First(s => s.ID_DotChinhSua == dcn.ID).DTDD
+                                                            @dtdd
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -262,7 +251,7 @@
                                                             <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.First(s => s.ID_DotChinhSua == dcn.ID).DTCha
+                                                            @dtcha
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -271,7 +260,7 @@
                                                             <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.First(s => s.ID_DotChinhSua == dcn.ID).DTMe
+                                                            @dtme
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -280,7 +269,7 @@
                                                             <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
                                                         </div>
                                                         <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.First(s => s.ID_DotChinhSua == dcn.ID).DiaChi
+                                                            @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DiaChi
                                                         </div>
                                                     </div>
                                                 </div>
@@ -291,7 +280,7 @@
                                 <div class="card">
                                     <div class="card-header" id="headingThree">
                                         <h5 class="mb-0">
-                                            <button class="btn collapsed" type="button" style="font-family: 'Montserrat'; color: black;" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <button class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                                 Thông tin mặc định
                                             </button>
                                         </h5>
@@ -354,174 +343,203 @@
                     }
                 </div>
             }
-            <!-- Xem điểm-->
-            <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                @{ var Sinhvien = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
-                @if (Sinhvien != null)
-                {
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
-                            &ensp;
-                            <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
-                            <!-- end page title -->
-                            <div class="visible" id="portfolio">
-                                @for (int i = 0; i < listHK.Count; i++)
-                                {
-                                    <div class="col-xl-12">
-                                        <div class="card-box">
-                                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
-                                            <div class="table-responsive ">
-                                                <table class="table table-hover mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>STT</th>
-                                                            <th>Mã học phần</th>
-                                                            <th>Tên học phần</th>
-                                                            <th>Số tín chỉ</th>
-                                                            <th>Điểm hệ số 10</th>
-                                                            <th>Điểm hệ số 4</th>
-                                                            <th>Điểm chữ</th>
-                                                            <th>Kết quả</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in diemhp)
-                                                        {
-                                                            if (item.HocKy.ToString() == listHK[i])
-                                                            {
-                                                                STT++;
-                                                                <tr>
-                                                                    <td>@STT</td>
-                                                                    <td>@item.TenHocPhan</td>
-                                                                    <td>@item.HocPhan</td>
-                                                                    <td>@item.SoTinChi</td>
-                                                                    <td>@item.Diem10</td>
-                                                                    <td>@item.Diem4</td>
-                                                                    <td>@item.DiemChu</td>
-                                                                    @if (item.QuaMon == true)
-                                                                    {
-                                                                        <td><i class="fa fa-check" style="color: green;"></i></td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div><!-- end col -->
-                                }
-                            </div>
-                            <div id="results" class="hidden">
-                                @foreach (var hk in listHK)
-                                {
-                                    <div class="col-xl-12">
-                                        <div class="card-box">
-                                            @if (hk == "")
-                                            {
-                                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
-                                            }
-                                            else
-                                            {
-                                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hk</h4>
-                                            }
-                                            <div class="table-responsive">
-                                                <table class="table table-hover mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>STT</th>
-                                                            <th>Mã học phần</th>
-                                                            <th>Tên học phần</th>
-                                                            <th>Số tín chỉ</th>
-                                                            <th>Điểm 10/10</th>
-                                                            <th>Điểm 4/10</th>
-                                                            <th>Điểm Chữ</th>
-                                                            <th>Kết quả</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in HocPhanDaoTao)
-                                                        {
-                                                            if (item.HocKy.ToString() == hk)
-                                                            {
-                                                                <tr>
-                                                                    @if (item.ID_HocPhanTuChon == null)
-                                                                    {
-                                                                        STT++;
-                                                                        <td>@STT</td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td></td>
-                                                                    }
-                                                                    <td>@item.MaHocPhan</td>
-                                                                    <td>@item.TenHocPhan</td>
-                                                                    <td>@item.SoTinChi</td>
-                                                                    @foreach (var diem in diemhp)
-                                                                    {
-                                                                        if (diem.HocPhan == item.MaHocPhan)
-                                                                        {
-                                                                            <td>@diem.Diem10</td>
-                                                                            <td>@diem.Diem4</td>
-                                                                            <td>@diem.DiemChu</td>
-                                                                            if (diem.QuaMon == true)
-                                                                            {
-                                                                                <td>Đạt</td>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <td>Rớt</td>
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div><!-- end col -->
-                                }
-                            </div>
-                            <style type="text/css">
-                                .hidden {
-                                    display: none;
-                                }
-
-                                .visible {
-                                    display: block;
-                                }
-                            </style>
-                            <script type="text/javascript">
-
-                                var portfolioDiv = document.getElementById('portfolio');
-                                var resultsDiv = document.getElementById('results');
-
-                                var portfolioBtn = document.getElementById('RenderPortfolio_Btn');
-                                var resultsBtn = document.getElementById('RenderResults_Btn');
-
-                                portfolioBtn.onclick = function () {
-                                    resultsDiv.setAttribute('class', 'hidden');
-                                    portfolioDiv.setAttribute('class', 'visible');
-                                };
-
-                                resultsBtn.onclick = function () {
-                                    portfolioDiv.setAttribute('class', 'hidden');
-                                    resultsDiv.setAttribute('class', 'visible');
-                                };
-
-                            </script>
+            }
+            <!-- Modal -->
+            <div class="modal fade" id="ThemSV" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Thêm sinh viên vào lớp</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
+                                <p style="font-family: 'Montserrat'; color: black;">MSSV</p>
+                                <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
+                                    <input type="submit" class="btn btn-primary" value="Thêm" />
+                                </div>
+                            }
                         </div>
                     </div>
-                }
+                </div>
             </div>
-            @*<div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <!-- Xem điểm-->
+            @if (diemhp != null)
+            {
+                <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    @{ var Sinhvien = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
+                    @if (Sinhvien != null)
+                    {
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
+                                &ensp;
+                                <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+                                <!-- end page title -->
+                                <div class="visible" id="portfolio">
+                                    @for (int i = 0; i < listHK.Count; i++)
+                                    {
+                                        <div class="col-xl-12">
+                                            <div class="card-box">
+                                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                                                <div class="table-responsive ">
+                                                    <table class="table table-hover mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>STT</th>
+                                                                <th>Mã học phần</th>
+                                                                <th>Tên học phần</th>
+                                                                <th>Số tín chỉ</th>
+                                                                <th>Điểm hệ số 10</th>
+                                                                <th>Điểm hệ số 4</th>
+                                                                <th>Điểm chữ</th>
+                                                                <th>Kết quả</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in diemhp)
+                                                            {
+                                                                if (item.HocKyChinhThuc.ToString() == listHK[i])
+                                                                {
+                                                                    STT++;
+                                                                    <tr>
+                                                                        <td>@STT</td>
+                                                                        <td>@item.TenHocPhan</td>
+                                                                        <td>@item.HocPhan</td>
+                                                                        <td>@item.SoTinChi</td>
+                                                                        <td>@item.Diem10</td>
+                                                                        <td>@item.Diem4</td>
+                                                                        <td>@item.DiemChu</td>
+                                                                        @if (item.QuaMon == true)
+                                                                        {
+                                                                            <td><i class="fa fa-check" style="color: green;"></i></td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div><!-- end col -->
+                                    }
+                                </div>
+                                <div id="results" class="hidden">
+                                    @foreach (var hk in listHK)
+                                    {
+                                        <div class="col-xl-12">
+                                            <div class="card-box">
+                                                @if (hk == "")
+                                                {
+                                                    <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hk</h4>
+                                                }
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>STT</th>
+                                                                <th>Mã học phần</th>
+                                                                <th>Tên học phần</th>
+                                                                <th>Số tín chỉ</th>
+                                                                <th>Điểm 10/10</th>
+                                                                <th>Điểm 4/10</th>
+                                                                <th>Điểm Chữ</th>
+                                                                <th>Kết quả</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in HocPhanDaoTao)
+                                                            {
+                                                                if (item.HocKy.ToString() == hk)
+                                                                {
+                                                                    <tr>
+                                                                        @if (item.ID_HocPhanTuChon == null)
+                                                                        {
+                                                                            STT++;
+                                                                            <td>@STT</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td></td>
+                                                                        }
+                                                                        <td>@item.MaHocPhan</td>
+                                                                        <td>@item.TenHocPhan</td>
+                                                                        <td>@item.SoTinChi</td>
+                                                                        @foreach (var diem in diemhp)
+                                                                        {
+                                                                            if (diem.HocPhan == item.MaHocPhan)
+                                                                            {
+                                                                                <td>@diem.Diem10</td>
+                                                                                <td>@diem.Diem4</td>
+                                                                                <td>@diem.DiemChu</td>
+                                                                                if (diem.QuaMon == true)
+                                                                                {
+                                                                                    <td>Đạt</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>Rớt</td>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div><!-- end col -->
+                                    }
+                                </div>
+                                <style type="text/css">
+                                    .hidden {
+                                        display: none;
+                                    }
+
+                                    .visible {
+                                        display: block;
+                                    }
+                                </style>
+                                <script type="text/javascript">
+
+                                    var portfolioDiv = document.getElementById('portfolio');
+                                    var resultsDiv = document.getElementById('results');
+
+                                    var portfolioBtn = document.getElementById('RenderPortfolio_Btn');
+                                    var resultsBtn = document.getElementById('RenderResults_Btn');
+
+                                    portfolioBtn.onclick = function () {
+                                        resultsDiv.setAttribute('class', 'hidden');
+                                        portfolioDiv.setAttribute('class', 'visible');
+                                    };
+
+                                    resultsBtn.onclick = function () {
+                                        portfolioDiv.setAttribute('class', 'hidden');
+                                        resultsDiv.setAttribute('class', 'visible');
+                                    };
+
+                                </script>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            <div class="modal fade" id="Xemthongtin" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                 @{ var Sinhvien1 = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
                 @if (Sinhvien1 != null)
                 {
@@ -541,7 +559,7 @@
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                                     <div class="mt-3">
-                                        <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@Sinhvien.Ho @Sinhvien.Ten</h4>
+                                        <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@Sinhvien1.Ho @Sinhvien1.Ten</h4>
                                     </div>
                                 </div>
                             </div>
@@ -564,7 +582,7 @@
                                                 <td>@item.HocPhan</td>
                                                 <td>@item.TenHocPhan</td>
                                                 <td>@item.SoTinChi</td>
-                                                <td>@item.HocKy</td>
+                                                <td>@item.HocKyChinhThuc</td>
                                                 <td>@item.Diem10</td>
                                                 <td>@item.Diem4</td>
                                                 <td>@item.DiemChu</td>
@@ -587,9 +605,9 @@
                         </div>
                     </div>
                 }
-            </div>*@
+            </div>
             <!-- xác nhận xóa -->
-            @*<div class="modal fade" id="xacNhanXoa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal fade" id="xacNhanXoa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                 @{ var sv = Session["sinhvien2"] as Cap24Team3.Models.SinhVien; }
                 @if (sv != null)
                 {
@@ -619,13 +637,10 @@
                         </div>
                     </div>
                 }
-            </div>*@
+            </div>
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
     $('#exampleModal').on('show.bs.modal', event => {
         var button = $(event.relatedTarget);
@@ -633,17 +648,23 @@
 
     });
 </script>
-@*@if (Session["sinhvien2"] != null)
+@if (Session["sinhvien2"] != null)
 {
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             $('#xacNhanXoa').modal('show');
         });
     </script>
     Session["sinhvien2"] = null;
-}*@
+}
 @if (Session["sinhvien"] != null)
 {
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             $('#modelId').modal('show');
@@ -653,11 +674,30 @@
 }
 @if (Session["sinhvien1"] != null)
 {
-    <script>
-        $(document).ready(function () {
-            $('#XemDiemSo').modal('show');
-        });
-    </script>
+    if (Session["diemso"] != null)
+    {
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $('#XemDiemSo').modal('show');
+            });
+        </script>
+    }
+    Session["sinhvien1"] = null;
+}
+@if (Session["sinhvien1"] != null)
+{
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $('#XemThongtin').modal('show');
+            });
+        </script>
+    }
     Session["sinhvien1"] = null;
 }
 <script>
@@ -670,8 +710,27 @@
         }).hide();
     });
 </script>
+<script>
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+
+    });
+</script>
+
+<script>
+    $('#DoiTinhTrang').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        // Use above variables to manipulate the DOM
+
+    });
+</script>
 @if (Session["SinhVienTT"] != null)
 {
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             $('#DoiTinhTrangSV').modal('show');

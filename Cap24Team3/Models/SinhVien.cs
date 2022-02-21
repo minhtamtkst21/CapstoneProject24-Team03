@@ -37,6 +37,7 @@ namespace Cap24Team3.Models
         public Nullable<int> ID_Khoa { get; set; }
         public Nullable<int> ID_Nganh { get; set; }
         public int HocKyBatDau { get; set; }
+        public string Note { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChinhSuaThongTin> ChinhSuaThongTins { get; set; }
