@@ -123,19 +123,19 @@ namespace Cap24Team3.Controllers
             if (mail != null)
             {
                 var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
-                if (sinhvien != null)
+                if (sinhvien != null && db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
                 {
                     var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     foreach (var item in list.OrderByDescending(s => s.ID))
                     {
-                        string s = item.HocPhan + item.MSSV + item.HocKy;
+                        string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
                         if (!CheckTonTai(s, diemso2))
                         {
                             diemso2.Add(s);
                             listdiem.Add(item);
                         };
-                        if (!CheckTonTai(item.HocKy.ToString(), listHK))
-                            listHK.Add(item.HocKy.ToString());
+                        if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
+                            listHK.Add(item.HocKyChinhThuc.ToString());
                     }
                     var diemtb = new double[listHK.Count];
                     var diemtbchung = new double[listHK.Count];
@@ -153,7 +153,7 @@ namespace Cap24Team3.Controllers
                     {
                         foreach (var item in listdiem)
                         {
-                            if (item.HocKy.ToString() == listHK[i])
+                            if (item.HocKyChinhThuc.ToString() == listHK[i])
                             {
                                 if (double.TryParse(item.Diem10, out double diem10))
                                 {
