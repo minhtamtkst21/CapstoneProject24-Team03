@@ -84,6 +84,15 @@ namespace Cap24Team3.Controllers
         }
         public ActionResult DanhSachDotChinhSua()
         {
+            foreach (var item in db.DotChinhSuaThongTins.Where(s=>s.TinhTrang == true).ToList())
+            {
+                if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                {
+                    item.TinhTrang = true;
+                    db.Entry(item).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
             var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
             return View(chinhSuaThongTins.ToList());
         }

@@ -24,11 +24,13 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["LuuDiem"] = new List<DiemHocPhan>();
             Session["LuuLichSu"] = new LichSuUpLoad();
             HttpPostedFileBase file = Request.Files["UploadedFile"];
-            if (System.IO.File.Exists(Server.MapPath(UPLOAD_PATH) + "0.xlxs"))
+            if (System.IO.File.Exists(Server.MapPath(UPLOAD_PATH) + "0.xlsx"))
             {
-                System.IO.File.Delete(Server.MapPath(UPLOAD_PATH) + "0.xlxs");
+                System.IO.File.Delete(Server.MapPath(UPLOAD_PATH) + "0.xlsx");
             }
-            System.IO.File.Create(Server.MapPath(UPLOAD_PATH) + "0.xlxs");
+            string _FileName = Path.GetFileName(file.FileName);
+            string _path = Path.Combine(Server.MapPath(UPLOAD_PATH), "0.xlsx");
+            file.SaveAs(_path);
             if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
             {
                 string DanhSachLoi = "";
