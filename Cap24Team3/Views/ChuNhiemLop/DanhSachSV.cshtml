@@ -51,6 +51,9 @@
             <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
                 Thêm sinh viên
             </button>
+            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop")" id="button" name="button" class="btn btn-secondary btn-rounded">
+                Sinh viên cần theo dõi
+            </a>
             <hr />
             <div class="col-xl-12">
                 <div class="card-box">
@@ -83,9 +86,11 @@
                                         </td>
                                         <td>@s.Email_1</td>
                                         <td>
-                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })">Xem chi tiết</a> |
-                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"> Xem điểm</a> |
-                                            <a href="@Url.Action("XoaSVKhoiLop", new { id = s.ID })"> Xóa</a>
+                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })"><i class="fa fa-address-book"></i> Chi tiết</a>
+                                            <br />
+                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"><i class="fa fa-clipboard"></i> Xem điểm</a>
+                                            <br />
+                                            <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-sticky-note-o"></i>Note</a>
                                         </td>
                                     </tr>
                                 }
@@ -151,6 +156,35 @@
                         </div>
                     </div>
 
+                </form>
+            }
+        </div>
+        <!-- Note -->
+        <div class="modal fade" id="NoiDung" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            @{ var nd = Session["Note"] as Cap24Team3.Models.SinhVien; }
+            @if (nd != null)
+            {
+                <form method="post">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @nd.Ho @nd.Ten: </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <input type="number" name="idSV" value="@nd.ID" required hidden />
+                                    <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@nd.Note</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             }
         </div>
@@ -503,6 +537,7 @@
                                     </div><!-- end col -->
                                 }
                             </div>
+
                             <style type="text/css">
                                 .hidden {
                                     display: none;
@@ -535,108 +570,12 @@
                     </div>
                 }
             </div>
-            <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                @{ var Sinhvien1 = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
-                @if (Sinhvien1 != null)
-                {
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="col-1"></div>
-                                <div class="col-10 text-center">
-                                    <h4 class="modal-title" style="font-family: Roboto;" color: black;> Thông tin sinh viên</h4>
-                                </div>
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                                    <div class="mt-3">
-                                        <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@Sinhvien.Ho @Sinhvien.Ten</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body text-wrap">
-                                <div class="row">
-                                    <table>
-                                        <tr style="">
-                                            <th>Mã học phần</th>
-                                            <th>Tên học phần</th>
-                                            <th>Số tín chỉ</th>
-                                            <th>Học kỳ</th>
-                                            <th>Điểm thang 10</th>
-                                            <th>Điểm thang 4</th>
-                                            <th>Đánh giá</th>
-                                            <th>Qua môn</th>
-                                        </tr>
-                                        @foreach (var item in Session["diemso"] as List<Cap24Team3.Models.DiemHocPhan>)
-                                        {
-                                            <tr>
-                                                <td>@item.HocPhan</td>
-                                                <td>@item.TenHocPhan</td>
-                                                <td>@item.SoTinChi</td>
-                                                <td>@item.HocKy</td>
-                                                <td>@item.Diem10</td>
-                                                <td>@item.Diem4</td>
-                                                <td>@item.DiemChu</td>
-                                                @if (item.QuaMon == true)
-                                                {
-                                                    <td><i class="fa fa-check" style="color: green;"></i></td>
-                                                }
-                                                else
-                                                {
-                                                    <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
-                                                }
-                                            </tr>
-                                        }
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-            <!-- xác nhận xóa -->
-            <div class="modal fade" id="xacNhanXoa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                @{ var sv = Session["sinhvien2"] as Cap24Team3.Models.SinhVien; }
-                @if (sv != null)
-                {
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="col-1"></div>
-                                <div class="col-10 text-center">
-                                    <h4 class="modal-title" style="font-family: Roboto; color: black;">Xác nhận xóa sinh viên:</h4>
-                                </div>
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <span style="font-family: 'Montserrat'; color: black; font-weight: 600 ">Xác nhận chắc chắn xóa sinh viên @sv.Ho @sv.Ten</span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <form method="post">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanXoaSV", new { ID = Session["XoaSV"] })">Xóa</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
     $('#exampleModal').on('show.bs.modal', event => {
         var button = $(event.relatedTarget);
@@ -644,59 +583,15 @@
 
     });
 </script>
-@if (Session["sinhvien2"] != null)
-{
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('#xacNhanXoa').modal('show');
-        });
-    </script>
-    Session["sinhvien2"] = null;
-}
-@if (Session["sinhvien"] != null)
-{
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('#modelId').modal('show');
-        });
-    </script>
-    Session["sinhvien"] = null;
-}
-@if (Session["sinhvien1"] != null)
-{
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('#XemDiemSo').modal('show');
-        });
-    </script>
-    Session["sinhvien1"] = null;
-}
-<script>
-    var $rows = $('#table tr');
-    $('#search').keyup(function () {
-        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-        $rows.show().filter(function () {
-            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-            return !~text.indexOf(val);
-        }).hide();
-    });
-</script>
-<script>
-    $('#exampleModal').on('show.bs.modal', event => {
-        var button = $(event.relatedTarget);
-        var modal = $(this);
-
-    });
-</script>
+@*@if (Session["sinhvien2"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                $('#xacNhanXoa').modal('show');
+            });
+        </script>
+        Session["sinhvien2"] = null;
+    }*@
 @if (Session["sinhvien"] != null)
 {
     <script>
@@ -714,6 +609,15 @@
         });
     </script>
     Session["sinhvien1"] = null;
+}
+@if (Session["Note"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#NoiDung').modal('show');
+        });
+    </script>
+    Session["Note"] = null;
 }
 <script>
     var $rows = $('#table tr');
