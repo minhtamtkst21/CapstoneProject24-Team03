@@ -51,7 +51,7 @@
             <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
                 Thêm sinh viên
             </button>
-            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop")" id="button" name="button" class="btn btn-secondary btn-rounded">
+            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop", new { idLop = @Model.First().ID_Lop})" id="button" name="button" class="btn btn-secondary btn-rounded">
                 Sinh viên cần theo dõi
             </a>
             <hr />
