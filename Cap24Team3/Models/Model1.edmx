@@ -96,13 +96,14 @@
           <Property Name="MSSV" Type="nvarchar" MaxLength="20" />
           <Property Name="HocPhan" Type="nvarchar" MaxLength="50" />
           <Property Name="TenHocPhan" Type="nvarchar(max)" />
-          <Property Name="HocKy" Type="int" />
+          <Property Name="HocKyChinhThuc" Type="int" />
           <Property Name="SoTinChi" Type="int" />
           <Property Name="Diem10" Type="varchar" MaxLength="4" />
           <Property Name="Diem4" Type="varchar" MaxLength="4" />
           <Property Name="DiemChu" Type="varchar" MaxLength="2" />
           <Property Name="QuaMon" Type="bit" />
           <Property Name="LichSu" Type="int" />
+          <Property Name="HocKyDangKy" Type="int" />
         </EntityType>
         <EntityType Name="DotChinhSuaThongTin">
           <Key>
@@ -208,6 +209,28 @@
           <Property Name="ID_Khoa" Type="int" />
           <Property Name="ID_Nganh" Type="int" />
           <Property Name="HocKyBatDau" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ThongBao">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TieuDe" Type="nvarchar(max)" />
+          <Property Name="NoiDung" Type="nvarchar(max)" />
+          <Property Name="Ngay" Type="datetime" />
+          <Property Name="NguoiGui" Type="nvarchar" MaxLength="128" />
+          <Property Name="NguoiNhan" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -330,6 +353,42 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao">
+          <End Role="HocKyDaoTao" Type="Self.HocKyDaoTao" Multiplicity="0..1" />
+          <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyChinhThuc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao1">
+          <End Role="HocKyDaoTao" Type="Self.HocKyDaoTao" Multiplicity="0..1" />
+          <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyDangKy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao2">
+          <End Role="HocKyDaoTao" Type="Self.HocKyDaoTao" Multiplicity="0..1" />
+          <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyDangKy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -489,6 +548,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ThongBao_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="NguoiGui" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CP24Team03ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -509,6 +580,8 @@
           <EntitySet Name="NganhDaoTao" EntityType="Self.NganhDaoTao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RangBuocHocPhan" EntityType="Self.RangBuocHocPhan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhTrang" EntityType="Self.TinhTrang" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ChinhSuaThongTin_DotChinhSuaThongTin" Association="Self.FK_ChinhSuaThongTin_DotChinhSuaThongTin">
             <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTin" />
@@ -545,6 +618,18 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao" Association="Self.FK_DiemHocPhan_HocKyDaoTao">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTao" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao1" Association="Self.FK_DiemHocPhan_HocKyDaoTao1">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTao" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao2" Association="Self.FK_DiemHocPhan_HocKyDaoTao2">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTao" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
           </AssociationSet>
           <AssociationSet Name="FK_DiemHocPhan_LichSuUpLoad" Association="Self.FK_DiemHocPhan_LichSuUpLoad">
             <End Role="LichSuUpLoad" EntitySet="LichSuUpLoad" />
@@ -598,6 +683,10 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="SinhVien" EntitySet="SinhVien" />
           </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_AspNetUsers" Association="Self.FK_ThongBao_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ThongBao" EntitySet="ThongBao" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -622,6 +711,8 @@
           <EntitySet Name="NganhDaoTaos" EntityType="CP24Team03Model.NganhDaoTao" />
           <EntitySet Name="RangBuocHocPhans" EntityType="CP24Team03Model.RangBuocHocPhan" />
           <EntitySet Name="SinhViens" EntityType="CP24Team03Model.SinhVien" />
+          <EntitySet Name="sysdiagrams" EntityType="CP24Team03Model.sysdiagram" />
+          <EntitySet Name="ThongBaos" EntityType="CP24Team03Model.ThongBao" />
           <EntitySet Name="TinhTrangs" EntityType="CP24Team03Model.TinhTrang" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -630,6 +721,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThongBao_AspNetUsers" Association="CP24Team03Model.FK_ThongBao_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ThongBao" EntitySet="ThongBaos" />
           </AssociationSet>
           <AssociationSet Name="FK_ChinhSuaThongTin_DotChinhSuaThongTin" Association="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin">
             <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTins" />
@@ -654,6 +749,18 @@
           <AssociationSet Name="FK_KhoiKienThuc_ChuongTrinhDaoTao" Association="CP24Team03Model.FK_KhoiKienThuc_ChuongTrinhDaoTao">
             <End Role="ChuongTrinhDaoTao" EntitySet="ChuongTrinhDaoTaos" />
             <End Role="KhoiKienThuc" EntitySet="KhoiKienThucs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao" Association="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTaos" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao1" Association="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao1">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTaos" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao2" Association="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao2">
+            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTaos" />
+            <End Role="DiemHocPhan" EntitySet="DiemHocPhans" />
           </AssociationSet>
           <AssociationSet Name="FK_DiemHocPhan_LichSuUpLoad" Association="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad">
             <End Role="LichSuUpLoad" EntitySet="LichSuUpLoads" />
@@ -765,6 +872,7 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="ThongBaos" Relationship="CP24Team03Model.FK_ThongBao_AspNetUsers" FromRole="AspNetUser" ToRole="ThongBao" />
           <NavigationProperty Name="AspNetRoles" Relationship="CP24Team03Model.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="ChinhSuaThongTin">
@@ -803,13 +911,17 @@
           <Property Name="MSSV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="HocPhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TenHocPhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="HocKy" Type="Int32" />
+          <Property Name="HocKyChinhThuc" Type="Int32" />
           <Property Name="SoTinChi" Type="Int32" />
           <Property Name="Diem10" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Diem4" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="DiemChu" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="QuaMon" Type="Boolean" />
           <Property Name="LichSu" Type="Int32" />
+          <Property Name="HocKyDangKy" Type="Int32" />
+          <NavigationProperty Name="HocKyDaoTao" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao" FromRole="DiemHocPhan" ToRole="HocKyDaoTao" />
+          <NavigationProperty Name="HocKyDaoTao1" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao1" FromRole="DiemHocPhan" ToRole="HocKyDaoTao" />
+          <NavigationProperty Name="HocKyDaoTao2" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao2" FromRole="DiemHocPhan" ToRole="HocKyDaoTao" />
           <NavigationProperty Name="LichSuUpLoad" Relationship="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad" FromRole="DiemHocPhan" ToRole="LichSuUpLoad" />
         </EntityType>
         <EntityType Name="DotChinhSuaThongTin">
@@ -834,6 +946,9 @@
           <Property Name="STT" Type="Int32" Nullable="false" />
           <Property Name="HocKy" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChuongTrinhDaoTaos" Relationship="CP24Team03Model.FK_ChuongTrinhDaoTao_HocKyDaoTao" FromRole="HocKyDaoTao" ToRole="ChuongTrinhDaoTao" />
+          <NavigationProperty Name="DiemHocPhans" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao" FromRole="HocKyDaoTao" ToRole="DiemHocPhan" />
+          <NavigationProperty Name="DiemHocPhans1" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao1" FromRole="HocKyDaoTao" ToRole="DiemHocPhan" />
+          <NavigationProperty Name="DiemHocPhans2" Relationship="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao2" FromRole="HocKyDaoTao" ToRole="DiemHocPhan" />
         </EntityType>
         <EntityType Name="HocPhanDaoTao">
           <Key>
@@ -939,11 +1054,34 @@
           <Property Name="ID_Khoa" Type="Int32" />
           <Property Name="ID_Nganh" Type="Int32" />
           <Property Name="HocKyBatDau" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ChinhSuaThongTins" Relationship="CP24Team03Model.FK_ChinhSuaThongTin_SinhVien" FromRole="SinhVien" ToRole="ChinhSuaThongTin" />
           <NavigationProperty Name="KhoaDaoTao" Relationship="CP24Team03Model.FK_SinhVien_KhoaDaoTao" FromRole="SinhVien" ToRole="KhoaDaoTao" />
           <NavigationProperty Name="LopQuanLy" Relationship="CP24Team03Model.FK_SinhVien_LopQuanLy" FromRole="SinhVien" ToRole="LopQuanLy" />
           <NavigationProperty Name="NganhDaoTao" Relationship="CP24Team03Model.FK_SinhVien_NganhDaoTao" FromRole="SinhVien" ToRole="NganhDaoTao" />
           <NavigationProperty Name="TinhTrang" Relationship="CP24Team03Model.FK_SinhVien_TinhTrang" FromRole="SinhVien" ToRole="TinhTrang" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ThongBao">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TieuDe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NoiDung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ngay" Type="DateTime" Precision="3" />
+          <Property Name="NguoiGui" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="NguoiNhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="CP24Team03Model.FK_ThongBao_AspNetUsers" FromRole="ThongBao" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -979,6 +1117,18 @@
             </Principal>
             <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThongBao_AspNetUsers">
+          <End Type="CP24Team03Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="CP24Team03Model.ThongBao" Role="ThongBao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ThongBao">
+              <PropertyRef Name="NguoiGui" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1051,6 +1201,42 @@
             </Principal>
             <Dependent Role="KhoiKienThuc">
               <PropertyRef Name="ID_ChuongTrinhDaoTao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao">
+          <End Type="CP24Team03Model.HocKyDaoTao" Role="HocKyDaoTao" Multiplicity="0..1" />
+          <End Type="CP24Team03Model.DiemHocPhan" Role="DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyChinhThuc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao1">
+          <End Type="CP24Team03Model.HocKyDaoTao" Role="HocKyDaoTao" Multiplicity="0..1" />
+          <End Type="CP24Team03Model.DiemHocPhan" Role="DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyDangKy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DiemHocPhan_HocKyDaoTao2">
+          <End Type="CP24Team03Model.HocKyDaoTao" Role="HocKyDaoTao" Multiplicity="0..1" />
+          <End Type="CP24Team03Model.DiemHocPhan" Role="DiemHocPhan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HocKyDaoTao">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DiemHocPhan">
+              <PropertyRef Name="HocKyDangKy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1290,13 +1476,14 @@
           <EntitySetMapping Name="DiemHocPhans">
             <EntityTypeMapping TypeName="CP24Team03Model.DiemHocPhan">
               <MappingFragment StoreEntitySet="DiemHocPhan">
+                <ScalarProperty Name="HocKyDangKy" ColumnName="HocKyDangKy" />
                 <ScalarProperty Name="LichSu" ColumnName="LichSu" />
                 <ScalarProperty Name="QuaMon" ColumnName="QuaMon" />
                 <ScalarProperty Name="DiemChu" ColumnName="DiemChu" />
                 <ScalarProperty Name="Diem4" ColumnName="Diem4" />
                 <ScalarProperty Name="Diem10" ColumnName="Diem10" />
                 <ScalarProperty Name="SoTinChi" ColumnName="SoTinChi" />
-                <ScalarProperty Name="HocKy" ColumnName="HocKy" />
+                <ScalarProperty Name="HocKyChinhThuc" ColumnName="HocKyChinhThuc" />
                 <ScalarProperty Name="TenHocPhan" ColumnName="TenHocPhan" />
                 <ScalarProperty Name="HocPhan" ColumnName="HocPhan" />
                 <ScalarProperty Name="MSSV" ColumnName="MSSV" />
@@ -1399,6 +1586,7 @@
           <EntitySetMapping Name="SinhViens">
             <EntityTypeMapping TypeName="CP24Team03Model.SinhVien">
               <MappingFragment StoreEntitySet="SinhVien">
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="HocKyBatDau" ColumnName="HocKyBatDau" />
                 <ScalarProperty Name="ID_Nganh" ColumnName="ID_Nganh" />
                 <ScalarProperty Name="ID_Khoa" ColumnName="ID_Khoa" />
@@ -1415,6 +1603,29 @@
                 <ScalarProperty Name="Ten" ColumnName="Ten" />
                 <ScalarProperty Name="Ho" ColumnName="Ho" />
                 <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CP24Team03Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThongBaos">
+            <EntityTypeMapping TypeName="CP24Team03Model.ThongBao">
+              <MappingFragment StoreEntitySet="ThongBao">
+                <ScalarProperty Name="NguoiNhan" ColumnName="NguoiNhan" />
+                <ScalarProperty Name="NguoiGui" ColumnName="NguoiGui" />
+                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
+                <ScalarProperty Name="NoiDung" ColumnName="NoiDung" />
+                <ScalarProperty Name="TieuDe" ColumnName="TieuDe" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
