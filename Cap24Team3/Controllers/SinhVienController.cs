@@ -203,5 +203,46 @@ namespace Cap24Team3.Controllers
             }
             return View(listdiem);
         }
+
+        public ActionResult DangKyKHDT()
+        {
+            string ListLoi = "";
+            var mailsv = User.Identity.Name;
+            var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mailsv);
+            if (sinhvien != null)
+            {
+                var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
+                if (ctdt == null)
+                {
+                    ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
+                    TempData["Alert"] = ListLoi;
+                    return View();
+                }
+                else
+                {
+                    var hocPhanDaoTaos = db.HocPhanDaoTaos.Include(h => h.KhoiKienThuc).Include(h => h.HocPhanDaoTao2).Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
+                    ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
+                    ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
+                    ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+                    ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
+                    var listHK = new List<string>();
+                    var listHP = db.HocPhanDaoTaos.ToList();
+                    foreach (var item in hocPhanDaoTaos)
+                        if (!CheckTonTai(item.HocKy.ToString(), listHK))
+                            listHK.Add(item.HocKy.ToString());
+                    ViewData["listHK"] = listHK;
+                    TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV);
+                    TempData["Sinhvien"] = sinhvien;
+                    return View(hocPhanDaoTaos.ToList());
+                }
+            }
+            else
+            {
+                TempData["Alert"] = "Bạn chưa đăng nhập!";
+                return View();
+            }
+        }
     }
 }

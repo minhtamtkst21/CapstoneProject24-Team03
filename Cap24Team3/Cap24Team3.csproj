@@ -963,6 +963,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ChuNhiemLop\DanhSachDotChinhSua.cshtml" />
     <Content Include="Views\ChuNhiemLop\TaoDotChinhSua.cshtml" />
+    <Content Include="Views\SinhVien\DangKyKHDT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

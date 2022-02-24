@@ -1,16 +1,24 @@
 ﻿@model IEnumerable<Cap24Team3.Models.HocPhanDaoTao>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "DangKyKHDT";
     Layout = "~/Views/Shared/Student_layout.cshtml";
     int STT = 0;
+    var diem = new List<Cap24Team3.Models.DiemHocPhan>();
+    var sv = new Cap24Team3.Models.SinhVien();
+    if (TempData["Diemso"] != null)
+    {
+        diem = TempData["Diemso"] as List<Cap24Team3.Models.DiemHocPhan>;
+        sv = TempData["Sinhvien"] as Cap24Team3.Models.SinhVien;
+    }
 }
+
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
-            <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Chương trình đào tạo</h2>
+            <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 100px;">Kế Hoạch Học Tập</h2>
             <ul>
                 <li><a href="#" title="">Home</a></li>
-                <li><span>Chương trình đào tạo</span></li>
+                <li><span>Kế hoạch học tập</span></li>
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
@@ -21,29 +29,18 @@
     <div class="content">
         <!-- Start Content-->
         <div class="container">
-            <!-- start page title -->
+            <br>
             <div class="row">
                 <div class="col-12">
-                    <div class="col-4" style="float: right;">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="page-title" style="font-family: 'Dongle2'; color: black; font-size: 50px;"></h4>
+                        <div class="page-title-right">
+                            <a href="register-student.html" class="btn btn-primary">Lưu</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
-            @if (TempData["Alert"] != null)
-            {
-                <div class="alert alert-warning">
-                    @Html.Raw(TempData["Alert"].ToString())
-                </div>
-            }
-            else
+            @if (TempData["Alert"] == null)
             {
                 foreach (var listHK in ViewData["listHK"] as List<string>)
                 {
@@ -69,6 +66,8 @@
                                             <th>Tiên quyết</th>
                                             <th>Học trước</th>
                                             <th>Song hành</th>
+                                            <th>Kết quả</th>
+                                            <th>Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -157,7 +156,15 @@
                                                             }
                                                         }
                                                     </td>
-                                                    @*<td>&emsp;@item.HocKy</td>*@
+                                                    @if (diem != null)
+                                                    {
+                                                        <td>@diem.Where(s => s.MSSV == sv.MSSV).Where(s => s.HocPhan == item.MaHocPhan).Where(s => s.HocKyChinhThuc == item.HocKy).Last().Diem10<i class="fa fa-times" style="color: red; font-size: 20px;"></i></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    <td><a href="#" data-toggle="modal" data-target="#editHK"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             }
                                         }
@@ -165,13 +172,37 @@
                                 </table>
                             </div>
                         </div>
-                    </div><!-- end col -->
+                    </div>
                 }
-
             }
-            <hr>
         </div>
     </div> <!-- content -->
 </div>
-
 <hr>
+<!-- Modal -->
+<div class="modal fade" id="editHK" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Roboto'; color: black; font-weight: 600;">Điểu chỉnh học kỳ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-control col-6">
+                    <option selected>Chọn học kỳ</option>
+                    @foreach (var listHK in ViewData["listHK"] as List<string>)
+                    {
+                        <option>@listHK</option>
+                    }
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="submit" class="btn btn-primary" value="Lưu" />
+            </div>
+        </div>
+    </div>
+</div>
+
