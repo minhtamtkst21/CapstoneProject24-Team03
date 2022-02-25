@@ -53,6 +53,28 @@ namespace Cap24Team3.Controllers
             ViewData["idLop"] = idLop;
             return View(lopQuanLies.ToList());
         }
+        public ActionResult UpdateNoiDung(int id)
+        {
+            Session["Note"] = db.SinhViens.Find(id);
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpPost]
+        public ActionResult ThemNoiDung(string NoiDung, int? idSV)
+        {
+            if (idSV == null)
+            {
+                return HttpNotFound();
+            }
+            var sinhvien = db.SinhViens.Find(idSV);
+            sinhvien.Note = NoiDung;
+            db.Entry(sinhvien).State = EntityState.Modified;
+            db.SaveChanges();
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult DanhSachNoteSV(int idLop)
+        {            
+            return View(db.SinhViens.Where(l => l.LopQuanLy.ID == idLop).ToList());
+        }
         public ActionResult DanhSachSV(int idLop)
         {
             ViewData["DSTT"] = db.TinhTrangs.ToList();
@@ -278,29 +300,6 @@ namespace Cap24Team3.Controllers
                 dcs.TinhTrang = true;
             db.Entry(dcs).State = EntityState.Modified;
             db.SaveChanges();
-            return Redirect(Request.UrlReferrer.ToString());
-        }
-        public ActionResult DoiTinhTrang(int id)
-        {
-            Session["SinhVienTT"] = db.SinhViens.Find(id);            
-            return Redirect(Request.UrlReferrer.ToString());
-        }
-        [HttpPost]
-        public ActionResult XacNhanDoiTinhTrang(int? tinhtrang, int? idSV)
-        {
-            if(idSV == null)
-            {
-                return HttpNotFound();
-            }
-            if(tinhtrang == null)
-            {
-                return HttpNotFound();
-            }
-            var sinhvien = db.SinhViens.Find(idSV);
-            sinhvien.ID_TinhTrang = tinhtrang;
-            db.Entry(sinhvien).State = EntityState.Modified;
-            db.SaveChanges();
-            Session["SinhVienTT"] = null;
             return Redirect(Request.UrlReferrer.ToString());
         }
         protected override void Dispose(bool disposing)
