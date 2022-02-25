@@ -10,8 +10,7 @@
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Danh sách sinh viên cần theo dõi</h2>
             <ul>
-                <li><a href="#" title="">Home</a></li>
-                <li><span>Note</span></li>
+                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
@@ -33,6 +32,7 @@
                                     <th>Họ</th>
                                     <th>Tên</th>
                                     <th>Nội dung</th>
+                                    <th>Chỉnh sửa</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,8 +45,9 @@
                                             <td>@s.Ho</td>
                                             <td>@s.Ten</td>
                                             <td>
-                                                <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })">@s.Note</a>
+                                                <span style="white-space: pre-wrap;">@s.Note</span>
                                             </td>
+                                            <td><a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-edit" style="color: red;"></i></a></td>
                                         </tr>
                                     }
                                 }
@@ -61,7 +62,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @svien.Ho @svien.Ten: </h5>
+                                                <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @svien.Ho @svien.Ten: </h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
