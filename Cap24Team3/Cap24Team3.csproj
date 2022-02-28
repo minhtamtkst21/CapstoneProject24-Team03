@@ -194,6 +194,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
+    <Compile Include="Controllers\ThongBaosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -515,13 +516,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Faculty\Views\web.config" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ChiTietCTDaoTao.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListCTDaoTao.cshtml" />
@@ -606,6 +600,13 @@
     <Content Include="FileUpLoad\27.xlsx" />
     <Content Include="Models\ChuongTrinhDaoTao.xlsx" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\DSSV.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -966,10 +967,15 @@
     <Content Include="Views\ChuNhiemLop\DanhSachDotChinhSua.cshtml" />
     <Content Include="Views\ChuNhiemLop\TaoDotChinhSua.cshtml" />
     <Content Include="Views\ChuNhiemLop\DanhSachNoteSV.cshtml" />
+    <Content Include="Views\ThongBaos\Index.cshtml" />
+    <Content Include="Views\ThongBaos\NhanThongBao.cshtml" />
+    <Content Include="Views\ThongBaos\TaoThongBao.cshtml" />
+    <Content Include="Views\ThongBaos\Bell.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Faculty\Data\" />
+    <Folder Include="Views\ThongBao\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

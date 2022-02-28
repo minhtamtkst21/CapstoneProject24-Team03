@@ -82,7 +82,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         TempData["Alert"] = "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
                                     }
-                                    savediem.HocKyChinhThuc = hockyhp - hockysv + 1;
+                                    savediem.HocKyKeHoach = hockyhp - hockysv + 1;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
                                     savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
                                     savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());

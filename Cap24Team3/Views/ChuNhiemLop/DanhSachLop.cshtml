@@ -6,41 +6,85 @@
     var LopQuanLy = ViewData["DanhSachLop"] as string[];
     var SiSo = ViewData["SiSo"] as int[];
     var idLop = ViewData["idLop"] as int[];
+
+
+
+
 }
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 90px; ">Quản lý lớp chủ nhiệm</h2>
             <ul>
-                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
     </div>
 </section><!--pager-section end-->
 <section class="page-content">
-    @for (int i = 0; i < LopQuanLy.Length; i++)
+    @if (TempData["Alert1"] != null)
     {
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog-section p-0 posts-page">
-                        <div class="blog-posts">
-                            <div class="blog-post">
-                                <div class="blog-post quote-post">
-                                    <div class="blog-info">
-                                        <span class="category" style="font-size: 20px;"><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" class="text-dark">Danh sách sinh viên lớp @LopQuanLy[i]</a></span>
-                                        <ul class="meta">
-                                            <li><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" title="">Sỉ số: @SiSo[i]</a></li>
-                                        </ul>
-                                    </div>
-                                </div><!--blog-post end-->
+        <style>
+            .div-centerr {
+                margin: auto;
+                width: 60%;
+                padding: 10px;
+            }
+        </style>
+        <div class="alert alert-warning col-6 div-centerr" align="center">
+            <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["Alert1"].ToString())
+        </div>
+    }
+    else
+    {
+        if (TempData["Alert"] != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="blog-section p-0 posts-page">
+                            <div class="blog-posts">
+                                <div class="blog-post">
+                                    <div class="blog-post quote-post">
+                                        <div class="blog-info">
+                                            <span class="category" style="font-size: 20px;">
+                                                @Html.Raw(TempData["Alert"].ToString())
+                                            </span>
+                                        </div>
+                                    </div><!--blog-post end-->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            for (int i = 0; i < LopQuanLy.Length; i++)
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="blog-section p-0 posts-page">
+                                <div class="blog-posts">
+                                    <div class="blog-post">
+                                        <div class="blog-post quote-post">
+                                            <div class="blog-info">
+                                                <span class="category" style="font-size: 20px;"><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" class="text-dark">Danh sách sinh viên lớp @LopQuanLy[i]</a></span>
+                                                <ul class="meta">
+                                                    <li><a href="@Url.Action("DanhSachSV", new { idLop = idLop[i] })" title="">Sỉ số: @SiSo[i]</a></li>
+                                                </ul>
+                                            </div>
+                                        </div><!--blog-post end-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     }
 </section>
 

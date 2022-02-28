@@ -128,14 +128,14 @@ namespace Cap24Team3.Controllers
                     var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     foreach (var item in list.OrderByDescending(s => s.ID))
                     {
-                        string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
+                        string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
                         if (!CheckTonTai(s, diemso2))
                         {
                             diemso2.Add(s);
                             listdiem.Add(item);
                         };
-                        if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
-                            listHK.Add(item.HocKyChinhThuc.ToString());
+                        if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                            listHK.Add(item.HocKyKeHoach.ToString());
                     }
                     var diemtb = new double[listHK.Count];
                     var diemtbchung = new double[listHK.Count];
@@ -153,7 +153,7 @@ namespace Cap24Team3.Controllers
                     {
                         foreach (var item in listdiem)
                         {
-                            if (item.HocKyChinhThuc.ToString() == listHK[i])
+                            if (item.HocKyKeHoach.ToString() == listHK[i])
                             {
                                 if (double.TryParse(item.Diem10, out double diem10))
                                 {

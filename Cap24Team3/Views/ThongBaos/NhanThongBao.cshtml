@@ -1,0 +1,176 @@
+﻿@model IEnumerable<Cap24Team3.Models.ThongBao>
+@{
+    ViewBag.Title = "NhanThongBao";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+    var XemThongBao = Session["XemThongBao"] as Cap24Team3.Models.ThongBao;
+}
+
+
+<style>
+    .text {
+        display: block; /* or inline-block */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 4.5em;
+        line-height: 1.5em;
+    }
+</style>
+<section class="main-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 col-md-7">
+                <div class="banner-text wow fadeInLeft" data-wow-duration="1000ms">
+                    <h2>Welcome to<span>Van Lang E-Profile</span></h2>
+                    <p>Trang quản lý kế hoạch học tập dành riêng cho khoa CNTT trường đại học Văn Lang</p>
+                    <form class="search-form">
+                        <input type="text" name="search" placeholder="Search">
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <div class="banner-img wow zoomIn" data-wow-duration="1000ms">
+                    <marquee>
+                        <img src="@Url.Content("~/Student_assets/img/VLU4.png")" alt="">
+                    </marquee>
+                    <marquee direction="up">
+                        <img src="@Url.Content("~/Student_assets/img/VLU5.png")" alt="">
+                    </marquee>
+
+                </div><!--banner-img end-->
+                <div class="elements-bg wow zoomIn" data-wow-duration="1000ms"></div>
+            </div>
+        </div>
+    </div>
+</section><!--main-banner end-->
+
+<h2 class="main-title">E-Profile</h2>
+
+<section class="about-us-section">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Welcome to <span>Van Lang E-Profile</span></h2>
+            <p>Trang quản lý kế hoạch học tập dành riêng cho khoa CNTT trường đại học Văn Lang</p>
+        </div><!--section-title end-->
+    </div>
+</section><!--about-us-section end-->
+<section class="page-content">
+    <div class="container">
+        <div class="course-section">
+            <div class="courses-list">
+                <div class="row" id="Noti">
+                    @if (TempData["Alert"] == null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="col-lg-6" onclick="location.href='@Url.Action("XemThongBao", new {idTB = item.ID})'">
+                                <div style="cursor: pointer" class="course-card">
+                                    <div class="d-flex flex-wrap align-items-center">
+                                        <ul class="course-meta">
+                                            <li>
+                                                @item.AspNetUser.Email
+                                            </li>
+                                        </ul>
+                                        <span><img src="@Url.Content("~/Student_assets/img/icon12.png")" alt=""> @item.Ngay</span>
+                                    </div>
+                                    <h3><a href="">@item.TieuDe</a></h3>
+                                    <div class="d-flex flex-wrap">
+                                        <div class="text">
+                                            <a title="">@item.NoiDung</a>
+                                        </div>
+                                    </div>
+                                </div><!--course-card end-->
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <style>
+                            .div-centerr {
+                                margin: auto;
+                                width: 60%;
+                                padding: 10px;
+                            }
+                        </style>
+                        <div class="alert alert-warning col-6 div-centerr" align="center">
+                            <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["Alert"].ToString())
+                        </div>
+                    }
+                </div>
+            </div><!--courses-list end-->
+        </div>
+        @if (Session["XemThongBao"] != null)
+        {
+            <div class="modal fade" id="modelTB" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="col-10 text-center">
+                                <h4 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600; font-size: 25px">@XemThongBao.TieuDe</h4>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="card-body text-wrap">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Người gửi:</h5>
+                                </div>
+                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngày gửi:</h5>
+                                </div>
+                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                    @XemThongBao.Ngay
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Nội dung:</h5>
+                                </div>
+                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                    <textarea class="form-control" type="text" rows="5" readonly>@XemThongBao.NoiDung</textarea>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="mdp-pagiation">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">15</a></li>
+                </ul>
+            </nav>
+        </div><!--pagination-end-->
+    </div>
+</section><!--page-content end-->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+@if (Session["XemThongBao"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#modelTB').modal('show');
+        });
+    </script>
+    Session["XemThongBao"] = null;
+}

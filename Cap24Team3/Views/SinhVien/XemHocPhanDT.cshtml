@@ -21,7 +21,7 @@
         <!-- Start Content-->
         <div class="container">
             <!-- start page title -->
-            <div class="row">
+            @*<div class="row">
                 <div class="col-12">
                     <div class="col-4" style="float: right;">
                         <div class="input-group">
@@ -34,12 +34,19 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <br>
             @if (TempData["Alert"] != null)
             {
-                <div class="alert alert-warning">
-                    @Html.Raw(TempData["Alert"].ToString())
+                <style>
+                    .div-centerr {
+                        margin: auto;
+                        width: 60%;
+                        padding: 10px;
+                    }
+                </style>
+                <div class="alert alert-warning col-6 div-centerr" align="center">
+                    <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["Alert"].ToString())
                 </div>
             }
             else

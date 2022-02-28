@@ -27,31 +27,44 @@ namespace Cap24Team3.Controllers
         public ActionResult DanhSachLop()
         {
             var mailGV = User.Identity.Name;
-            var lopQuanLies = db.LopQuanLies.Include(l => l.KhoaDaoTao).Include(l => l.NganhDaoTao).Where(l => l.ChuNhiem == mailGV);
-            var Lop = new string[lopQuanLies.Count()];
-            var SiSo = new int[lopQuanLies.Count()];
-            var idLop = new int[lopQuanLies.Count()];
-            int stt = 0;
-            foreach (var item in lopQuanLies)
+            if (mailGV != "")
             {
-                Lop[stt] = item.TenLop;
-                idLop[stt] = item.ID;
-                stt++;
-            }
-            for (int i = 0; i < Lop.Length; i++)
-            {
-                foreach (var item in db.SinhViens.ToList())
+                var lopQuanLies = db.LopQuanLies.Where(l => l.ChuNhiem == mailGV).ToList();
+                if (lopQuanLies.Count > 0)
                 {
-                    if (item.LopQuanLy.TenLop == Lop[i])
+                    var Lop = new string[lopQuanLies.Count()];
+                    var SiSo = new int[lopQuanLies.Count()];
+                    var idLop = new int[lopQuanLies.Count()];
+                    int stt = 0;
+                    foreach (var item in lopQuanLies)
                     {
-                        SiSo[i]++;
+                        Lop[stt] = item.TenLop;
+                        idLop[stt] = item.ID;
+                        stt++;
                     }
+                    for (int i = 0; i < Lop.Length; i++)
+                    {
+                        foreach (var item in db.SinhViens.ToList())
+                        {
+                            if (item.LopQuanLy.TenLop == Lop[i])
+                            {
+                                SiSo[i]++;
+                            }
+                        }
+                    }
+                    ViewData["DanhSachLop"] = Lop;
+                    ViewData["SiSo"] = SiSo;
+                    ViewData["idLop"] = idLop;
+                    return View(lopQuanLies.ToList());
+                }
+                else
+                {
+                    TempData["Alert"] = "Chưa có lớp chủ nhiệm!!!";
+                    return View();
                 }
             }
-            ViewData["DanhSachLop"] = Lop;
-            ViewData["SiSo"] = SiSo;
-            ViewData["idLop"] = idLop;
-            return View(lopQuanLies.ToList());
+            TempData["Alert1"] = "Bạn chưa đăng nhập";
+            return View();
         }
         public ActionResult UpdateNoiDung(int id)
         {
@@ -106,17 +119,26 @@ namespace Cap24Team3.Controllers
         }
         public ActionResult DanhSachDotChinhSua()
         {
-            foreach (var item in db.DotChinhSuaThongTins.Where(s=>s.TinhTrang == true).ToList())
+            var mailGV = User.Identity.Name;
+            if (mailGV != "")
             {
-                if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                foreach (var item in db.DotChinhSuaThongTins.Where(s => s.TinhTrang == true).ToList())
                 {
-                    item.TinhTrang = true;
-                    db.Entry(item).State = EntityState.Modified;
-                    db.SaveChanges();
+                    if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                    {
+                        item.TinhTrang = true;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
+                var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
+                return View(chinhSuaThongTins.ToList());
             }
-            var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
-            return View(chinhSuaThongTins.ToList());
+            else
+            {
+                TempData["Alert"] = "Bạn chưa đăng nhập!";
+                return View();
+            }
         }
         public ActionResult TaoDotChinhSua()
         {
@@ -185,9 +207,9 @@ namespace Cap24Team3.Controllers
             var l = new List<string>();
             foreach (var item in list.OrderByDescending(s => s.ID))
             {
-                if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
-                    listHK.Add(item.HocKyChinhThuc.ToString());
-                string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
+                if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                    listHK.Add(item.HocKyKeHoach.ToString());
+                string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
                 if (!CheckTonTai(s, l))
                 {
                     l.Add(s);
@@ -214,7 +236,7 @@ namespace Cap24Team3.Controllers
             {
                 foreach (var item in diemso2)
                 {
-                    if (item.HocKyChinhThuc.ToString() == listHK[i])
+                    if (item.HocKyKeHoach.ToString() == listHK[i])
                     {
                         if (double.TryParse(item.Diem10, out double diem10))
                         {

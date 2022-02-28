@@ -1,0 +1,65 @@
+﻿@{
+    var XemThongBao = Session["XemThongBao"] as Cap24Team3.Models.ThongBao;
+}
+
+<style>
+    .text {
+        display: block; /* or inline-block */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 4.5em;
+        line-height: 1.5em;
+    }
+</style>
+<div class="col-4" align="right">
+    <div class="nav-link waves-effect dropdown">
+        <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black"><i class="fa fa-bell noti-icon"></i></a>
+        <div class="dropdown-content dropdown-menu-right col-6" style="border-radius: 15px; background-color: #f2f2f2;">
+            <div class="noti-title">
+                <h5 class="m-0" style=" font-family: 'Montserrat'; color: black; text-align:center">
+                    Notification
+                </h5>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="dropdown-item">
+                    <a class="aaa" href="@Url.Action("XemThongBao", new {idTB = item.ID})" >
+                        <h3 class="title" style="font-family: 'Montserrat'; color: black;">@item.TieuDe</h3>
+                    </a>
+                    <p class="text" style="text-align: left">@item.NoiDung</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@if (Session["XemThongBao"] != null)
+{
+    <div class="modal fade" id="modelTB" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: 'Montserrat'; color: black;">@XemThongBao.TieuDe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div>@XemThongBao.NoiDung</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Session["XemThongBao"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#modelTB').modal('show');
+        });
+    </script>
+    Session["XemThongBao"] = null;
+}
