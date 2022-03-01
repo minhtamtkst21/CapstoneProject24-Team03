@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cap24Team3.Models.HocPhanDaoTao>
+﻿@model IEnumerable<Cap24Team3.Models.DiemHocPhan>
 @{
     ViewBag.Title = "DangKyKHDT";
     Layout = "~/Views/Shared/Student_layout.cshtml";
@@ -73,22 +73,19 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            if (item.HocKy.ToString() == listHK)
+                                            if (item.HocKyKeHoach.ToString() == listHK)
                                             {
                                                 <tr>
-                                                    @if (item.ID_HocPhanTuChon == null)
-                                                    {
-                                                        STT++;
-                                                        <td>@STT</td>
-                                                    }
+                                                    @STT++;
+                                                    <td>@STT</td>
                                                     else
                                                     {
-                                                        <td></td>
+                                                    <td></td>
                                                     }
-                                                    <td>@item.MaHocPhan</td>
+                                                    <td>@item.HocPhan</td>
                                                     <td>@item.TenHocPhan</td>
                                                     <td>@item.SoTinChi</td>
-                                                    @if (item.ID_HocPhanTuChon == null)
+                                                    @if ((Cap24Team3.Models.HocPhanDaoTao as List<Cap24Team3.Models.HocPhanDaoTao>))
                                                     {
                                                         <td title="Bắt Buộc">BB</td>
                                                     }
@@ -158,13 +155,38 @@
                                                     </td>
                                                     @if (diem != null)
                                                     {
-                                                        <td>@diem.Where(s => s.MSSV == sv.MSSV).Where(s => s.HocPhan == item.MaHocPhan).Where(s => s.HocKyChinhThuc == item.HocKy).Last().Diem10<i class="fa fa-times" style="color: red; font-size: 20px;"></i></td>
+                                                        var diemsv = diem.Where(s => s.MSSV == sv.MSSV).Where(s => s.HocPhan.Trim() == item.MaHocPhan.Trim()).ToList();
+                                                        if (diemsv.Count() > 0)
+                                                        {
+                                                            <td>
+                                                                @diemsv.Last().Diem10
+                                                                @if (diemsv.Last().QuaMon == true)
+                                                                {
+                                                                    <i class="fa fa-check" style="color: green;"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
+                                                                }
+                                                            </td>
+                                                            if (@diemsv.Last().QuaMon == true)
+                                                            {
+                                                                <td></td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <td></td>
+                                                        }
                                                     }
                                                     else
                                                     {
-                                                        <td></td>
+                                                        <td>0</td>
                                                     }
-                                                    <td><a href="#" data-toggle="modal" data-target="#editHK"><i class="fa fa-edit"></i></a></td>
                                                 </tr>
                                             }
                                         }
@@ -189,19 +211,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <select class="form-control col-6">
-                    <option selected>Chọn học kỳ</option>
-                    @foreach (var listHK in ViewData["listHK"] as List<string>)
-                    {
-                        <option>@listHK</option>
-                    }
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <input type="submit" class="btn btn-primary" value="Lưu" />
-            </div>
+
+            <form action="@Url.Action("LuuHP")">
+                <div class="modal-body">
+                    <select class="form-control col-6">
+                        <option selected>Chọn học kỳ</option>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option>@i</option>
+                        }
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <input type="submit" class="btn btn-primary" value="Lưu" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

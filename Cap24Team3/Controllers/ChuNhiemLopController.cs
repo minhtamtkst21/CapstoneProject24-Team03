@@ -163,9 +163,9 @@ namespace Cap24Team3.Controllers
             var l = new List<string>();
             foreach (var item in list.OrderByDescending(s => s.ID))
             {
-                if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
-                    listHK.Add(item.HocKyChinhThuc.ToString());
-                string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
+                if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                    listHK.Add(item.HocKyKeHoach.ToString());
+                string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
                 if (!CheckTonTai(s, l))
                 {
                     l.Add(s);
@@ -192,7 +192,7 @@ namespace Cap24Team3.Controllers
             {
                 foreach (var item in diemso2)
                 {
-                    if (item.HocKyChinhThuc.ToString() == listHK[i])
+                    if (item.HocKyKeHoach.ToString() == listHK[i])
                     {
                         if (double.TryParse(item.Diem10, out double diem10))
                         {

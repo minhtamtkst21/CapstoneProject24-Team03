@@ -82,7 +82,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         TempData["Alert"] = "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
                                     }
-                                    savediem.HocKyChinhThuc = hockyhp - hockysv + 1;
+                                    savediem.HocKyKeHoach = db.HocKyDaoTaos.FirstOrDefault(s=>s.STT == hockyhp - hockysv + 1).ID;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
                                     savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
                                     savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());
@@ -148,7 +148,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             db.LichSuUpLoads.Add(LichSu);
             foreach (var item in listDiem)
                 db.DiemHocPhans.Add(item);
-            System.IO.File.Move(Server.MapPath(UPLOAD_PATH) + "0.xlsx", Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx");
+            if (System.IO.File.Exists(Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx"))
+                System.IO.File.Delete(Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx");
+            System.IO.File.Copy(Server.MapPath(UPLOAD_PATH) + "0.xlsx", Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx");
             db.SaveChanges();
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());

@@ -90,7 +90,7 @@ namespace Cap24Team3.Controllers
                     ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
                     var listHK = new List<string>();
                     var listHP = db.HocPhanDaoTaos.ToList();
-                    foreach (var item in hocPhanDaoTaos)
+                    foreach (var item in hocPhanDaoTaos.OrderBy(s => s.HocKy))
                         if (!CheckTonTai(item.HocKy.ToString(), listHK))
                             listHK.Add(item.HocKy.ToString());
                     ViewData["listHK"] = listHK;
@@ -128,14 +128,14 @@ namespace Cap24Team3.Controllers
                     var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     foreach (var item in list.OrderByDescending(s => s.ID))
                     {
-                        string s = item.HocPhan + item.MSSV + item.HocKyChinhThuc;
+                        string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
                         if (!CheckTonTai(s, diemso2))
                         {
                             diemso2.Add(s);
                             listdiem.Add(item);
                         };
-                        if (!CheckTonTai(item.HocKyChinhThuc.ToString(), listHK))
-                            listHK.Add(item.HocKyChinhThuc.ToString());
+                        if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                            listHK.Add(item.HocKyKeHoach.ToString());
                     }
                     var diemtb = new double[listHK.Count];
                     var diemtbchung = new double[listHK.Count];
@@ -153,7 +153,7 @@ namespace Cap24Team3.Controllers
                     {
                         foreach (var item in listdiem)
                         {
-                            if (item.HocKyChinhThuc.ToString() == listHK[i])
+                            if (item.HocKyKeHoach.ToString() == listHK[i])
                             {
                                 if (double.TryParse(item.Diem10, out double diem10))
                                 {
@@ -213,8 +213,8 @@ namespace Cap24Team3.Controllers
             {
                 var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
                 var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
-                var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
-                if (ctdt == null)
+                var diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV);
+                if (diemhp == null)
                 {
                     ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
                     TempData["Alert"] = ListLoi;
@@ -222,20 +222,19 @@ namespace Cap24Team3.Controllers
                 }
                 else
                 {
-                    var hocPhanDaoTaos = db.HocPhanDaoTaos.Include(h => h.KhoiKienThuc).Include(h => h.HocPhanDaoTao2).Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
                     ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
                     ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
                     ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
                     ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
                     var listHK = new List<string>();
                     var listHP = db.HocPhanDaoTaos.ToList();
-                    foreach (var item in hocPhanDaoTaos)
-                        if (!CheckTonTai(item.HocKy.ToString(), listHK))
-                            listHK.Add(item.HocKy.ToString());
+                    foreach (var item in diemhp)
+                        if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK))
+                            listHK.Add(item.HocKyDangKy.ToString());
                     ViewData["listHK"] = listHK;
-                    TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV);
+                    TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     TempData["Sinhvien"] = sinhvien;
-                    return View(hocPhanDaoTaos.ToList());
+                    return View(diemhp.ToList());
                 }
             }
             else
@@ -243,6 +242,15 @@ namespace Cap24Team3.Controllers
                 TempData["Alert"] = "Bạn chưa đăng nhập!";
                 return View();
             }
+        }
+
+        public ActionResult LuuHP(int hocky)
+        {
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult SuaHK(int id)
+        {
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }

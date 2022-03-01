@@ -20,7 +20,6 @@ namespace Cap24Team3.Models
             this.ChuongTrinhDaoTaos = new HashSet<ChuongTrinhDaoTao>();
             this.DiemHocPhans = new HashSet<DiemHocPhan>();
             this.DiemHocPhans1 = new HashSet<DiemHocPhan>();
-            this.DiemHocPhans2 = new HashSet<DiemHocPhan>();
         }
     
         public int ID { get; set; }
@@ -33,7 +32,5 @@ namespace Cap24Team3.Models
         public virtual ICollection<DiemHocPhan> DiemHocPhans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiemHocPhan> DiemHocPhans1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DiemHocPhan> DiemHocPhans2 { get; set; }
     }
 }

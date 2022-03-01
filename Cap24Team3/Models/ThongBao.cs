@@ -20,6 +20,7 @@ namespace Cap24Team3.Models
         public Nullable<System.DateTime> Ngay { get; set; }
         public string NguoiGui { get; set; }
         public string NguoiNhan { get; set; }
+        public Nullable<bool> TrangThai { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }
