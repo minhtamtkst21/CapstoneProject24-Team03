@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Cap24Team3.Models.SinhVien>
+
+@{
+    ViewBag.Title = "DanhSachNoteSV";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+}
+
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Danh sách sinh viên cần theo dõi</h2>
+            <ul>
+                
+            </ul>
+        </div><!--pager-content end-->
+        <h4 class="page-titlee">E-Profile</h4>
+    </div>
+</section><!--pager-section end-->
+<hr>
+<div class="page-content">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container">
+            <div class="col-xl-12">
+                <div class="card-box">
+                    @*<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Danh sách sinh viên cần theo dõi</h4>*@
+                    <div class="table-responsive ">
+                        <table id="t_draggable1" class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>MSSV</th>
+                                    <th>Họ</th>
+                                    <th>Tên</th>
+                                    <th>Nội dung</th>
+                                    <th>Chỉnh sửa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model)
+                                {
+                                    if (s.Note != null && s.Note != "")
+                                    {
+                                        <tr>
+                                            <td>@s.MSSV</td>
+                                            <td>@s.Ho</td>
+                                            <td>@s.Ten</td>
+                                            <td>
+                                                <span style="white-space: pre-wrap;">@s.Note</span>
+                                            </td>
+                                            <td><a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-edit" style="color: red;"></i></a></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <!-- Note -->
+                        <div class="modal fade" id="NoiDung" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                            @{ var svien = Session["Note"] as Cap24Team3.Models.SinhVien; }
+                            @if (svien != null)
+                            {
+                                <form method="post">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @svien.Ho @svien.Ten: </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    <input type="number" name="idSV" value="@svien.ID" required hidden />
+                                                    <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@svien.Note</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end col -->
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+@if (Session["Note"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#NoiDung').modal('show');
+        });
+    </script>
+    Session["Note"] = null;
+}

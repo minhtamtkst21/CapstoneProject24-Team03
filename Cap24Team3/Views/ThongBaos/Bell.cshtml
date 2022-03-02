@@ -1,0 +1,90 @@
+﻿
+@{
+    int countTB = 0;
+    var tb = ViewData["BellDB"] as Cap24Team3.Models.ThongBao;
+}
+
+<style>
+    .text {
+        display: block; /* or inline-block */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 4.5em;
+        line-height: 1.5em;
+    }
+
+    .noti_bubble {
+        position: absolute;
+        top: 1px;
+        right: 25px;
+        padding: 2px 3px 2px 3px;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        font-size: 9px;
+        border-radius: 30px;
+        box-shadow: 1px 1px 1px white;
+    }
+
+    .div-centerr {
+        margin: auto;
+        width: 60%;
+        padding: 10px;
+    }
+</style>
+<div class="col-4" align="right">
+    <div class="nav-link waves-effect dropdown" style="width: max-content !important;">
+
+        <div class="dropdown-content dropdown-menu-right" style="border-radius: 10px; background-color: #f2f2f2; width: 350px; overflow: auto; height: 230px;">
+            <div class="noti-title">
+                <br />
+                <h5 class="m-0" style=" font-family: 'Montserrat', bold; color: black; font-size:25px; text-align:center">
+                    Notification
+                </h5>
+                <br />
+            </div>
+            @foreach (var item in ViewData["BellDB"] as List<Cap24Team3.Models.ThongBao>)
+            {
+
+                if (item.TrangThai == true)
+                {
+                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                        &emsp;
+                        @item.TieuDe
+                        <p class="text" style="text-align: left">@item.NoiDung</p>
+                    </a>
+                    <hr style="width: 85%" />
+                }
+                else
+                {
+                    countTB++;
+                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #bfbfbf; border-radius: 5px; width: 315px;">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                        &emsp;
+                        @item.TieuDe
+                        <i class="fa fa-eye float-right"></i>
+                        <p class="text" style="text-align: left">@item.NoiDung</p>
+                    </a>
+                    <hr style="width: 85%" />
+                }
+            }
+
+        </div>
+        @if (countTB == 0)
+        {
+            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+                <i class="fa fa-bell noti-icon"></i>
+            </a>
+        }
+        else
+        {
+            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+                <i class="fa fa-bell noti-icon"></i>
+                <span class="noti_bubble">@countTB</span>
+            </a>
+        }
+    </div>
+</div>

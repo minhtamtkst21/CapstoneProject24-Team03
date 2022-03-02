@@ -180,258 +180,258 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var sinhvien = db.SinhViens.OrderBy(s => s.TinhTrang.DoUuTien).Where(s => s.LopQuanLy.ID == id).ToList();
             return View(sinhvien);
         }
-        public string KiemTraFile(HttpPostedFileBase file)
-        {
-            string DanhSachLoi = "";
-            byte[] fileBytes = new byte[file.ContentLength];
-            var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-            using (var package = new ExcelPackage(file.InputStream))
-            {
-                var currentSheet = package.Workbook.Worksheets;
-                var workSheet = currentSheet.First();
-                if (workSheet.Dimension != null)
-                {
-                    var noOfRow = workSheet.Dimension.End.Row;
-                    var noOfCol = workSheet.Dimension.End.Column;
-                    if (noOfCol == 15 && noOfRow > 1)
-                    {
-                        var listMSSV = new List<string>();
-                        var listEmail = new List<string>();
-                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-                        {
-                            if (workSheet.Cells[rowIterator, 1].Value != null)
-                            {
-                                var MSSV = workSheet.Cells[rowIterator, 1].Value.ToString();
-                                if (CheckTonTai(MSSV, listMSSV))
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu bị trùng, dữ liệu trùng: " + MSSV + "</p>";
-                                }
-                                if (MSSV.Length > 20)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được quá 20 ký tự, số ký tự của " + MSSV + " là " + MSSV.Length + "<p>";
-                                }
-                                if (MSSV.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
-                                }
-                                listMSSV.Add(MSSV);
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 2].Value != null)
-                            {
-                                var Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
-                                if (Ho.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ho + " là " + Ho.Length + "<p>";
-                                }
-                                if (Ho.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 3].Value != null)
-                            {
-                                var Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                if (Ten.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ten + " là " + Ten.Length + "<p>";
-                                }
-                                if (Ten.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 4].Value != null)
-                            {
-                                var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                if (NgaySinh.Length > 10)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
-                                }
-                                if (NgaySinh.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 5].Value != null)
-                            {
-                                var GT = workSheet.Cells[rowIterator, 5].Value.ToString();
-                                if (GT.Length > 10)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được quá 10 ký tự, số ký tự của " + GT + " là " + GT.Length + "<p>";
-                                }
-                                if (GT.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 6].Value != null)
-                            {
-                                var TinhTrang = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                if (TinhTrang.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được quá 100 ký tự, số ký tự của " + TinhTrang + " là " + TinhTrang.Length + "<p>";
-                                }
-                                if (TinhTrang.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
+        //public string KiemTraFile(HttpPostedFileBase file)
+        //{
+        //    string DanhSachLoi = "";
+        //    byte[] fileBytes = new byte[file.ContentLength];
+        //    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+        //    using (var package = new ExcelPackage(file.InputStream))
+        //    {
+        //        var currentSheet = package.Workbook.Worksheets;
+        //        var workSheet = currentSheet.First();
+        //        if (workSheet.Dimension != null)
+        //        {
+        //            var noOfRow = workSheet.Dimension.End.Row;
+        //            var noOfCol = workSheet.Dimension.End.Column;
+        //            if (noOfCol == 15 && noOfRow > 1)
+        //            {
+        //                var listMSSV = new List<string>();
+        //                var listEmail = new List<string>();
+        //                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+        //                {
+        //                    if (workSheet.Cells[rowIterator, 1].Value != null)
+        //                    {
+        //                        var MSSV = workSheet.Cells[rowIterator, 1].Value.ToString();
+        //                        if (CheckTonTai(MSSV, listMSSV))
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu bị trùng, dữ liệu trùng: " + MSSV + "</p>";
+        //                        }
+        //                        if (MSSV.Length > 20)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được quá 20 ký tự, số ký tự của " + MSSV + " là " + MSSV.Length + "<p>";
+        //                        }
+        //                        if (MSSV.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
+        //                        }
+        //                        listMSSV.Add(MSSV);
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 2].Value != null)
+        //                    {
+        //                        var Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+        //                        if (Ho.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ho + " là " + Ho.Length + "<p>";
+        //                        }
+        //                        if (Ho.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 3].Value != null)
+        //                    {
+        //                        var Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+        //                        if (Ten.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ten + " là " + Ten.Length + "<p>";
+        //                        }
+        //                        if (Ten.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 4].Value != null)
+        //                    {
+        //                        var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+        //                        if (NgaySinh.Length > 10)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
+        //                        }
+        //                        if (NgaySinh.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 5].Value != null)
+        //                    {
+        //                        var GT = workSheet.Cells[rowIterator, 5].Value.ToString();
+        //                        if (GT.Length > 10)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được quá 10 ký tự, số ký tự của " + GT + " là " + GT.Length + "<p>";
+        //                        }
+        //                        if (GT.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 6].Value != null)
+        //                    {
+        //                        var TinhTrang = workSheet.Cells[rowIterator, 6].Value.ToString();
+        //                        if (TinhTrang.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được quá 100 ký tự, số ký tự của " + TinhTrang + " là " + TinhTrang.Length + "<p>";
+        //                        }
+        //                        if (TinhTrang.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
 
-                            }
-                            if (workSheet.Cells[rowIterator, 8].Value != null)
-                            {
-                                var Lop = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                if (Lop.Length > 20)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được quá 20 ký tự, số ký tự của " + Lop + " là " + Lop.Length + "<p>";
-                                }
-                                if (Lop.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 9].Value != null)
-                            {
-                                var Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
-                                if (CheckTonTai(Email_1, listEmail))
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu bị trùng, dữ liệu trùng: " + Email_1 + "</p>";
-                                }
-                                if (Email_1.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_1 + " là " + Email_1.Length + "<p>";
-                                }
-                                if (Email_1.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
-                                }
-                                listEmail.Add(Email_1);
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 10].Value != null)
-                            {
-                                var Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
-                                if (Email_2.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột J: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_2 + " là " + Email_2.Length + "<p>";
-                                }
-                            }
-                            if (workSheet.Cells[rowIterator, 12].Value != null)
-                            {
-                                var DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
-                                if (DTDD.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột L: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTDD + " là " + DTDD.Length + "<p>";
-                                }
-                            }
-                            if (workSheet.Cells[rowIterator, 13].Value != null)
-                            {
-                                var DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
-                                if (DTCha.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột M: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTCha + " là " + DTCha.Length + "<p>";
-                                }
-                            }
-                            if (workSheet.Cells[rowIterator, 14].Value != null)
-                            {
-                                var DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
-                                if (DTMe.Length > 100)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột N: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTMe + " là " + DTMe.Length + "<p>";
-                                }
-                            }
-                            if (workSheet.Cells[rowIterator, 15].Value != null)
-                            {
-                                var DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
-                                if (DiaChi.Replace(" ", string.Empty) == null)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột O: Dữ liệu không được để trống <p>";
-                                }
-                            }
-                            if (workSheet.Cells[rowIterator, 11].Value != null)
-                            {
-                                var listNganh = db.NganhDaoTaos.ToList();
-                                var listNganhMoi = new List<string>();
-                                var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString();
-                                foreach (var item in listNganh)
-                                {
-                                    listNganhMoi.Add(item.MaNganh.ToString());
-                                }
-                                if (CheckTonTai(maNganh, listNganhMoi) == false)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Mã ngành " + maNganh + " chưa có trong hệ thống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Dữ liệu không được để trống <p>";
-                            }
-                            if (workSheet.Cells[rowIterator, 7].Value != null)
-                            {
-                                var listKhoa = db.KhoaDaoTaos.ToList();
-                                var listKhoaMoi = new List<string>();
-                                foreach (var item in listKhoa)
-                                {
-                                    listKhoaMoi.Add(item.Khoa.ToString());
-                                }
-                                var tenKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
-                                if (CheckTonTai(tenKhoa, listKhoaMoi) == false)
-                                {
-                                    DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Khóa K" + tenKhoa + " chưa có trong hệ thống <p>";
-                                }
-                            }
-                            else
-                            {
-                                DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Dữ liệu không được để trống <p>";
-                            }
-                        }
-                    }
-                    else if (noOfCol != 15)
-                    {
-                        DanhSachLoi += "<p> File bị sai định dạng, vui lòng thử lại!!</p>";
-                    }
-                    else
-                    {
-                        DanhSachLoi += "<p> File bị trống, vui lòng thử lại!!</p>";
-                    }
-                }
-                else
-                {
-                    DanhSachLoi += "<p> File bị trống, vui lòng thử lại!!</p>";
-                }
-            }
-            return DanhSachLoi;
-        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 8].Value != null)
+        //                    {
+        //                        var Lop = workSheet.Cells[rowIterator, 8].Value.ToString();
+        //                        if (Lop.Length > 20)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được quá 20 ký tự, số ký tự của " + Lop + " là " + Lop.Length + "<p>";
+        //                        }
+        //                        if (Lop.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 9].Value != null)
+        //                    {
+        //                        var Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+        //                        if (CheckTonTai(Email_1, listEmail))
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu bị trùng, dữ liệu trùng: " + Email_1 + "</p>";
+        //                        }
+        //                        if (Email_1.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_1 + " là " + Email_1.Length + "<p>";
+        //                        }
+        //                        if (Email_1.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
+        //                        }
+        //                        listEmail.Add(Email_1);
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 10].Value != null)
+        //                    {
+        //                        var Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+        //                        if (Email_2.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột J: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_2 + " là " + Email_2.Length + "<p>";
+        //                        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 12].Value != null)
+        //                    {
+        //                        var DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+        //                        if (DTDD.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột L: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTDD + " là " + DTDD.Length + "<p>";
+        //                        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 13].Value != null)
+        //                    {
+        //                        var DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+        //                        if (DTCha.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột M: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTCha + " là " + DTCha.Length + "<p>";
+        //                        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 14].Value != null)
+        //                    {
+        //                        var DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+        //                        if (DTMe.Length > 100)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột N: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTMe + " là " + DTMe.Length + "<p>";
+        //                        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 15].Value != null)
+        //                    {
+        //                        var DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+        //                        if (DiaChi.Replace(" ", string.Empty) == null)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột O: Dữ liệu không được để trống <p>";
+        //                        }
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 11].Value != null)
+        //                    {
+        //                        var listNganh = db.NganhDaoTaos.ToList();
+        //                        var listNganhMoi = new List<string>();
+        //                        var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString();
+        //                        foreach (var item in listNganh)
+        //                        {
+        //                            listNganhMoi.Add(item.MaNganh.ToString());
+        //                        }
+        //                        if (CheckTonTai(maNganh, listNganhMoi) == false)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Mã ngành " + maNganh + " chưa có trong hệ thống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Dữ liệu không được để trống <p>";
+        //                    }
+        //                    if (workSheet.Cells[rowIterator, 7].Value != null)
+        //                    {
+        //                        var listKhoa = db.KhoaDaoTaos.ToList();
+        //                        var listKhoaMoi = new List<string>();
+        //                        foreach (var item in listKhoa)
+        //                        {
+        //                            listKhoaMoi.Add(item.Khoa.ToString());
+        //                        }
+        //                        var tenKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+        //                        if (CheckTonTai(tenKhoa, listKhoaMoi) == false)
+        //                        {
+        //                            DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Khóa K" + tenKhoa + " chưa có trong hệ thống <p>";
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Dữ liệu không được để trống <p>";
+        //                    }
+        //                }
+        //            }
+        //            else if (noOfCol != 15)
+        //            {
+        //                DanhSachLoi += "<p> File bị sai định dạng, vui lòng thử lại!!</p>";
+        //            }
+        //            else
+        //            {
+        //                DanhSachLoi += "<p> File bị trống, vui lòng thử lại!!</p>";
+        //            }
+        //        }
+        //        else
+        //        {
+        //            DanhSachLoi += "<p> File bị trống, vui lòng thử lại!!</p>";
+        //        }
+        //    }
+        //    return DanhSachLoi;
+        //}
         [HttpPost]
         public ActionResult XemTruocThongKe(FormCollection formCollection)
         {
@@ -446,12 +446,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     HttpPostedFileBase file = Request.Files["UploadedFile"];
                     if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                     {
-                        var listError = KiemTraFile(file);
-                        if (listError != "")
-                        {
-                            TempData["Alert"] = listError;
-                            return Redirect(Request.UrlReferrer.ToString());
-                        }
                         string fileName = file.FileName;
                         string fileContentType = file.ContentType;
                         byte[] fileBytes = new byte[file.ContentLength];
@@ -472,6 +466,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         listTenLop.Add(item.TenLop);
                                     }
+                                    var listMSSV = new List<string>();
+                                    var listEmail = new List<string>();
                                     var listTinhTrangMoi = new List<string>();
                                     foreach (var item in LuuTinhTrang)
                                     {
@@ -479,12 +475,218 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     }
                                     for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                                     {
+                                        SinhVien SaveSV = new SinhVien();
+                                        if (workSheet.Cells[rowIterator, 1].Value != null)
+                                        {
+                                            var mssv = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            if (CheckTonTai(mssv, listMSSV))
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu bị trùng, dữ liệu trùng: " + mssv + "</p>";
+                                            }
+                                            if (mssv.Length > 20)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được quá 20 ký tự, số ký tự của " + mssv + " là " + mssv.Length + "<p>";
+                                            }
+                                            if (mssv.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
+                                            }
+                                            listMSSV.Add(mssv);
+                                            SaveSV.MSSV = mssv;
+                                            int hk;
+                                            var HocKyBatDau = int.TryParse(mssv.Substring(0, 2), out hk);
+                                            if (HocKyBatDau)
+                                            {
+                                                SaveSV.HocKyBatDau = hk * 10 + 1;
+                                            }
+                                            else
+                                            {
+                                                SaveSV.HocKyBatDau = 171;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 2].Value != null)
+                                        {
+                                            var Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            if (Ho.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ho + " là " + Ho.Length + "<p>";
+                                            }
+                                            if (Ho.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
+                                            }
+                                            SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 3].Value != null)
+                                        {
+                                            var Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            if (Ten.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ten + " là " + Ten.Length + "<p>";
+                                            }
+                                            if (Ten.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
+                                            }
+                                            SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 4].Value != null)
+                                        {
+                                            var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                            if (NgaySinh.Length > 10)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
+                                            }
+                                            if (NgaySinh.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+                                            }
+                                            SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 5].Value != null)
+                                        {
+                                            var GT = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                            if (GT.Length > 10)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được quá 10 ký tự, số ký tự của " + GT + " là " + GT.Length + "<p>";
+                                            }
+                                            if (GT.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
+                                            }
+                                            SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 7].Value != null)
+                                        {
+                                            var listKhoa = db.KhoaDaoTaos.ToList();
+                                            var listKhoaMoi = new List<string>();
+                                            foreach (var item in listKhoa)
+                                            {
+                                                listKhoaMoi.Add(item.Khoa.ToString());
+                                            }
+                                            var tenKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                            if (CheckTonTai(tenKhoa, listKhoaMoi) == false)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Khóa K" + tenKhoa + " chưa có trong hệ thống <p>";
+                                            }
+                                            var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                            SaveSV.ID_Khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.Khoa.ToString() == khoa).ID;
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 9].Value != null)
+                                        {
+                                            var Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                            if (CheckTonTai(Email_1, listEmail))
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu bị trùng, dữ liệu trùng: " + Email_1 + "</p>";
+                                            }
+                                            if (Email_1.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_1 + " là " + Email_1.Length + "<p>";
+                                            }
+                                            if (Email_1.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
+                                            }
+                                            listEmail.Add(Email_1);
+                                            SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 10].Value != null)
+                                        {
+                                            var Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                            if (Email_2.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột J: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_2 + " là " + Email_2.Length + "<p>";
+                                            }
+                                            SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                        }
+                                        if (workSheet.Cells[rowIterator, 11].Value != null)
+                                        {
+                                            var nganh = workSheet.Cells[rowIterator, 11].Value.ToString();
+                                            var listNganh = db.NganhDaoTaos.ToList();
+                                            var listNganhMoi = new List<string>();
+                                            foreach (var item in listNganh)
+                                            {
+                                                listNganhMoi.Add(item.MaNganh.ToString());
+                                            }
+                                            if (CheckTonTai(nganh, listNganhMoi) == false)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Mã ngành " + nganh + " chưa có trong hệ thống <p>";
+                                            }
+                                            SaveSV.ID_Nganh = db.NganhDaoTaos.FirstOrDefault(s => s.MaNganh.ToString() == nganh).ID;
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột K: Dữ liệu không được để trống <p>";
+                                        }
+                                        if (workSheet.Cells[rowIterator, 12].Value != null)
+                                        {
+                                            var DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                            if (DTDD.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột L: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTDD + " là " + DTDD.Length + "<p>";
+                                            }
+                                            SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                        }
+                                        if (workSheet.Cells[rowIterator, 13].Value != null)
+                                        {
+                                            var DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                            if (DTCha.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột M: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTCha + " là " + DTCha.Length + "<p>";
+                                            }
+                                            SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                        }
+                                        if (workSheet.Cells[rowIterator, 14].Value != null)
+                                        {
+                                            var DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                            if (DTMe.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột N: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTMe + " là " + DTMe.Length + "<p>";
+                                            }
+                                            SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                        }
+                                        if (workSheet.Cells[rowIterator, 15].Value != null)
+                                        {
+                                            var DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                            if (DiaChi.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột O: Dữ liệu không được để trống <p>";
+                                            }
+                                            SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                        }
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
                                             var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString();
                                             var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString();
                                             var maKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
-
                                             if (!CheckTonTai(tenLop, listTenLop))
                                             {
                                                 var lopQL = new LopQuanLy();
@@ -494,134 +696,99 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                                 LuuLop.Add(lopQL);
                                                 listTenLop.Add(tenLop);
                                             }
-                                        }
-                                        if (workSheet.Cells[rowIterator, 6].Value != null)
-                                        {
-                                            var tenTinhTrang = workSheet.Cells[rowIterator, 6].Value.ToString();
-
-                                            if (!CheckTonTai(tenTinhTrang, listTinhTrangMoi))
+                                            if (tenLop.Length > 20)
                                             {
-                                                var TinhTrangMoi = new TinhTrang();
-                                                TinhTrangMoi.TenTinhTrang = tenTinhTrang;
-                                                TinhTrangMoi.DoUuTien = 1;
-                                                LuuTinhTrang.Add(TinhTrangMoi);
-                                                listTinhTrangMoi.Add(tenTinhTrang);
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được quá 20 ký tự, số ký tự của " + tenLop + " là " + tenLop.Length + "<p>";
                                             }
-                                        }
-                                    }
-                                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-                                    {
-                                        SinhVien SaveSV = new SinhVien();
-                                        if (workSheet.Cells[rowIterator, 1].Value != null)
-                                        {
-                                            var mssv = workSheet.Cells[rowIterator, 1].Value.ToString();
-                                            SaveSV.MSSV = mssv;
-                                            int hk;
-                                            var HocKyBatDau = int.TryParse(mssv.Substring(0, 2), out hk);
-                                            if (HocKyBatDau)
-                                                SaveSV.HocKyBatDau = hk * 10 + 1;
-                                            else
-                                                SaveSV.HocKyBatDau = 171;
-                                        }
-                                        if (workSheet.Cells[rowIterator, 2].Value != null)
-                                        {
-                                            SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 3].Value != null)
-                                        {
-                                            SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 4].Value != null)
-                                        {
-                                            SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 5].Value != null)
-                                        {
-                                            SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 7].Value != null)
-                                        {
-                                            var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
-                                            SaveSV.ID_Khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.Khoa.ToString() == khoa).ID;
-                                        }
-                                        if (workSheet.Cells[rowIterator, 9].Value != null)
-                                        {
-                                            SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 10].Value != null)
-                                        {
-                                            SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 11].Value != null)
-                                        {
-                                            var nganh = workSheet.Cells[rowIterator, 11].Value.ToString();
-                                            SaveSV.ID_Nganh = db.NganhDaoTaos.FirstOrDefault(s => s.MaNganh.ToString() == nganh).ID;
-                                        }
-                                        if (workSheet.Cells[rowIterator, 12].Value != null)
-                                        {
-                                            SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 13].Value != null)
-                                        {
-                                            SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 14].Value != null)
-                                        {
-                                            SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 15].Value != null)
-                                        {
-                                            SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
-                                        }
-                                        if (workSheet.Cells[rowIterator, 8].Value != null)
-                                        {
-                                            var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString();
+                                            if (tenLop.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
+                                            }
                                             SaveSV.LopQuanLy = LuuLop.FirstOrDefault(s => s.TenLop == tenLop);
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột H: Dữ liệu không được để trống <p>";
                                         }
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
                                             var tinhtrang = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                            if (!CheckTonTai(tinhtrang, listTinhTrangMoi))
+                                            {
+                                                var TinhTrangMoi = new TinhTrang();
+                                                TinhTrangMoi.TenTinhTrang = tinhtrang;
+                                                TinhTrangMoi.DoUuTien = 1;
+                                                LuuTinhTrang.Add(TinhTrangMoi);
+                                                listTinhTrangMoi.Add(tinhtrang);
+                                            }
+                                            if (tinhtrang.Length > 100)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được quá 100 ký tự, số ký tự của " + tinhtrang + " là " + tinhtrang.Length + "<p>";
+                                            }
+                                            if (tinhtrang.Replace(" ", string.Empty) == null)
+                                            {
+                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
+                                            }
                                             SaveSV.TinhTrang = LuuTinhTrang.FirstOrDefault(s => s.TenTinhTrang == tinhtrang);
+                                        }
+                                        else
+                                        {
+                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột F: Dữ liệu không được để trống <p>";
                                         }
                                         LuuSinhVien.Add(SaveSV);
                                     }
                                 }
+                                else if (noOfCol != 15)
+                                {
+                                    TempData["Alert"] += "<p> File bị sai định dạng, vui lòng thử lại!!</p>";
+                                }
+                                else
+                                {
+                                    TempData["Alert"] += "<p> File bị trống, vui lòng thử lại!!</p>";
+                                }
+                            }
+                            else
+                            {
+                                TempData["Alert"] += "<p> File bị trống, vui lòng thử lại!!</p>";
                             }
                         }
                     }
                 }
-                Session["LuuSinhVien"] = LuuSinhVien;
-                Session["LuuLop"] = LuuLop;
-                Session["LuuTinhTrang"] = LuuTinhTrang;
-                //Session["ThongBao"]
-                string thongbao = "<table class='table table-hover mb-0'>";
-                thongbao += "<tr>";
-                thongbao += "<td>Số lượng sinh viên: " + soluong + "</td>";
-                thongbao += "</tr>";
-                foreach (var khoa in db.KhoaDaoTaos)
+                if (TempData["Alert"].ToString() != "")
                 {
+                    Session["LuuSinhVien"] = LuuSinhVien;
+                    Session["LuuLop"] = LuuLop;
+                    Session["LuuTinhTrang"] = LuuTinhTrang;
+                    //Session["ThongBao"]
+                    string thongbao = "<table class='table table-hover mb-0'>";
                     thongbao += "<tr>";
-                    thongbao += "<td>Lớp thuộc khóa " + khoa.Khoa + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Count() + "</td>";
-                    thongbao += "<td></td><td>Sinh viên khóa " + khoa.Khoa + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Count() + "</td>";
-                    thongbao += "<td></td></tr>";
-                    foreach (var nganh in db.NganhDaoTaos)
+                    thongbao += "<td>Số lượng sinh viên: " + soluong + "</td>";
+                    thongbao += "</tr>";
+                    foreach (var khoa in db.KhoaDaoTaos)
                     {
                         thongbao += "<tr>";
-                        thongbao += "<td></td><td>Lớp thuộc ngành " + nganh.Nganh + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID).Count() + "</td>";
-                        thongbao += "<td></td><td>Sinh viên ngành " + nganh.Nganh + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Count() + "</td>";
-                        thongbao += "</tr>";
-                        foreach (var lop in LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID))
+                        thongbao += "<td>Lớp thuộc khóa " + khoa.Khoa + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Count() + "</td>";
+                        thongbao += "<td></td><td>Sinh viên khóa " + khoa.Khoa + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Count() + "</td>";
+                        thongbao += "<td></td></tr>";
+                        foreach (var nganh in db.NganhDaoTaos)
                         {
                             thongbao += "<tr>";
-                            thongbao += "<td></td><td></td><td></td><td>Sinh viên lớp " + lop.TenLop + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Where(s => s.LopQuanLy.TenLop == lop.TenLop).Count() + "</td>";
+                            thongbao += "<td></td><td>Lớp thuộc ngành " + nganh.Nganh + " là: " + LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID).Count() + "</td>";
+                            thongbao += "<td></td><td>Sinh viên ngành " + nganh.Nganh + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Count() + "</td>";
                             thongbao += "</tr>";
+                            foreach (var lop in LuuLop.Where(s => s.ID_Khoa == khoa.ID).Where(s => s.ID_Nganh == nganh.ID))
+                            {
+                                thongbao += "<tr>";
+                                thongbao += "<td></td><td></td><td></td><td>Sinh viên lớp " + lop.TenLop + " là: " + LuuSinhVien.Where(s => s.LopQuanLy.ID_Khoa == khoa.ID).Where(s => s.LopQuanLy.ID_Nganh == nganh.ID).Where(s => s.LopQuanLy.TenLop == lop.TenLop).Count() + "</td>";
+                                thongbao += "</tr>";
+                            }
                         }
                     }
+                    thongbao += "</table>";
+                    Session["ThongBao"] = thongbao;
                 }
-                thongbao += "</table>";
-                Session["ThongBao"] = thongbao;
                 return Redirect(Request.UrlReferrer.ToString());
-            }
+            }           
             catch (Exception)
             {
                 TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
@@ -704,12 +871,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 HttpPostedFileBase file = Request.Files["UploadedFile"];
                 if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
-                    var listError = KiemTraFile(file);
-                    if (listError != "")
-                    {
-                        TempData["Alert"] = listError;
-                        return Redirect(Request.UrlReferrer.ToString());
-                    }
+                    //var listError = KiemTraFile(file);
+                    //if (listError != "")
+                    //{
+                    //    TempData["Alert"] = listError;
+                    //    return Redirect(Request.UrlReferrer.ToString());
+                    //}
                     string fileName = file.FileName;
                     string fileContentType = file.ContentType;
                     byte[] fileBytes = new byte[file.ContentLength];
@@ -997,12 +1164,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 HttpPostedFileBase file = Request.Files["UploadedFile"];
                 if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                 {
-                    var listError = KiemTraFile(file);
-                    if (listError != "")
-                    {
-                        TempData["Alert"] = listError;
-                        return Redirect(Request.UrlReferrer.ToString());
-                    }
+                    //var listError = KiemTraFile(file);
+                    //if (listError != "")
+                    //{
+                    //    TempData["Alert"] = listError;
+                    //    return Redirect(Request.UrlReferrer.ToString());
+                    //}
                     string fileName = file.FileName;
                     string fileContentType = file.ContentType;
                     byte[] fileBytes = new byte[file.ContentLength];

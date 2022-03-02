@@ -36,8 +36,7 @@
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Quản lý lớp</h2>
             <ul>
-                <li><a href="#" title="">Home</a></li>
-                <li><span>Quản lý lớp</span></li>
+                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
@@ -51,6 +50,9 @@
             <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
                 Thêm sinh viên
             </button>
+            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop", new { idLop = @Model.First().ID_Lop})" id="button" name="button" class="btn btn-secondary btn-rounded">
+                Sinh viên cần theo dõi
+            </a>
             <hr />
             <div class="col-xl-12">
                 <div class="card-box">
@@ -87,8 +89,7 @@
                                             <br />
                                             <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"><i class="fa fa-clipboard"></i> Xem điểm</a>
                                             <br />
-                                            <a href="#"><i class="fa fa-sticky-note-o"></i> Note</a>
-                                            @*<a href="@Url.Action("XoaSVKhoiLop", new { id = s.ID })"> Xóa</a>*@
+                                            <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-sticky-note-o"></i>Note</a>
                                         </td>
                                     </tr>
                                 }
@@ -154,6 +155,35 @@
                         </div>
                     </div>
 
+                </form>
+            }
+        </div>
+        <!-- Note -->
+        <div class="modal fade" id="NoiDung" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            @{ var nd = Session["Note"] as Cap24Team3.Models.SinhVien; }
+            @if (nd != null)
+            {
+                <form method="post">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @nd.Ho @nd.Ten: </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <input type="number" name="idSV" value="@nd.ID" required hidden />
+                                    <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@nd.Note</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             }
         </div>
@@ -405,7 +435,7 @@
                                                     <tbody>
                                                         @foreach (var item in diemhp)
                                                         {
-                                                            if (item.HocKyChinhThuc.ToString() == listHK[i])
+                                                            if (item.HocKyKeHoach.ToString() == listHK[i])
                                                             {
                                                                 STT++;
                                                                 <tr>
@@ -506,6 +536,7 @@
                                     </div><!-- end col -->
                                 }
                             </div>
+
                             <style type="text/css">
                                 .hidden {
                                     display: none;
@@ -577,6 +608,15 @@
         });
     </script>
     Session["sinhvien1"] = null;
+}
+@if (Session["Note"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#NoiDung').modal('show');
+        });
+    </script>
+    Session["Note"] = null;
 }
 <script>
     var $rows = $('#table tr');

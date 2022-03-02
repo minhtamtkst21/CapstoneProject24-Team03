@@ -27,31 +27,66 @@ namespace Cap24Team3.Controllers
         public ActionResult DanhSachLop()
         {
             var mailGV = User.Identity.Name;
-            var lopQuanLies = db.LopQuanLies.Include(l => l.KhoaDaoTao).Include(l => l.NganhDaoTao).Where(l => l.ChuNhiem == mailGV);
-            var Lop = new string[lopQuanLies.Count()];
-            var SiSo = new int[lopQuanLies.Count()];
-            var idLop = new int[lopQuanLies.Count()];
-            int stt = 0;
-            foreach (var item in lopQuanLies)
+            if (mailGV != "")
             {
-                Lop[stt] = item.TenLop;
-                idLop[stt] = item.ID;
-                stt++;
-            }
-            for (int i = 0; i < Lop.Length; i++)
-            {
-                foreach (var item in db.SinhViens.ToList())
+                var lopQuanLies = db.LopQuanLies.Where(l => l.ChuNhiem == mailGV).ToList();
+                if (lopQuanLies.Count > 0)
                 {
-                    if (item.LopQuanLy.TenLop == Lop[i])
+                    var Lop = new string[lopQuanLies.Count()];
+                    var SiSo = new int[lopQuanLies.Count()];
+                    var idLop = new int[lopQuanLies.Count()];
+                    int stt = 0;
+                    foreach (var item in lopQuanLies)
                     {
-                        SiSo[i]++;
+                        Lop[stt] = item.TenLop;
+                        idLop[stt] = item.ID;
+                        stt++;
                     }
+                    for (int i = 0; i < Lop.Length; i++)
+                    {
+                        foreach (var item in db.SinhViens.ToList())
+                        {
+                            if (item.LopQuanLy.TenLop == Lop[i])
+                            {
+                                SiSo[i]++;
+                            }
+                        }
+                    }
+                    ViewData["DanhSachLop"] = Lop;
+                    ViewData["SiSo"] = SiSo;
+                    ViewData["idLop"] = idLop;
+                    return View(lopQuanLies.ToList());
+                }
+                else
+                {
+                    TempData["Alert"] = "Chưa có lớp chủ nhiệm!!!";
+                    return View();
                 }
             }
-            ViewData["DanhSachLop"] = Lop;
-            ViewData["SiSo"] = SiSo;
-            ViewData["idLop"] = idLop;
-            return View(lopQuanLies.ToList());
+            TempData["Alert1"] = "Bạn chưa đăng nhập";
+            return View();
+        }
+        public ActionResult UpdateNoiDung(int id)
+        {
+            Session["Note"] = db.SinhViens.Find(id);
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpPost]
+        public ActionResult ThemNoiDung(string NoiDung, int? idSV)
+        {
+            if (idSV == null)
+            {
+                return HttpNotFound();
+            }
+            var sinhvien = db.SinhViens.Find(idSV);
+            sinhvien.Note = NoiDung;
+            db.Entry(sinhvien).State = EntityState.Modified;
+            db.SaveChanges();
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult DanhSachNoteSV(int idLop)
+        {            
+            return View(db.SinhViens.Where(l => l.LopQuanLy.ID == idLop).ToList());
         }
         public ActionResult DanhSachSV(int idLop)
         {
@@ -84,17 +119,26 @@ namespace Cap24Team3.Controllers
         }
         public ActionResult DanhSachDotChinhSua()
         {
-            foreach (var item in db.DotChinhSuaThongTins.Where(s=>s.TinhTrang == true).ToList())
+            var mailGV = User.Identity.Name;
+            if (mailGV != "")
             {
-                if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                foreach (var item in db.DotChinhSuaThongTins.Where(s => s.TinhTrang == true).ToList())
                 {
-                    item.TinhTrang = true;
-                    db.Entry(item).State = EntityState.Modified;
-                    db.SaveChanges();
+                    if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
+                    {
+                        item.TinhTrang = true;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
+                var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
+                return View(chinhSuaThongTins.ToList());
             }
-            var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
-            return View(chinhSuaThongTins.ToList());
+            else
+            {
+                TempData["Alert"] = "Bạn chưa đăng nhập!";
+                return View();
+            }
         }
         public ActionResult TaoDotChinhSua()
         {
