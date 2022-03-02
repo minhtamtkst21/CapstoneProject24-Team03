@@ -12,13 +12,13 @@
         <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="12" PointY="13.5" />
         <EntityTypeShape EntityType="CP24Team03Model.ChinhSuaThongTin" Width="1.5" PointX="7.5" PointY="10.875" />
         <EntityTypeShape EntityType="CP24Team03Model.ChuongTrinhDaoTao" Width="1.5" PointX="6" PointY="7.25" />
-        <EntityTypeShape EntityType="CP24Team03Model.DiemHocPhan" Width="1.5" PointX="6" PointY="17" />
+        <EntityTypeShape EntityType="CP24Team03Model.DiemHocPhan" Width="1.5" PointX="6" PointY="18.75" />
         <EntityTypeShape EntityType="CP24Team03Model.DotChinhSuaThongTin" Width="1.5" PointX="5.25" PointY="13.25" />
-        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="3.75" PointY="17" />
+        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="3.75" PointY="19.75" />
         <EntityTypeShape EntityType="CP24Team03Model.HocPhanDaoTao" Width="1.5" PointX="10.5" PointY="6.75" />
-        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="3.75" PointY="20" />
+        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="3.75" PointY="17" />
         <EntityTypeShape EntityType="CP24Team03Model.KhoiKienThuc" Width="1.5" PointX="8.25" PointY="7.375" />
-        <EntityTypeShape EntityType="CP24Team03Model.LichSuUpLoad" Width="1.5" PointX="3.75" PointY="23.25" />
+        <EntityTypeShape EntityType="CP24Team03Model.LichSuUpLoad" Width="1.5" PointX="3.75" PointY="23" />
         <EntityTypeShape EntityType="CP24Team03Model.LopQuanLy" Width="1.5" PointX="3" PointY="7.125" />
         <EntityTypeShape EntityType="CP24Team03Model.NganhDaoTao" Width="1.5" PointX="0.75" PointY="7.375" />
         <EntityTypeShape EntityType="CP24Team03Model.RangBuocHocPhan" Width="1.5" PointX="12.75" PointY="7.375" />
