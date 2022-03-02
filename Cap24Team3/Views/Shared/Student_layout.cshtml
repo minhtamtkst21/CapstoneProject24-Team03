@@ -26,6 +26,12 @@
                         E-Profile
                     </a>
                 </div><!--logo end-->
+                @if (User.Identity.Name != "")
+                {
+                    @Html.Action("BellTB", "ThongBaos")
+                }
+
+                @Html.Action("ModalXemTB", "ThongBaos")
                 @if (Request.IsAuthenticated)
                 {
                     <div class="ml-auto">
@@ -95,11 +101,11 @@
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
-                {
-                    <div class="alert alert-warning">
-                        @Html.Raw(TempData["Alert"].ToString())
-                    </div>
-                }*@
+            {
+                <div class="alert alert-warning">
+                    @Html.Raw(TempData["Alert"].ToString())
+                </div>
+            }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">

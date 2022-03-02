@@ -20,6 +20,19 @@ namespace Cap24Team3.Controllers
             var thongBaos = db.ThongBaos.Include(t => t.AspNetUser);
             return View(thongBaos.ToList());
         }
+        [ChildActionOnly]
+        public ActionResult BellTB()
+        {
+            var mail = User.Identity.Name;
+            var listTb = db.ThongBaos.Where(t => t.NguoiNhan == mail).ToList();
+            ViewData["BellDB"] = listTb;
+            return PartialView("Bell", new ThongBao());
+        }
+        [ChildActionOnly]
+        public ActionResult ModalXemTB()
+        {
+            return PartialView("ModalTB", new ThongBao());
+        }
         public ActionResult NhanThongBao()
         {
             var mail = User.Identity.Name;
@@ -46,6 +59,7 @@ namespace Cap24Team3.Controllers
             db.Entry(thongBao).State = EntityState.Modified;
             db.SaveChanges();
             Session["XemThongBao"] = thongBao;
+            ViewData["XemThongBao"] = thongBao;
             return Redirect(Request.UrlReferrer.ToString());
         }
         // GET: ThongBaos/Create

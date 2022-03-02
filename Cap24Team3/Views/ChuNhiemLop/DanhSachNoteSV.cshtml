@@ -38,7 +38,7 @@
                             <tbody>
                                 @foreach (var s in Model)
                                 {
-                                    if (s.Note != null)
+                                    if (s.Note != null && s.Note != "")
                                     {
                                         <tr>
                                             <td>@s.MSSV</td>

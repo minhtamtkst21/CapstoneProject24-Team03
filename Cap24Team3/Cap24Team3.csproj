@@ -971,11 +971,11 @@
     <Content Include="Views\ThongBaos\NhanThongBao.cshtml" />
     <Content Include="Views\ThongBaos\TaoThongBao.cshtml" />
     <Content Include="Views\ThongBaos\Bell.cshtml" />
+    <Content Include="Views\ThongBaos\ModalTB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Faculty\Data\" />
-    <Folder Include="Views\ThongBao\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

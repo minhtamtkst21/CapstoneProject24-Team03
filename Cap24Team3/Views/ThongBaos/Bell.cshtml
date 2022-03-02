@@ -1,5 +1,7 @@
-﻿@{
-    var XemThongBao = Session["XemThongBao"] as Cap24Team3.Models.ThongBao;
+﻿
+@{
+    int countTB = 0;
+    var tb = ViewData["BellDB"] as Cap24Team3.Models.ThongBao;
 }
 
 <style>
@@ -12,54 +14,77 @@
         max-height: 4.5em;
         line-height: 1.5em;
     }
+
+    .noti_bubble {
+        position: absolute;
+        top: 1px;
+        right: 25px;
+        padding: 2px 3px 2px 3px;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        font-size: 9px;
+        border-radius: 30px;
+        box-shadow: 1px 1px 1px white;
+    }
+
+    .div-centerr {
+        margin: auto;
+        width: 60%;
+        padding: 10px;
+    }
 </style>
 <div class="col-4" align="right">
-    <div class="nav-link waves-effect dropdown">
-        <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black"><i class="fa fa-bell noti-icon"></i></a>
-        <div class="dropdown-content dropdown-menu-right col-6" style="border-radius: 15px; background-color: #f2f2f2;">
+    <div class="nav-link waves-effect dropdown" style="width: max-content !important;">
+
+        <div class="dropdown-content dropdown-menu-right" style="border-radius: 10px; background-color: #f2f2f2; width: 350px; overflow: auto; height: 230px;">
             <div class="noti-title">
-                <h5 class="m-0" style=" font-family: 'Montserrat'; color: black; text-align:center">
+                <br />
+                <h5 class="m-0" style=" font-family: 'Montserrat', bold; color: black; font-size:25px; text-align:center">
                     Notification
                 </h5>
+                <br />
             </div>
-            @foreach (var item in Model)
+            @foreach (var item in ViewData["BellDB"] as List<Cap24Team3.Models.ThongBao>)
             {
-                <div class="dropdown-item">
-                    <a class="aaa" href="@Url.Action("XemThongBao", new {idTB = item.ID})" >
-                        <h3 class="title" style="font-family: 'Montserrat'; color: black;">@item.TieuDe</h3>
+
+                if (item.TrangThai == true)
+                {
+                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                        &emsp;
+                        @item.TieuDe
+                        <p class="text" style="text-align: left">@item.NoiDung</p>
                     </a>
-                    <p class="text" style="text-align: left">@item.NoiDung</p>
-                </div>
+                    <hr style="width: 85%" />
+                }
+                else
+                {
+                    countTB++;
+                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #bfbfbf; border-radius: 5px; width: 315px;">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                        &emsp;
+                        @item.TieuDe
+                        <i class="fa fa-eye float-right"></i>
+                        <p class="text" style="text-align: left">@item.NoiDung</p>
+                    </a>
+                    <hr style="width: 85%" />
+                }
             }
+
         </div>
+        @if (countTB == 0)
+        {
+            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+                <i class="fa fa-bell noti-icon"></i>
+            </a>
+        }
+        else
+        {
+            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+                <i class="fa fa-bell noti-icon"></i>
+                <span class="noti_bubble">@countTB</span>
+            </a>
+        }
     </div>
 </div>
-@if (Session["XemThongBao"] != null)
-{
-    <div class="modal fade" id="modelTB" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" style="font-family: 'Montserrat'; color: black;">@XemThongBao.TieuDe</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div>@XemThongBao.NoiDung</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-@if (Session["XemThongBao"] != null)
-{
-    <script>
-        $(document).ready(function () {
-            $('#modelTB').modal('show');
-        });
-    </script>
-    Session["XemThongBao"] = null;
-}
