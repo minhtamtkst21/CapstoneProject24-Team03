@@ -7,7 +7,6 @@
     var sv = new Cap24Team3.Models.SinhVien();
     if (TempData["Diemso"] != null)
     {
-        diem = TempData["Diemso"] as List<Cap24Team3.Models.DiemHocPhan>;
         sv = TempData["Sinhvien"] as Cap24Team3.Models.SinhVien;
     }
 }
@@ -85,7 +84,7 @@
                                                     <td>@item.HocPhan</td>
                                                     <td>@item.TenHocPhan</td>
                                                     <td>@item.SoTinChi</td>
-                                                    @if ((Cap24Team3.Models.HocPhanDaoTao as List<Cap24Team3.Models.HocPhanDaoTao>))
+                                                    @if (item.BBTC == true)
                                                     {
                                                         <td title="Bắt Buộc">BB</td>
                                                     }
@@ -153,23 +152,22 @@
                                                             }
                                                         }
                                                     </td>
-                                                    @if (diem != null)
-                                                    {
-                                                        var diemsv = diem.Where(s => s.MSSV == sv.MSSV).Where(s => s.HocPhan.Trim() == item.MaHocPhan.Trim()).ToList();
-                                                        if (diemsv.Count() > 0)
+                                                    @{
+                                                        if (item.Diem10 != null)
                                                         {
                                                             <td>
-                                                                @diemsv.Last().Diem10
-                                                                @if (diemsv.Last().QuaMon == true)
+                                                                @item.Diem10
+                                                                @if (item.QuaMon == true)
                                                                 {
                                                                     <i class="fa fa-check" style="color: green;"></i>
-                                                                }
+                                                                
+                                                                    }
                                                                 else
                                                                 {
                                                                     <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
                                                                 }
                                                             </td>
-                                                            if (@diemsv.Last().QuaMon == true)
+                                                            if (item.QuaMon == true)
                                                             {
                                                                 <td></td>
                                                             }
@@ -182,10 +180,6 @@
                                                         {
                                                             <td></td>
                                                         }
-                                                    }
-                                                    else
-                                                    {
-                                                        <td>0</td>
                                                     }
                                                 </tr>
                                             }

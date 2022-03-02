@@ -82,7 +82,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         TempData["Alert"] = "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
                                     }
-                                    savediem.HocKyKeHoach = db.HocKyDaoTaos.FirstOrDefault(s=>s.STT == hockyhp - hockysv + 1).ID;
+                                    savediem.HocKyKeHoach = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == hockyhp - hockysv + 1).ID;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
                                     savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
                                     savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());
@@ -91,6 +91,18 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
                                     savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null || workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
                                     savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
+                                    bool bbtc = false;
+                                    foreach (var hp in db.HocPhanDaoTaos.ToList())
+                                    {
+                                        if (workSheet.Cells[rowIterator, 4].Value != null)
+                                            if (hp.MaHocPhan == workSheet.Cells[rowIterator, 4].Value.ToString())
+                                                if (hp.ID_HocPhanTuChon == null)
+                                                {
+                                                    bbtc = true;
+                                                    break;
+                                                }
+                                    }
+                                    savediem.BBTC = bbtc;
                                     if (mssvmoi != savediem.MSSV.ToLower())
                                     {
                                         dem++;
