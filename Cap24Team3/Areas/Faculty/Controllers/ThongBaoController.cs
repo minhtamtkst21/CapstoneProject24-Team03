@@ -26,13 +26,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 ViewData["DSLop"] = db.LopQuanLies.OrderByDescending(l => l.ID_Khoa).ToList();
                 ViewData["DSKhoa"] = db.KhoaDaoTaos.OrderByDescending(l => l.ID).ToList();
                 ViewData["DSNganh"] = db.NganhDaoTaos.ToList();
-                var nguoiTao = db.AspNetUsers.FirstOrDefault(n => n.Email == mail);
-                ViewData["NguoiTao"] = nguoiTao;
+                
                 return View();
             }
             else
             {
-                TempData["Alert"] = "Yêu cầu đăng nhập";
+                TempData["AlertCreate"] = "Yêu cầu đăng nhập";
                 return View();
             }
         }
@@ -48,7 +47,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (idLop != null)
+                    if(idLop != null && idNganh != null && idKhoa != null)
+                    {
+                        TempData["AlertCreate"] = "Vui lòng không chọn cả ba cột người nhận";
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
+                    else if (idLop != null)
                     {
                         for (int i = 0; i < idLop.Length; i++)
                         {
@@ -71,7 +75,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         }
                         db.SaveChanges();
                     }
-                    if (idNganh != null && idKhoa != null)
+                    else if (idNganh != null && idKhoa != null)
                     {
                         for (int i = 0; i < idNganh.Length; i++)
                         {
@@ -95,6 +99,37 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             }
                         }
                         db.SaveChanges();
+                    }
+                    else if(idNganh != null && idKhoa == null)
+                    {
+                        for (int i = 0; i < idNganh.Length; i++)
+                        {
+                            var listNganh = db.NganhDaoTaos.Find(idNganh[i]);
+                            var listsv = db.SinhViens.Where(s => s.NganhDaoTao.ID == listNganh.ID).ToList();
+                            foreach (var sv in listsv)
+                            {
+                                string mail = sv.Email_1;
+                                var thongBao = new ThongBao();
+                                thongBao.Ngay = ngay;
+                                thongBao.TieuDe = tieuDe;
+                                thongBao.NoiDung = noiDung;
+                                thongBao.NguoiGui = nguoiGui;
+                                thongBao.NguoiNhan = mail;
+                                thongBao.TrangThai = false;
+                                db.Entry(thongBao).State = EntityState.Added;
+                            }
+                        }
+                        db.SaveChanges();
+                    }
+                    else if(idNganh == null && idKhoa != null)
+                    {
+                        TempData["AlertCreate"] = "Vui lòng chọn ngành theo khóa mà bạn muốn gửi thông báo";
+                        return Redirect(Request.UrlReferrer.ToString());
+                    }
+                    else
+                    {
+                        TempData["AlertCreate"] = "Vui lòng chọn khóa ngành hoặc chọn lớp muốn gửi thông báo";
+                        return Redirect(Request.UrlReferrer.ToString());
                     }
                 }
                 return RedirectToAction("Index");

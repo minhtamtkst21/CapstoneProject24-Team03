@@ -44,7 +44,7 @@
                                         <td>@s.NoiDung</td>
                                         <td>@s.NguoiNhan</td>
                                         <td>@s.Ngay</td>
-                                        <td>@s.AspNetUser.Email</td>
+                                        <td>@s.NguoiGui</td>
                                         @if (s.TrangThai == true)
                                         {
                                             <td>
@@ -86,7 +86,7 @@
                     @Html.DisplayNameFor(model => model.NguoiNhan)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.AspNetUser.Email)
+                    @Html.DisplayNameFor(model => model.NguoiGui)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TrangThai)
@@ -110,7 +110,7 @@
                         @Html.DisplayFor(modelItem => item.NguoiNhan)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                        @Html.DisplayFor(modelItem => item.NguoiGui)
                     </td>
                     @if (item.TrangThai == true)
                     {

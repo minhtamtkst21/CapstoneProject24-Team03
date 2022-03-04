@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CP24Team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CP24Team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -104,6 +104,7 @@
           <Property Name="QuaMon" Type="bit" />
           <Property Name="LichSu" Type="int" />
           <Property Name="HocKyDangKy" Type="int" />
+          <Property Name="BBTC" Type="bit" />
         </EntityType>
         <EntityType Name="DotChinhSuaThongTin">
           <Key>
@@ -357,30 +358,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DiemHocPhan_HocKyDaoTao3">
-          <End Role="HocKyDaoTao" Type="Self.HocKyDaoTao" Multiplicity="0..1" />
-          <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HocKyDaoTao">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DiemHocPhan">
-              <PropertyRef Name="HocKyKeHoach" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DiemHocPhan_HocKyDaoTao4">
-          <End Role="HocKyDaoTao" Type="Self.HocKyDaoTao" Multiplicity="0..1" />
-          <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HocKyDaoTao">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DiemHocPhan">
-              <PropertyRef Name="HocKyDangKy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DiemHocPhan_LichSuUpLoad">
           <End Role="LichSuUpLoad" Type="Self.LichSuUpLoad" Multiplicity="0..1" />
           <End Role="DiemHocPhan" Type="Self.DiemHocPhan" Multiplicity="*" />
@@ -537,18 +514,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ThongBao_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ThongBao">
-              <PropertyRef Name="NguoiGui" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CP24Team03ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -608,14 +573,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao3" Association="Self.FK_DiemHocPhan_HocKyDaoTao3">
-            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTao" />
-            <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DiemHocPhan_HocKyDaoTao4" Association="Self.FK_DiemHocPhan_HocKyDaoTao4">
-            <End Role="HocKyDaoTao" EntitySet="HocKyDaoTao" />
-            <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
-          </AssociationSet>
           <AssociationSet Name="FK_DiemHocPhan_LichSuUpLoad" Association="Self.FK_DiemHocPhan_LichSuUpLoad">
             <End Role="LichSuUpLoad" EntitySet="LichSuUpLoad" />
             <End Role="DiemHocPhan" EntitySet="DiemHocPhan" />
@@ -668,13 +625,8 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="SinhVien" EntitySet="SinhVien" />
           </AssociationSet>
-          <AssociationSet Name="FK_ThongBao_AspNetUsers" Association="Self.FK_ThongBao_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ThongBao" EntitySet="ThongBao" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP24Team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -785,6 +737,7 @@
           <NavigationProperty Name="HocKyDaoTao" Relationship="Self.FK_DiemHocPhan_HocKyDaoTao3" FromRole="DiemHocPhan" ToRole="HocKyDaoTao" />
           <NavigationProperty Name="HocKyDaoTao1" Relationship="Self.FK_DiemHocPhan_HocKyDaoTao4" FromRole="DiemHocPhan" ToRole="HocKyDaoTao" />
           <NavigationProperty Name="LichSuUpLoad" Relationship="Self.FK_DiemHocPhan_LichSuUpLoad" FromRole="DiemHocPhan" ToRole="LichSuUpLoad" />
+          <Property Name="BBTC" Type="Boolean" />
         </EntityType>
         <EntityType Name="DotChinhSuaThongTin">
           <Key>
@@ -1445,6 +1398,7 @@
           <EntitySetMapping Name="DiemHocPhans">
             <EntityTypeMapping TypeName="CP24Team03Model.DiemHocPhan">
               <MappingFragment StoreEntitySet="DiemHocPhan">
+                <ScalarProperty Name="BBTC" ColumnName="BBTC" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MSSV" ColumnName="MSSV" />
                 <ScalarProperty Name="HocPhan" ColumnName="HocPhan" />
