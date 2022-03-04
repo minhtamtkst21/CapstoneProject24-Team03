@@ -16,7 +16,7 @@ namespace Cap24Team3
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "SinhVien", action = "XemHocPhanDT", id = UrlParameter.Optional }
+                defaults: new { controller = "ThongBaos", action = "NhanThongBao", id = UrlParameter.Optional }
             );
         }
     }
