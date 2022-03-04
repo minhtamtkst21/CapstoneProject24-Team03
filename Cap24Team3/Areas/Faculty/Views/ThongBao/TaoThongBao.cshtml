@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "TaoThongBao";
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
-    var nguoitao = ViewData["NguoiTao"] as Cap24Team3.Models.AspNetUser;
+    
 }
 
 <style>
@@ -30,7 +30,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card-box taskboard-box">
-                @if (TempData["Alert"] != null)
+                @if (TempData["AlertCreate"] != null)
                 {
                     <style>
                         .div-centerr {
@@ -40,7 +40,7 @@
                         }
                     </style>
                     <div class="alert alert-warning col-6 div-centerr" align="center">
-                        <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["Alert"].ToString())
+                        <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["AlertCreate"].ToString())
                     </div>
                 }
                 else
@@ -57,7 +57,7 @@
                         <textarea class="form-control" id="noiDung" name="noiDung" rows="3" required></textarea>
                         <br>
                         <input type="datetime" name="ngay" id="ngay" class="form-control" value="@DateTime.Now" hidden />
-                        <input type="text" name="nguoiGui" id="nguoiGui" class="form-control" value="@nguoitao.Id" hidden />
+                        <input type="text" name="nguoiGui" id="nguoiGui" class="form-control" value="@User.Identity.Name" hidden />
                         <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Người nhận</p>
                         @*<input type="text" name="nguoiNhan" id="nguoiNhan" class="form-control" />*@
                         <div class="row col-12">
@@ -65,7 +65,7 @@
                                 <label class="form-check-label">
                                     @foreach (var nganh in ViewData["DSNganh"] as List<Cap24Team3.Models.NganhDaoTao>)
                                     {
-                                        <input type="checkbox" class="form-check-input" name="idNganh" id="idNganh" value="@nganh.Nganh">
+                                        <input type="checkbox" class="form-check-input" name="idNganh" id="idNganh" value="@nganh.ID">
                                         <span style="font-family: 'Montserrat'; color: black;">Ngành @nganh.Nganh</span>
                                         <br />
                                     }
