@@ -1,0 +1,73 @@
+﻿@model Cap24Team3.Models.ThongBao
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ThongBao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TieuDe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TieuDe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoiDung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoiDung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ngay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ngay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NguoiNhan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NguoiNhan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

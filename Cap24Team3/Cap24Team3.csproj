@@ -188,6 +188,7 @@
     <Compile Include="Areas\Faculty\Controllers\ChuongTrinhDaoTaoController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DanhSachSinhVienController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DiemHocPhansController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\ThongBaoController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuNhiemLopController.cs" />
@@ -607,6 +608,9 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\ThongBao\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\ThongBao\TaoThongBao.cshtml" />
+    <Content Include="Areas\Faculty\Views\ThongBao\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -717,6 +721,7 @@
     <Content Include="Student_assets\js\froogaloop2.min.js" />
     <Content Include="Student_assets\js\html5lightbox.js" />
     <Content Include="Student_assets\js\isotope.js" />
+    <Content Include="Student_assets\js\jquery-latest.min.js" />
     <Content Include="Student_assets\js\jquery.js" />
     <Content Include="Student_assets\js\scripts.js" />
     <Content Include="Student_assets\js\skins\default\html5boxplayer_caption.png" />

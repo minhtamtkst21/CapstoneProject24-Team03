@@ -1,68 +1,23 @@
-﻿using System;
+﻿using Cap24Team3.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Cap24Team3.Models;
 
-namespace Cap24Team3.Controllers
+namespace Cap24Team3.Areas.Faculty.Controllers
 {
-    public class ThongBaosController : Controller
+    public class ThongBaoController : Controller
     {
         private Cap24 db = new Cap24();
-
-        // GET: ThongBaos
+        // GET: Faculty/ThongBao
         public ActionResult Index()
         {
-            var thongBaos = db.ThongBaos.Include(t => t.AspNetUser);
+            var thongBaos = db.ThongBaos.ToList();
             return View(thongBaos.ToList());
         }
-        [ChildActionOnly]
-        public ActionResult BellTB()
-        {
-            var mail = User.Identity.Name;
-            var listTb = db.ThongBaos.Where(t => t.NguoiNhan == mail).ToList();
-            ViewData["BellDB"] = listTb;
-            return PartialView("Bell", new ThongBao());
-        }
-        [ChildActionOnly]
-        public ActionResult ModalXemTB()
-        {
-            return PartialView("ModalTB", new ThongBao());
-        }
-        public ActionResult NhanThongBao()
-        {
-            var mail = User.Identity.Name;
-            if (mail != "")
-            {
-                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
-                var thongBaos = db.ThongBaos.Where(t => t.NguoiNhan == sinhvien.Email_1).ToList();
-                foreach (var item in thongBaos)
-                {
-                    ViewData["thongbao"] = item;
-                }
-                return View(thongBaos.ToList());
-            }
-            else
-            {
-                TempData["Alert"] = "Yêu cầu đăng nhập";
-                return View();
-            }
-        }
-        public ActionResult XemThongBao(int idTB)
-        {
-            var thongBao = db.ThongBaos.FirstOrDefault(t => t.ID == idTB);
-            thongBao.TrangThai = true;
-            db.Entry(thongBao).State = EntityState.Modified;
-            db.SaveChanges();
-            Session["XemThongBao"] = thongBao;
-            ViewData["XemThongBao"] = thongBao;
-            return Redirect(Request.UrlReferrer.ToString());
-        }
-        // GET: ThongBaos/Create
         public ActionResult TaoThongBao()
         {
             var mail = User.Identity.Name;
@@ -79,7 +34,7 @@ namespace Cap24Team3.Controllers
             {
                 TempData["Alert"] = "Yêu cầu đăng nhập";
                 return View();
-            }           
+            }
         }
 
         // POST: ThongBaos/Create
@@ -146,39 +101,6 @@ namespace Cap24Team3.Controllers
             }
             return RedirectToAction("Index");
         }
-        // GET: ThongBaos/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ThongBao thongBao = db.ThongBaos.Find(id);
-            if (thongBao == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.NguoiGui = new SelectList(db.AspNetUsers, "Id", "Email", thongBao.NguoiGui);
-            return View(thongBao);
-        }
-
-        // POST: ThongBaos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,TieuDe,NoiDung,Ngay,NguoiGui,NguoiNhan")] ThongBao thongBao)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(thongBao).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.NguoiGui = new SelectList(db.AspNetUsers, "Id", "Email", thongBao.NguoiGui);
-            return View(thongBao);
-        }
-
         // GET: ThongBaos/Delete/5
         public ActionResult Delete(int? id)
         {
