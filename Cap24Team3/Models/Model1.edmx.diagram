@@ -4,52 +4,50 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b93a4cdae0a644b2a4324ab53e607b1c" Name="Diagram1">
-        <EntityTypeShape EntityType="CP24Team03Model.C__MigrationHistory" Width="1.5" PointX="10.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetRole" Width="1.5" PointX="11.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="16.25" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="16.25" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="14" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.ChinhSuaThongTin" Width="1.5" PointX="10.5" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.ChuongTrinhDaoTao" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.DiemHocPhan" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.DotChinhSuaThongTin" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.HocPhanDaoTao" Width="1.5" PointX="7.5" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.KhoiKienThuc" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.LichSuUpLoad" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.LopQuanLy" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.NganhDaoTao" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.RangBuocHocPhan" Width="1.5" PointX="9.75" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.SinhVien" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.sysdiagram" Width="1.5" PointX="10.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.ThongBao" Width="1.5" PointX="16.25" PointY="16.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CP24Team03Model.TinhTrang" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
-        <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ThongBao_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_SinhVien" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_HocKyDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_KhoaDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_NganhDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_KhoiKienThuc_ChuongTrinhDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao3" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_DiemHocPhan_HocKyDaoTao4" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_DotChinhSuaThongTin_LopQuanLy" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_HocPhanBatBuoc_KhoiKienThuc" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_HocPhanDaoTao_HocPhanDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_HocPhanKhac_HocPhanBatBuoc" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_RangBuocHocPhan_HocPhanBatBuoc" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_LopQuanLy_KhoaDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_KhoaDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_LopQuanLy_NganhDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_LopQuanLy" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_NganhDaoTao" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_TinhTrang" ManuallyRouted="false" />
-        <AssociationConnector Association="CP24Team03Model.AspNetUserRoles" ManuallyRouted="false" />
+      <Diagram DiagramId="b93a4cdae0a644b2a4324ab53e607b1c" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CP24Team03Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetRole" Width="1.5" PointX="9.75" PointY="14.75" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="17.5" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="14.875" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="12" PointY="13.5" />
+        <EntityTypeShape EntityType="CP24Team03Model.ChinhSuaThongTin" Width="1.5" PointX="7.5" PointY="10.875" />
+        <EntityTypeShape EntityType="CP24Team03Model.ChuongTrinhDaoTao" Width="1.5" PointX="6" PointY="7.25" />
+        <EntityTypeShape EntityType="CP24Team03Model.DiemHocPhan" Width="1.5" PointX="10" PointY="1.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.DotChinhSuaThongTin" Width="1.5" PointX="5.25" PointY="13.25" />
+        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="3.75" PointY="17.25" />
+        <EntityTypeShape EntityType="CP24Team03Model.HocPhanDaoTao" Width="1.5" PointX="10.5" PointY="6.75" />
+        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="3.75" PointY="19.75" />
+        <EntityTypeShape EntityType="CP24Team03Model.KhoiKienThuc" Width="1.5" PointX="8.25" PointY="7.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.LichSuUpLoad" Width="1.5" PointX="7.75" PointY="2.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.LopQuanLy" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="CP24Team03Model.NganhDaoTao" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.RangBuocHocPhan" Width="1.5" PointX="12.75" PointY="7.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.SinhVien" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="CP24Team03Model.sysdiagram" Width="1.5" PointX="12.75" PointY="1.125" />
+        <EntityTypeShape EntityType="CP24Team03Model.ThongBao" Width="1.5" PointX="14.25" PointY="11.625" />
+        <EntityTypeShape EntityType="CP24Team03Model.TinhTrang" Width="1.5" PointX="3" PointY="2.625" />
+        <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CP24Team03Model.FK_ThongBao_AspNetUsers" />
+        <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin" />
+        <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_SinhVien" />
+        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_HocKyDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_KhoaDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_NganhDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_KhoiKienThuc_ChuongTrinhDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad" />
+        <AssociationConnector Association="CP24Team03Model.FK_DotChinhSuaThongTin_LopQuanLy" />
+        <AssociationConnector Association="CP24Team03Model.FK_HocPhanBatBuoc_KhoiKienThuc" />
+        <AssociationConnector Association="CP24Team03Model.FK_HocPhanDaoTao_HocPhanDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_HocPhanKhac_HocPhanBatBuoc" />
+        <AssociationConnector Association="CP24Team03Model.FK_RangBuocHocPhan_HocPhanBatBuoc" />
+        <AssociationConnector Association="CP24Team03Model.FK_LopQuanLy_KhoaDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_KhoaDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_LopQuanLy_NganhDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_LopQuanLy" />
+        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_NganhDaoTao" />
+        <AssociationConnector Association="CP24Team03Model.FK_SinhVien_TinhTrang" />
+        <AssociationConnector Association="CP24Team03Model.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -28,8 +28,6 @@ namespace Cap24Team3.Models
         public Nullable<int> HocKyDangKy { get; set; }
         public Nullable<bool> BBTC { get; set; }
     
-        public virtual HocKyDaoTao HocKyDaoTao { get; set; }
-        public virtual HocKyDaoTao HocKyDaoTao1 { get; set; }
         public virtual LichSuUpLoad LichSuUpLoad { get; set; }
     }
 }
