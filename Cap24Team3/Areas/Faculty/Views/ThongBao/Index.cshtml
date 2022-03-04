@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Cap24Team3.Models.ThongBao>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<style>
+    .text {
+        display: block; /* or inline-block */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        overflow: hidden;
+        max-height: 4.5em;
+        line-height: 1.5em;
+    }
+</style>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-sinhviens-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">QUẢN LÝ THÔNG BÁO</h4>
+            <div class="page-title-right">
+                <form>
+                    <br />
+                    <a href="@Url.Action("TaoThongBao", "ThongBao")" class="btn btn-secondary btn-rounded">Tạo mới</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="table">
+                        <thead>
+                            <tr>
+                                <th>Tiêu đề</th>
+                                <th>Nội dung</th>
+                                <th>Người nhận</th>
+                                <th>Ngày gửi</th>
+                                <th>Người gửi</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.TieuDe</td>
+                                    <td>@s.NoiDung</td>
+                                    <td>@s.NguoiNhan</td>
+                                    <td>@s.Ngay</td>
+                                    <td>@s.AspNetUser.Email</td>
+                                    @if (s.TrangThai == true)
+                                    {
+                                        <td>
+                                            Đã đọc
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            Chưa đọc
+                                        </td>
+                                    }
+                                <td>
+                                    <a href="@Url.Action("Delete", "ThongBao" , new {id = s.ID})"><i class="fa fa-trash"></i></a>
+                                </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
