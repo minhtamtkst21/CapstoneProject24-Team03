@@ -75,12 +75,8 @@
                                             if (item.HocKyKeHoach.ToString() == listHK)
                                             {
                                                 <tr>
-                                                    @STT++;
+                                                    @{STT++; }
                                                     <td>@STT</td>
-                                                    else
-                                                    {
-                                                    <td></td>
-                                                    }
                                                     <td>@item.HocPhan</td>
                                                     <td>@item.TenHocPhan</td>
                                                     <td>@item.SoTinChi</td>
@@ -160,8 +156,8 @@
                                                                 @if (item.QuaMon == true)
                                                                 {
                                                                     <i class="fa fa-check" style="color: green;"></i>
-                                                                
-                                                                    }
+
+                                                                }
                                                                 else
                                                                 {
                                                                     <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
@@ -196,32 +192,45 @@
 </div>
 <hr>
 <!-- Modal -->
-<div class="modal fade" id="editHK" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Roboto'; color: black; font-weight: 600;">Điểu chỉnh học kỳ</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+@if (Session["HocPhanDC"] != null)
+{
+    var mh = Session["HocPhanDC"] as Cap24Team3.Models.DiemHocPhan;
+    <div class="modal fade" id="editHK" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Roboto'; color: black; font-weight: 600;">Điểu chỉnh học kỳ @mh.TenHocPhan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="@Url.Action("LuuHP")">
+                    <div class="modal-body">
+                        <select class="form-control col-6" name="hocky">
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i.ToString()">@i.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <input type="submit" class="btn btn-primary" value="Lưu" />
+                    </div>
+                </form>
             </div>
-
-            <form action="@Url.Action("LuuHP")">
-                <div class="modal-body">
-                    <select class="form-control col-6">
-                        <option selected>Chọn học kỳ</option>
-                        @for (int i = 1; i <= 12; i++)
-                        {
-                            <option>@i</option>
-                        }
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <input type="submit" class="btn btn-primary" value="Lưu" />
-                </div>
-            </form>
         </div>
     </div>
-</div>
+}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+@if (Session["HocPhanDC"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#editHK').modal('show');
+        });
+    </script>
+}
