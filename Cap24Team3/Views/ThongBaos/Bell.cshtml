@@ -18,7 +18,7 @@
     .noti_bubble {
         position: absolute;
         top: 1px;
-        right: 25px;
+        right: 8px;
         padding: 2px 3px 2px 3px;
         background-color: red;
         color: white;
@@ -65,23 +65,22 @@
                         <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                         &emsp;
                         @item.TieuDe
-                        <i class="fa fa-eye float-right"></i>
+                        <i class="fa fa-eye-slash float-right"></i>
                         <p class="text" style="text-align: left">@item.NoiDung</p>
                     </a>
                     <hr style="width: 85%" />
                 }
             }
-
         </div>
         @if (countTB == 0)
         {
-            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+            <a href="" class="drop-btn aaa" data-toggle="dropdown" style="color: black">
                 <i class="fa fa-bell noti-icon"></i>
             </a>
         }
         else
         {
-            <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="color: black">
+            <a href="" class="drop-btn aaa" data-toggle="dropdown" style="color: black">
                 <i class="fa fa-bell noti-icon"></i>
                 <span class="noti_bubble">@countTB</span>
             </a>

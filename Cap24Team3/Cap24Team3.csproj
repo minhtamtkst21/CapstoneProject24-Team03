@@ -972,9 +972,7 @@
     <Content Include="Views\ChuNhiemLop\DanhSachDotChinhSua.cshtml" />
     <Content Include="Views\ChuNhiemLop\TaoDotChinhSua.cshtml" />
     <Content Include="Views\ChuNhiemLop\DanhSachNoteSV.cshtml" />
-    <Content Include="Views\ThongBaos\Index.cshtml" />
     <Content Include="Views\ThongBaos\NhanThongBao.cshtml" />
-    <Content Include="Views\ThongBaos\TaoThongBao.cshtml" />
     <Content Include="Views\ThongBaos\Bell.cshtml" />
     <Content Include="Views\ThongBaos\ModalTB.cshtml" />
     <Content Include="Views\SinhVien\DangKyKHDT.cshtml" />
