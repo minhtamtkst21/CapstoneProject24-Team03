@@ -5,18 +5,19 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b93a4cdae0a644b2a4324ab53e607b1c" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CP24Team03Model.Thamso" Width="1.5" PointX="1.5" PointY="4.5" />
         <EntityTypeShape EntityType="CP24Team03Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="11.125" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetRole" Width="1.5" PointX="9.75" PointY="14.75" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="17.5" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="14.875" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="12" PointY="13.5" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetRole" Width="1.5" PointX="9.75" PointY="12.875" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="14" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="11.375" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="12" PointY="11.75" />
         <EntityTypeShape EntityType="CP24Team03Model.ChinhSuaThongTin" Width="1.5" PointX="7.5" PointY="10.875" />
         <EntityTypeShape EntityType="CP24Team03Model.ChuongTrinhDaoTao" Width="1.5" PointX="6" PointY="7.25" />
         <EntityTypeShape EntityType="CP24Team03Model.DiemHocPhan" Width="1.5" PointX="10" PointY="1.375" />
         <EntityTypeShape EntityType="CP24Team03Model.DotChinhSuaThongTin" Width="1.5" PointX="5.25" PointY="13.25" />
-        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="3.75" PointY="17.25" />
+        <EntityTypeShape EntityType="CP24Team03Model.HocKyDaoTao" Width="1.5" PointX="3.75" PointY="20" />
         <EntityTypeShape EntityType="CP24Team03Model.HocPhanDaoTao" Width="1.5" PointX="10.5" PointY="6.75" />
-        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="3.75" PointY="19.75" />
+        <EntityTypeShape EntityType="CP24Team03Model.KhoaDaoTao" Width="1.5" PointX="3.75" PointY="17.25" />
         <EntityTypeShape EntityType="CP24Team03Model.KhoiKienThuc" Width="1.5" PointX="8.25" PointY="7.375" />
         <EntityTypeShape EntityType="CP24Team03Model.LichSuUpLoad" Width="1.5" PointX="7.75" PointY="2.375" />
         <EntityTypeShape EntityType="CP24Team03Model.LopQuanLy" Width="1.5" PointX="3" PointY="7.125" />
@@ -24,11 +25,10 @@
         <EntityTypeShape EntityType="CP24Team03Model.RangBuocHocPhan" Width="1.5" PointX="12.75" PointY="7.375" />
         <EntityTypeShape EntityType="CP24Team03Model.SinhVien" Width="1.5" PointX="5.25" PointY="0.75" />
         <EntityTypeShape EntityType="CP24Team03Model.sysdiagram" Width="1.5" PointX="12.75" PointY="1.125" />
-        <EntityTypeShape EntityType="CP24Team03Model.ThongBao" Width="1.5" PointX="14.25" PointY="11.625" />
+        <EntityTypeShape EntityType="CP24Team03Model.ThongBao" Width="1.5" PointX="12.75" PointY="4.125" />
         <EntityTypeShape EntityType="CP24Team03Model.TinhTrang" Width="1.5" PointX="3" PointY="2.625" />
         <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="CP24Team03Model.FK_ThongBao_AspNetUsers" />
         <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin" />
         <AssociationConnector Association="CP24Team03Model.FK_ChinhSuaThongTin_SinhVien" />
         <AssociationConnector Association="CP24Team03Model.FK_ChuongTrinhDaoTao_HocKyDaoTao" />
@@ -48,7 +48,7 @@
         <AssociationConnector Association="CP24Team03Model.FK_SinhVien_NganhDaoTao" />
         <AssociationConnector Association="CP24Team03Model.FK_SinhVien_TinhTrang" />
         <AssociationConnector Association="CP24Team03Model.AspNetUserRoles" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

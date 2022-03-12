@@ -1,0 +1,138 @@
+﻿@model IEnumerable<Cap24Team3.Models.ThongBao>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+}
+
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Thông Báo</h2>
+            <ul>
+            </ul>
+        </div><!--pager-content end-->
+        <h4 class="page-titlee">E-Profile</h4>
+    </div>
+</section><!--pager-section end-->
+<hr>
+<div class="page-content">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container">
+            <hr />
+            <div class="col-xl-12">
+                <div class="card-box">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" id="table">
+                            <thead>
+                                <tr>
+                                    <th>Tiêu đề</th>
+                                    <th>Nội dung</th>
+                                    <th>Người nhận</th>
+                                    <th>Ngày gửi</th>
+                                    <th>Người gửi</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model)
+                                {
+                                    <tr>
+                                        <td>@s.TieuDe</td>
+                                        <td>@s.NoiDung</td>
+                                        <td>@s.NguoiNhan</td>
+                                        <td>@s.Ngay</td>
+                                        <td>@s.NguoiGui</td>
+                                        @if (s.TrangThai == true)
+                                        {
+                                            <td>
+                                                Đã đọc
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                Chưa đọc
+                                            </td>
+                                        }
+                                        <td>
+                                            <a href="@Url.Action("Delete", new { id = s.ID })"><i class="fa fa-address-book"></i> Xoá</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div> <!-- end .table-responsive-->
+                </div> <!-- end card-box -->
+            </div> <!-- end col -->
+        </div>
+        <p>
+            @Html.ActionLink("Create New", "TaoThongBao")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TieuDe)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoiDung)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ngay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NguoiNhan)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NguoiGui)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrangThai)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TieuDe)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoiDung)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ngay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiNhan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NguoiGui)
+                    </td>
+                    @if (item.TrangThai == true)
+                    {
+                        <td>
+                            Đã đọc
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Chưa đọc
+                        </td>
+                    }
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

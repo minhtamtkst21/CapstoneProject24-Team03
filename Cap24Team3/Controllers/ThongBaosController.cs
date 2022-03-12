@@ -17,7 +17,7 @@ namespace Cap24Team3.Controllers
         // GET: ThongBaos
         public ActionResult Index()
         {
-            var thongBaos = db.ThongBaos.Include(t => t.AspNetUser);
+            var thongBaos = db.ThongBaos;
             return View(thongBaos.ToList());
         }
         [ChildActionOnly]

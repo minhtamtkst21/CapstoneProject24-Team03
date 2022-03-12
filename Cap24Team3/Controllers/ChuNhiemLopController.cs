@@ -85,7 +85,7 @@ namespace Cap24Team3.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult DanhSachNoteSV(int idLop)
-        {            
+        {
             return View(db.SinhViens.Where(l => l.LopQuanLy.ID == idLop).ToList());
         }
         public ActionResult DanhSachSV(int idLop)
@@ -192,8 +192,10 @@ namespace Cap24Team3.Controllers
             var sinhvien = db.SinhViens.Find(id);
             var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
             var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
-            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
-            var hocPhanDaoTaos = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
+            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).Where(s => s.ID_Khoa == khoa.ID).ToList();
+            if (ctdt == null)
+                return Redirect(Request.UrlReferrer.ToString());
+            var hocPhanDaoTaos = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.FirstOrDefault().ID).ToList();
             ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
             ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
@@ -261,7 +263,7 @@ namespace Cap24Team3.Controllers
                 diemtbchung[i] = Math.Round(DiemTong / Somon, 2);
             }
             var khoikienthucmoi = new List<string>();
-            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.FirstOrDefault().ID).ToList())
                 if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
                     khoikienthucmoi.Add(item.MaKhoiKienThuc);
             var tongsotinchi = 0;

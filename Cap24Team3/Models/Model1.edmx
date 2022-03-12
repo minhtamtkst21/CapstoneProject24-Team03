@@ -96,14 +96,14 @@
           <Property Name="MSSV" Type="nvarchar" MaxLength="20" />
           <Property Name="HocPhan" Type="nvarchar" MaxLength="50" />
           <Property Name="TenHocPhan" Type="nvarchar(max)" />
-          <Property Name="HocKyKeHoach" Type="int" />
+          <Property Name="HocKyKeHoach" Type="int" Nullable="false" />
           <Property Name="SoTinChi" Type="int" />
           <Property Name="Diem10" Type="varchar" MaxLength="4" />
           <Property Name="Diem4" Type="varchar" MaxLength="4" />
           <Property Name="DiemChu" Type="varchar" MaxLength="2" />
           <Property Name="QuaMon" Type="bit" />
           <Property Name="LichSu" Type="int" />
-          <Property Name="HocKyDangKy" Type="int" />
+          <Property Name="HocKyDangKy" Type="int" Nullable="false" />
           <Property Name="BBTC" Type="bit" />
         </EntityType>
         <EntityType Name="DotChinhSuaThongTin">
@@ -221,6 +221,14 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Thamso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ma" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Giatri" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ThongBao">
           <Key>
@@ -514,18 +522,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ThongBao_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="ThongBao" Type="Self.ThongBao" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ThongBao">
-              <PropertyRef Name="NguoiGui" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CP24Team03ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -547,6 +543,7 @@
           <EntitySet Name="RangBuocHocPhan" EntityType="Self.RangBuocHocPhan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SinhVien" EntityType="Self.SinhVien" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Thamso" EntityType="Self.Thamso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ThongBao" EntityType="Self.ThongBao" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhTrang" EntityType="Self.TinhTrang" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ChinhSuaThongTin_DotChinhSuaThongTin" Association="Self.FK_ChinhSuaThongTin_DotChinhSuaThongTin">
@@ -637,16 +634,13 @@
             <End Role="TinhTrang" EntitySet="TinhTrang" />
             <End Role="SinhVien" EntitySet="SinhVien" />
           </AssociationSet>
-          <AssociationSet Name="FK_ThongBao_AspNetUsers" Association="Self.FK_ThongBao_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ThongBao" EntitySet="ThongBao" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CP24Team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Cap24" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Thamsoes" EntityType="CP24Team03Model.Thamso" />
           <EntitySet Name="C__MigrationHistory" EntityType="CP24Team03Model.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="CP24Team03Model.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="CP24Team03Model.AspNetUserClaim" />
@@ -675,10 +669,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ThongBao_AspNetUsers" Association="CP24Team03Model.FK_ThongBao_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="ThongBao" EntitySet="ThongBaos" />
           </AssociationSet>
           <AssociationSet Name="FK_ChinhSuaThongTin_DotChinhSuaThongTin" Association="CP24Team03Model.FK_ChinhSuaThongTin_DotChinhSuaThongTin">
             <End Role="DotChinhSuaThongTin" EntitySet="DotChinhSuaThongTins" />
@@ -757,6 +747,14 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Thamso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Giatri" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ma" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -814,7 +812,6 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="CP24Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="ThongBaos" Relationship="CP24Team03Model.FK_ThongBao_AspNetUsers" FromRole="AspNetUser" ToRole="ThongBao" />
           <NavigationProperty Name="AspNetRoles" Relationship="CP24Team03Model.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="ChinhSuaThongTin">
@@ -853,14 +850,14 @@
           <Property Name="MSSV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="HocPhan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TenHocPhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="HocKyKeHoach" Type="Int32" />
+          <Property Name="HocKyKeHoach" Type="Int32" Nullable="false" />
           <Property Name="SoTinChi" Type="Int32" />
           <Property Name="Diem10" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Diem4" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="DiemChu" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="QuaMon" Type="Boolean" />
           <Property Name="LichSu" Type="Int32" />
-          <Property Name="HocKyDangKy" Type="Int32" />
+          <Property Name="HocKyDangKy" Type="Int32" Nullable="false" />
           <Property Name="BBTC" Type="Boolean" />
           <NavigationProperty Name="LichSuUpLoad" Relationship="CP24Team03Model.FK_DiemHocPhan_LichSuUpLoad" FromRole="DiemHocPhan" ToRole="LichSuUpLoad" />
         </EntityType>
@@ -1019,7 +1016,6 @@
           <Property Name="NguoiGui" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="NguoiNhan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrangThai" Type="Boolean" />
-          <NavigationProperty Name="AspNetUser" Relationship="CP24Team03Model.FK_ThongBao_AspNetUsers" FromRole="ThongBao" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="TinhTrang">
           <Key>
@@ -1055,18 +1051,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogin">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ThongBao_AspNetUsers">
-          <End Type="CP24Team03Model.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="CP24Team03Model.ThongBao" Role="ThongBao" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ThongBao">
-              <PropertyRef Name="NguoiGui" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1296,6 +1280,15 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CP24Team03ModelStoreContainer" CdmEntityContainer="Cap24">
+          <EntitySetMapping Name="Thamsoes">
+            <EntityTypeMapping TypeName="CP24Team03Model.Thamso">
+              <MappingFragment StoreEntitySet="Thamso">
+                <ScalarProperty Name="Ma" ColumnName="Ma" />
+                <ScalarProperty Name="Giatri" ColumnName="Giatri" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="CP24Team03Model.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1551,7 +1544,7 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -12,14 +12,10 @@ namespace Cap24Team3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ThongBao
+    public partial class Thamso
     {
-        public int ID { get; set; }
-        public string TieuDe { get; set; }
-        public string NoiDung { get; set; }
-        public Nullable<System.DateTime> Ngay { get; set; }
-        public string NguoiGui { get; set; }
-        public string NguoiNhan { get; set; }
-        public Nullable<bool> TrangThai { get; set; }
+        public int Id { get; set; }
+        public string Giatri { get; set; }
+        public string Ma { get; set; }
     }
 }

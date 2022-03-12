@@ -1,0 +1,148 @@
+﻿@model Cap24Team3.Models.ThongBao
+
+@{
+    ViewBag.Title = "TaoThongBao";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+    var nguoitao = ViewData["NguoiTao"] as Cap24Team3.Models.AspNetUser;
+}
+<style>
+    .column {
+        float: left;
+        width: 33.33%;
+        padding: 10px;
+        height: auto;
+    }
+
+    .check-box-hide {
+        display: none
+    }
+</style>
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 90px; ">Tạo thông báo</h2>
+            <ul>
+            </ul>
+        </div><!--pager-content end-->
+        <h4 class="page-titlee">E-Profile</h4>
+    </div>
+</section><!--pager-section end-->
+<section class="page-content">
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container">
+            <!-- start page title -->
+            <!-- end page title -->
+            <div class="col-12">
+                @if (TempData["Alert"] != null)
+                {
+                    <style>
+                        .div-centerr {
+                            margin: auto;
+                            width: 60%;
+                            padding: 10px;
+                        }
+                    </style>
+                    <div class="alert alert-warning col-6 div-centerr" align="center">
+                        <i class="fa fa-exclamation-triangle"></i> @Html.Raw(TempData["Alert"].ToString())
+                    </div>
+                }
+                else
+                {
+                    <br />
+                    <form action="@Url.Action("TaoThongBao")" method="post">
+                        <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Tiêu đề</p>
+                        <br>
+                        <input type="text" name="tieuDe" id="tieuDe" class="form-control" required/>
+                        <br>
+                        <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Nội dung</p>
+                        <br>
+                        <input type="text" name="noiDung" id="noiDung" class="form-control" required/>
+                        <br>
+                        <input type="datetime" name="ngay" id="ngay" class="form-control" value="@DateTime.Now" hidden />
+                        <input type="text" name="nguoiGui" id="nguoiGui" class="form-control" value="@nguoitao.Id" hidden />
+                        <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Người nhận</p>
+                        @*<input type="text" name="nguoiNhan" id="nguoiNhan" class="form-control" />*@
+                        <div class="row col-12">
+                            <div class="form-check column col-4">
+                                <label class="form-check-label">
+                                    @foreach (var nganh in ViewData["DSNganh"] as List<Cap24Team3.Models.NganhDaoTao>)
+                                    {
+                                        <input type="checkbox" class="form-check-input" name="idNganh" id="idNganh" value="@nganh.Nganh">
+                                        <span style="font-family: 'Montserrat'; color: black;">Ngành @nganh.Nganh</span>
+                                        <br />
+                                    }
+                                </label>
+                            </div>
+                                <div class="form-check column col-3">
+                                    <label class="form-check-label">
+                                        @foreach (var khoa in ViewData["DSKhoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                                        {
+                                            <input type="checkbox" class="form-check-input" name="idKhoa" id="idKhoa" value="@khoa.ID">
+                                            <span style="font-family: 'Montserrat'; color: black;">Khóa @khoa.Khoa</span>
+                                            <br />
+                                        }
+                                    </label>
+                                </div>
+                                <div class="form-check column col-3">
+                                    <label class="form-check-label">
+                                        @foreach (var lop in ViewData["DSLop"] as List<Cap24Team3.Models.LopQuanLy>)
+                                        {
+                                            <input type="checkbox" class="form-check-input" name="idLop" id="" value="@lop.ID">
+                                            <span style="font-family: 'Montserrat'; color: black;">Lớp @lop.TenLop</span>
+                                            <br />
+                                        }
+                                    </label>
+                                </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger" style="font-family: 'Montserrat'; font-size: 20px;">
+                            <i class="fa fa-refresh"></i> Tạo
+                        </button>
+                    </form>
+                    <br />
+                    <p style="font-family: 'Montserrat'; color: black;">
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                }
+            </div> <!-- end col -->
+        </div>
+    </div> <!-- content -->
+</section>
+<script src="@Url.Content("~/Student_assets/js/jquery-latest.min.js")"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#test").CreateMultiCheckBox({ width: '230px', defaultText: 'Select Below', height: '250px' });
+    });
+</script>
+<!-- show/hide checkbox-->
+<!--<script type="text/javascript">
+    $(function () {
+        $(".checkme").click(function (event) {
+            var x = $(this).is(':checked');
+            if (x == true) {
+                $(this).parents(".checkbox-card").find('.check-box-hide').show();
+            }
+            else {
+                $(this).parents(".checkbox-card").find('.check-box-hide').hide();
+            }
+        });
+    })
+</script>-->
+<!-- en/disabled checkbox-->
+<!--<script>
+    var determine = document.getElementById("idNganh");
+    var disableCheckboxConditioned = function () {
+        if (determine.checked) {
+            document.getElementById("idKhoa").disabled = false;
+        }
+        else {
+            document.getElementById("idKhoa").disabled = true;
+        }
+    }
+    determine.onclick = disableCheckboxConditioned;
+    disableCheckboxConditioned();
+</script>-->
+
+
+
