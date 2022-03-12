@@ -36,13 +36,13 @@
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Quản lý lớp</h2>
             <ul>
-                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
     </div>
 </section><!--pager-section end-->
 <hr>
+
 <div class="page-content">
     <div class="content">
         <!-- Start Content-->
@@ -53,6 +53,10 @@
             <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop", new { idLop = @Model.First().ID_Lop})" id="button" name="button" class="btn btn-secondary btn-rounded">
                 Sinh viên cần theo dõi
             </a>
+            <a href="@Url.Action("XemDiemThongKe","ChuNhiemLop", new { idLop = @Model.First().ID_Lop})" id="button" name="button" class="btn btn-secondary btn-rounded">
+                Xem điểm và thống kê
+            </a>
+
             <hr />
             <div class="col-xl-12">
                 <div class="card-box">
@@ -572,6 +576,7 @@
         </div>
     </div>
 </div>
+<!--Xem điểm và thống kê-->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
