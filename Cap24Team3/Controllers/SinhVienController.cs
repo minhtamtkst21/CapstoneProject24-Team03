@@ -232,6 +232,16 @@ namespace Cap24Team3.Controllers
                     var listHK2 = new List<string>();
                     var listHP = db.HocPhanDaoTaos.ToList();
                     var listHPDiem = new List<string>();
+                    var ListHKDK = new List<string>();
+                    int maxhk = 18;
+                    if (maxhk - hockyhientai >= 6) maxhk = 15;
+                    else if (maxhk - hockyhientai >= 3) maxhk = 12;
+                    else maxhk = 18;
+                    for (int i = hockyhientai + 1; i <= maxhk; i++)
+                    {
+                        string hkc = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == (i + db.HocKyDaoTaos.FirstOrDefault(t => t.HocKy == sinhvien.HocKyBatDau).STT - 1)).HocKy.ToString();
+                        ListHKDK.Add(hkc);
+                    }
                     foreach (var item in diemhp)
                     {
                         if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK2))
@@ -268,6 +278,8 @@ namespace Cap24Team3.Controllers
                     db.SaveChanges();
                     ViewData["listHK"] = listHK.OrderBy(s => s.stt).ToList();
                     ViewData["HocKyHienTai"] = hockyhientai;
+                    TempData["ListHKDK"] = ListHKDK.ToArray();
+                    ViewData["maxhk"] = maxhk;
                     TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     TempData["Sinhvien"] = sinhvien;
                     return View(diemhp.ToList());
@@ -283,11 +295,11 @@ namespace Cap24Team3.Controllers
         public ActionResult LuuHP(string hocky)
         {
             var diem = db.DiemHocPhans.Find((Session["HocPhanDC"] as DiemHocPhan).ID);
-            diem.HocKyKeHoach = int.Parse(hocky);
+            diem.HocKyDangKy = int.Parse(hocky);
             db.Entry(diem).State = EntityState.Modified;
             db.SaveChanges();
             Session["HocPhanDC"] = null;
-            return Redirect(Request.UrlReferrer.ToString());
+            return RedirectToAction("DangKyKHDT");
         }
         public ActionResult SuaHK(int id)
         {

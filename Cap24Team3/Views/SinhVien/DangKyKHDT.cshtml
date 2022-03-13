@@ -19,14 +19,13 @@
                 <li><a href="#" title="">Home</a></li>
                 <li><span>Kế hoạch học tập</span></li>
             </ul>
-        </div><!--pager-content end-->
+        </div>
         <h4 class="page-titlee">E-Profile</h4>
     </div>
-</section><!--pager-section end-->
+</section>
 <hr>
 <div class="page-content">
     <div class="content">
-        <!-- Start Content-->
         <div class="container">
             <br>
             <div class="row">
@@ -69,9 +68,9 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            if (item.HocKyKeHoach.ToString() == listHK.HocKy)
+                                            if (item.HocKyDangKy.ToString() == listHK.HocKy)
                                             {
-                                                if (item.QuaMon == true || item.Diem10 == "" || item.HocKyKeHoach == (int)ViewData["HocKyHienTai"])
+                                                if (item.QuaMon == true || item.Diem10 == "" || item.HocKyKeHoach == (int)ViewData["HocKyHienTai"] || item.HocKyDangKy != item.HocKyKeHoach)
                                                 {
                                                     <tr>
                                                         @{STT++; }
@@ -168,17 +167,29 @@
                                                                 }
                                                                 else
                                                                 {
-                                                                    if (item.HocKyDangKy >= (int)ViewData["HocKyHienTai"])
+                                                                    if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
                                                                     {
                                                                         <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td></td>
                                                                     }
                                                                 }
                                                             }
                                                             else
                                                             {
                                                                 <td></td>
+                                                                if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
+                                                                {
+                                                                    <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                <td></td>
+                                                                    }
+                                                                }
                                                             }
-                                                        }
                                                     </tr>
                                                 }
                                             }
@@ -211,7 +222,7 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        if (item.Diem10 == null && item.HocKyKeHoach != (int)ViewData["HocKyHienTai"])
+                                        if (item.Diem10 == null && item.HocKyDangKy != (int)ViewData["HocKyHienTai"] && item.HocKyDangKy == item.HocKyKeHoach)
                                         {
                                             <tr>
                                                 @{STT++; }
@@ -287,36 +298,24 @@
                                                         }
                                                     }
                                                 </td>
-                                                @{
-                                                    if (item.Diem10 != null)
-                                                    {
-                                                        <td>
-                                                            @item.Diem10
-                                                            @if (item.QuaMon == true)
-                                                            {
-                                                                <i class="fa fa-check" style="color: green;"></i>
-
-                                                            }
-                                                            else
-                                                            {
-                                                                <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
-                                                            }
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td></td>
-                                                    }
-
-                                                    if (item.QuaMon == true)
-                                                    {
-                                                        <td></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
-                                                    }
+                                                @if (item.Diem10 != null)
+                                                {
+                                                    <td>
+                                                        @if (item.QuaMon == true)
+                                                        {
+                                                            <i class="fa fa-check" style="color: green;"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
+                                                        }
+                                                    </td>
                                                 }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                                <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
                                             </tr>
                                         }
                                     }
@@ -346,11 +345,15 @@
                 <form action="@Url.Action("LuuHP")">
                     <div class="modal-body">
                         <select class="form-control col-6" name="hocky">
-                            @for (int i = 1; i <= 12; i++)
-                            {
-                                <option value="@i.ToString()">@i.ToString()</option>
+                            @{
+                                var ListHKDK = TempData["ListHKDK"] as string[];
+                                int dem = 0;
                             }
-                        </select>
+                            @for (int i = (int)ViewData["HocKyHienTai"] + 1; i <= (int)ViewData["maxhk"]; i++)
+                            {
+                                <option value="@i.ToString()">@ListHKDK[dem]</option>
+                                dem++;
+                            }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
