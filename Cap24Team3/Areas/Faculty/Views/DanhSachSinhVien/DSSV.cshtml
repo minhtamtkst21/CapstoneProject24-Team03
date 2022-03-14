@@ -33,7 +33,8 @@
                                     <td>@s.TinhTrang.TenTinhTrang</td>
                                     <td>
                                         <a href="@Url.Action("XemChiTiet", new { id = s.ID })">Xem chi tiết</a> |
-                                        <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })">Xem điểm</a>
+                                        <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })">Xem điểm</a> |
+                                        <a href="@Url.Action("XemKHHTSinhVien", "DanhSachSinhVien", new { id = s.ID })">KHHT</a>
                                     </td>
                                 </tr>
                             }
@@ -211,7 +212,7 @@
                                     <td>@item.HocPhan</td>
                                     <td>@item.TenHocPhan</td>
                                     <td>@item.SoTinChi</td>
-                                    <td>@item.HocKyDaoTao</td>
+                                    <td>@item.HocKyKeHoach</td>
                                     <td>@item.Diem10</td>
                                     <td>@item.Diem4</td>
                                     <td>@item.DiemChu</td>

@@ -808,6 +808,44 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
             return Redirect(Request.UrlReferrer.ToString());
         }
+        public ActionResult XemKHHTSinhVien(int id)
+        {
+            string ListLoi = "";
+            var sinhvien = db.SinhViens.Find(id);
+            if (sinhvien != null)
+            {
+                var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                var diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV);
+                if (diemhp == null)
+                {
+                    ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
+                    TempData["Alert"] = ListLoi;
+                    return View();
+                }
+                else
+                {
+                    ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
+                    ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
+                    ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+                    ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
+                    var listHK = new List<string>();
+                    var listHP = db.HocPhanDaoTaos.ToList();
+                    foreach (var item in diemhp)
+                        if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK))
+                            listHK.Add(item.HocKyDangKy.ToString());
+                    ViewData["listHK"] = listHK;
+                    TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+                    TempData["Sinhvien"] = sinhvien;
+                    return View(diemhp.ToList());
+                }
+            }
+            else
+            {
+                TempData["Alert"] = "Bạn chưa đăng nhập!";
+                return View();
+            }
+        }
         public ActionResult TaiLenSinhVien()
         {
             db.Configuration.AutoDetectChangesEnabled = false;
