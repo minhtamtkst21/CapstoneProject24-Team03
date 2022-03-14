@@ -41,6 +41,7 @@
                             <div class="dropdown" style="border-radius:30px">
                                 <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="font-family: 'Montserrat'; color: black;">Chào @User.Identity.Name!</a>
                                 <div class="dropdown-content dropdown-menu-right" style="border-radius: 25px; background-color: #f2f2f2; ">
+                                    <a class="aaa dropdown-item" href="@Url.Action("ChuongTrinhDaoTao","Faculty")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-tasks"></i> Chuyển đến trang BCN Khoa</a>
                                     <a class="aaa dropdown-item" href="#" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-pencil-square-o"></i> Xem thông tin chi tiết</a>
                                     <a class="aaa dropdown-item" href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-user"></i> Chỉnh sửa thông tin</a>
                                     <hr style="width: 80%; margin: 0 auto;" />
@@ -104,11 +105,11 @@
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
-            {
-                <div class="alert alert-warning">
-                    @Html.Raw(TempData["Alert"].ToString())
-                </div>
-            }*@
+                {
+                    <div class="alert alert-warning">
+                        @Html.Raw(TempData["Alert"].ToString())
+                    </div>
+                }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">

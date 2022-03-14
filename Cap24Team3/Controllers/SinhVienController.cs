@@ -106,7 +106,7 @@ namespace Cap24Team3.Controllers
                     //    }
                     //}
                     ViewData["listHK"] = listHK;
-                    ViewData["KhoiKienThucXem"] = db.KhoiKienThucs.ToList();
+                    ViewData["KhoiKienThucXem"] = db.KhoiKienThucs.Where(k => k.ID_ChuongTrinhDaoTao == ctdt.ID).ToList();
                     return View(hocPhanDaoTaos.ToList());
                 }
             }

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class ChuongTrinhDaoTaoController : Controller
     {
         private Cap24 db = new Cap24();

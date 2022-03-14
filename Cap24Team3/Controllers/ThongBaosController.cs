@@ -13,13 +13,6 @@ namespace Cap24Team3.Controllers
     public class ThongBaosController : Controller
     {
         private Cap24 db = new Cap24();
-
-        // GET: ThongBaos
-        public ActionResult Index()
-        {
-            var thongBaos = db.ThongBaos.Include(t => t.AspNetUser);
-            return View(thongBaos.ToList());
-        }
         [ChildActionOnly]
         public ActionResult BellTB()
         {

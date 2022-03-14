@@ -277,6 +277,9 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Thamso.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ThongBao.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -325,6 +328,7 @@
     <Content Include="Faculty_assets\images\big\img4.jpg" />
     <Content Include="Faculty_assets\images\big\img5.jpg" />
     <Content Include="Faculty_assets\images\clear.png" />
+    <Content Include="Faculty_assets\images\cs3.png" />
     <Content Include="Faculty_assets\images\email\1.png" />
     <Content Include="Faculty_assets\images\email\2.png" />
     <Content Include="Faculty_assets\images\email\3.png" />
@@ -604,13 +608,6 @@
     <Content Include="FileUpLoad\27.xlsx" />
     <Content Include="Models\ChuongTrinhDaoTao.xlsx" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\DSSV.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Faculty\Views\ThongBao\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\ThongBao\TaoThongBao.cshtml" />
     <Content Include="Areas\Faculty\Views\ThongBao\Delete.cshtml" />
@@ -626,6 +623,13 @@
     <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\AspNetUserRoleFacultys\Create.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\XemKHHTSinhVien.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
