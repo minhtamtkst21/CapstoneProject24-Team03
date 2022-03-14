@@ -82,12 +82,15 @@
                                 <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
-                            <ul>
-                                <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("CN Lop"))
+                        {
+                            <li>
+                                <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                                <ul>
+                                    <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </nav><!--nav end-->
                 <ul class="social-links ml-auto">

@@ -7,51 +7,42 @@
     var Users = ViewBag.Users as SelectList;
 }
 
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <style>
+        body {
+            font-family: "Trirong", serif;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="page-title" style="font-family:Roboto">Thêm tài khoản vào Role @Role.Name</h2>
 
+    @using (Html.BeginForm())
+    {
+                <div class="col-10 d-flex align-items-center">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h5>
+                        User &emsp;
+                    </h5>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="container">
-        <div class="row">
-            <section class="row">
-                <div class="col-2 col-lg-4">
-                    <h2>Add to </h2>
+                    <div class="col-7 text-right">
+                        <div class="input-group">
+                            <input class="col-6" id="UserId" name="UserId" />
+                        </div>
+                    </div>
                 </div>
                 <br />
-            </section>
-            <div class="col-10 d-flex align-items-center">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <h5>
-                    User &emsp;
-                </h5>
-
-                <div class="col-7 text-right">
-                    <div class="input-group">             
-                   @*@Html.DropDownList("UserId", Users, new { @class = "form-control" })*@ 
-                        @Html.TextBox("UserId", Users, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <br />
-            &emsp;
-            <div class="container">
-                <div class="row">
-                    <div class="col-8">
-                        <button type="submit" value="Add" class="btn btn-dark">Thêm</button>
-                    </div>
-                    &emsp;
-                    <div class="col-8">
-                        <br />
-                        <a href="@Url.Action("Index", "AspNetRoleFacultys")">Quay lại</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                        <div class="col-8">
+                            <button type="submit" value="Add" class="btn btn-dark">Thêm</button>
+                        </div>
+                        <div class="col-8">
+                            <br />
+                            <a href="@Url.Action("Index", "AspNetRoleFacultys")">Quay lại</a>
+                        </div>
+    }
+    </body>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 

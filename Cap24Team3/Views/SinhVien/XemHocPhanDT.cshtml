@@ -22,19 +22,19 @@
         <div class="container">
             <!-- start page title -->
             @*<div class="row">
-                <div class="col-12">
-                    <div class="col-4" style="float: right;">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
+            <div class="col-12">
+                <div class="col-4" style="float: right;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
             <br>
             @if (TempData["Alert"] != null)
             {
@@ -162,8 +162,7 @@
                                                                 }
                                                             }
                                                         }
-                                                    </td>
-                                                    @*<td>&emsp;@item.HocKy</td>*@
+                                                    </td>                                                    
                                                 </tr>
                                             }
                                         }
@@ -173,7 +172,123 @@
                         </div>
                     </div><!-- end col -->
                 }
-
+                
+                foreach (var khoikienthuc in ViewData["KhoiKienThucXem"] as List<Cap24Team3.Models.KhoiKienThuc>)
+                {
+                    <div class="col-xl-12">
+                        <div class="card-box">
+                            <h4 class="header-title mt-0 mb-3" style="font-family: Roboto;">@khoikienthuc.TenKhoiKienThuc</h4>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr style="background-color:lightblue">
+                                            <th>STT</th>
+                                            <th>Mã học phần</th>
+                                            <th>Tên học phần</th>
+                                            <th>Số tín chỉ</th>
+                                            <th>BB/TC</th>
+                                            <th>Tiên quyết</th>
+                                            <th>Học trước</th>
+                                            <th>Song hành</th>
+                                            <th>Học kỳ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var hocphan in Model)
+                                        {
+                                            if (hocphan.KhoiKienThuc.ID == khoikienthuc.ID)
+                                            {
+                                                <tr>
+                                                    @if (hocphan.ID_HocPhanTuChon == null)
+                                                    {
+                                                        STT++;
+                                                        <td>@STT</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    <td>@hocphan.MaHocPhan</td>
+                                                    <td>@hocphan.TenHocPhan</td>
+                                                    <td>@hocphan.SoTinChi</td>
+                                                    @if (hocphan.ID_HocPhanTuChon == null)
+                                                    {
+                                                        <td>BB</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>TC</td>
+                                                    }
+                                                    <td>
+                                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                        {
+                                                            if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                            {
+                                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                                {
+                                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                                    </p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>
+                                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                                    </p>
+                                                                }
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                        {
+                                                            if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                            {
+                                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                                {
+                                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                                    </p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>
+                                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                                    </p>
+                                                                }
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                        {
+                                                            if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                            {
+                                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                                {
+                                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                                    </p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>
+                                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                                    </p>
+                                                                }
+                                                            }
+                                                        }
+                                                    </td>
+                                                    <td>&emsp;@hocphan.HocKy</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
             <hr>
         </div>

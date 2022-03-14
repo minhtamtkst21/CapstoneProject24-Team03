@@ -24,8 +24,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         public ActionResult Create(string RoleId, string UserId)
         {
             var role = db.AspNetRoles.Find(RoleId);
-            //   var user = db.AspNetUsers.FirstOrDefault(u => u.Email == UserId).Id;
-            var user = db.AspNetUsers.Find(UserId);
+            var user = db.AspNetUsers.FirstOrDefault(u => u.Email == UserId);
             role.AspNetUsers.Add(user);
             db.Entry(role).State = EntityState.Modified;
             db.SaveChanges();

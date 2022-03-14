@@ -625,6 +625,7 @@
     <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Edit.cshtml" />
     <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\AspNetUserRoleFacultys\Create.cshtml" />
+    <Content Include="Areas\Faculty\Views\DanhSachSinhVien\XemKHHTSinhVien.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

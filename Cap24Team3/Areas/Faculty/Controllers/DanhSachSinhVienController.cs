@@ -1275,8 +1275,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 return HttpNotFound();
             }
             var Lop = db.LopQuanLies.Find(idlop);
+            var chunhiemlop = db.AspNetUsers.FirstOrDefault(cn => cn.Email == chunhiem);
+            var roleCN = db.AspNetRoles.FirstOrDefault(r => r.Name == "CN Lop");
             Lop.ChuNhiem = chunhiem;
             db.Entry(Lop).State = EntityState.Modified;
+            roleCN.AspNetUsers.Add(chunhiemlop);
+            db.Entry(roleCN).State = EntityState.Modified;
             db.SaveChanges();
             Session["Lop"] = null;
             return Redirect(Request.UrlReferrer.ToString());
