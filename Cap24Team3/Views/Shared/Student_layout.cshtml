@@ -19,6 +19,11 @@
 </head>
 <body>
     <header>
+        <style>
+            body.modal-open {
+                overflow: visible;
+            }
+        </style>
         <div class="container">
             <div class="header-content d-flex flex-wrap align-items-center">
                 <div class="logo">
@@ -41,6 +46,10 @@
                             <div class="dropdown" style="border-radius:30px">
                                 <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="font-family: 'Montserrat'; color: black;">Chào @User.Identity.Name!</a>
                                 <div class="dropdown-content dropdown-menu-right" style="border-radius: 25px; background-color: #f2f2f2; ">
+                                    @if (User.IsInRole("BCN Khoa"))
+                                    {
+                                        <a class="aaa dropdown-item" href="@Url.Action("ChuongTrinhDaoTao", "Faculty")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-tasks"></i> Chuyển đến trang BCN Khoa</a>
+                                    }
                                     <a class="aaa dropdown-item" href="#" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-pencil-square-o"></i> Xem thông tin chi tiết</a>
                                     <a class="aaa dropdown-item" href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-user"></i> Chỉnh sửa thông tin</a>
                                     <hr style="width: 80%; margin: 0 auto;" />
@@ -82,12 +91,15 @@
                                 <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
-                            <ul>
-                                <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
-                            </ul>
-                        </li>
+                        @if (User.IsInRole("CN Lop"))
+                        {
+                            <li>
+                                <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                                <ul>
+                                    <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </nav><!--nav end-->
                 <ul class="social-links ml-auto">
@@ -101,11 +113,11 @@
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
-            {
-                <div class="alert alert-warning">
-                    @Html.Raw(TempData["Alert"].ToString())
-                </div>
-            }*@
+                {
+                    <div class="alert alert-warning">
+                        @Html.Raw(TempData["Alert"].ToString())
+                    </div>
+                }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">

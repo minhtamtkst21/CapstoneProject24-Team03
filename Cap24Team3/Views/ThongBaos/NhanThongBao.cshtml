@@ -132,18 +132,18 @@
                 this.totalPages = Math.ceil(this.items.length / this.perPage);
 
                 $('.pagination', this.container.parent()).remove();
-                var pagination = $('<ul class="pagination float-right"></ul>').append('<li class="page-item"><a class="page-link nav prev disabled" style="color: black;" data-next="false"><</a></li>');
+                var pagination = $('<ul class="pagination float-right"></ul>').append('<li class="page-item"><a class="page-link nav prev disabled" style="color: black;cursor: context-menu;" data-next="false"><</a></li>');
 
                 for (var i = 0; i < this.totalPages; i++) {
                     var pageElClass = "page";
                     if (!i)
                         pageElClass = "page current";
                     var pageEl = '<li class="page-item"><a class="page-link ' + pageElClass + '" data-page="' + (
-                        i + 1) + '" style="color: #ff3333;">' + (
+                        i + 1) + '" style="color: #ff3333;cursor: context-menu;">' + (
                             i + 1) + "</a></li>";
                     pagination.append(pageEl);
                 }
-                pagination.append('<li class="page-item"><a class="page-link nav next" style="color: black;" data-next="true">></a></li>');
+                pagination.append('<li class="page-item"><a class="page-link nav next" style="color: black;cursor: context-menu;" data-next="true">></a></li>');
 
                 this.container.after(pagination);
 

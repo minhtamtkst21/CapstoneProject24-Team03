@@ -91,9 +91,22 @@ namespace Cap24Team3.Controllers
                     var listHK = new List<string>();
                     var listHP = db.HocPhanDaoTaos.ToList();
                     foreach (var item in hocPhanDaoTaos.OrderBy(s => s.HocKy))
+                    {
                         if (!CheckTonTai(item.HocKy.ToString(), listHK))
+                        {
                             listHK.Add(item.HocKy.ToString());
+                        }
+                    }
+                    //var listKKT = new List<string>();
+                    //foreach (var item in hocPhanDaoTaos.OrderBy(s => s.ID_KhoiKienThuc))
+                    //{
+                    //    if (!CheckTonTai(item.KhoiKienThuc.TenKhoiKienThuc, listKKT))
+                    //    {
+                    //        listKKT.Add(item.KhoiKienThuc.TenKhoiKienThuc);
+                    //    }
+                    //}
                     ViewData["listHK"] = listHK;
+                    ViewData["KhoiKienThucXem"] = db.KhoiKienThucs.Where(k => k.ID_ChuongTrinhDaoTao == ctdt.ID).ToList();
                     return View(hocPhanDaoTaos.ToList());
                 }
             }

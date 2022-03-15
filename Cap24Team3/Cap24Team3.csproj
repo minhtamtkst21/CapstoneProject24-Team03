@@ -185,6 +185,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Faculty\Controllers\AspNetRoleFacultysController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\AspNetUserFacultysController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\AspNetUserRoleFacultysController.cs" />
     <Compile Include="Areas\Faculty\Controllers\ChuongTrinhDaoTaoController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DanhSachSinhVienController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DiemHocPhansController.cs" />
@@ -326,6 +329,7 @@
     <Content Include="Faculty_assets\images\big\img4.jpg" />
     <Content Include="Faculty_assets\images\big\img5.jpg" />
     <Content Include="Faculty_assets\images\clear.png" />
+    <Content Include="Faculty_assets\images\cs3.png" />
     <Content Include="Faculty_assets\images\email\1.png" />
     <Content Include="Faculty_assets\images\email\2.png" />
     <Content Include="Faculty_assets\images\email\3.png" />
@@ -605,6 +609,21 @@
     <Content Include="FileUpLoad\27.xlsx" />
     <Content Include="Models\ChuongTrinhDaoTao.xlsx" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\DSSV.cshtml" />
+    <Content Include="Areas\Faculty\Views\ThongBao\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\ThongBao\TaoThongBao.cshtml" />
+    <Content Include="Areas\Faculty\Views\ThongBao\Delete.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetRoleFacultys\Create.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetRoleFacultys\Delete.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetRoleFacultys\Details.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetRoleFacultys\Edit.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetRoleFacultys\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Create.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Delete.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Details.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Edit.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserFacultys\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\AspNetUserRoleFacultys\Create.cshtml" />
+    <Content Include="Areas\Faculty\Views\DanhSachSinhVien\XemKHHTSinhVien.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -612,9 +631,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Faculty\Views\ThongBao\Index.cshtml" />
-    <Content Include="Areas\Faculty\Views\ThongBao\TaoThongBao.cshtml" />
-    <Content Include="Areas\Faculty\Views\ThongBao\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

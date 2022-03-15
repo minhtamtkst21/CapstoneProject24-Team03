@@ -1,0 +1,40 @@
+﻿@using Cap24Team3.Models;
+@{
+    ViewBag.Title = "Create";
+
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    var Role = ViewBag.Role as AspNetRole;
+    var Users = ViewBag.Users as SelectList;
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">Thêm tài khoản vào Role @Role.Name</h4>
+            <div class="page-title-right">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">User Email</p>
+                    <input class="form-control" id="UserId" name="UserId" />
+                    <br />
+                    <button type="submit" value="Add" class="btn btn-secondary">Thêm</button>
+                    <br />
+                    <br />
+                    <a href="@Url.Action("Index", "AspNetRoleFacultys")"style="font-family: 'Montserrat'; color: black;">Quay lại</a>
+                }
+                @section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+                }
+            </div>
+        </div>
+    </div>
+</div>

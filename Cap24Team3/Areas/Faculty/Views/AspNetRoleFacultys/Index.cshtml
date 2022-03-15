@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Cap24Team3.Models.AspNetRole>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">QUẢN LÝ DANH SÁCH PHÂN QUYỀN</h4>
+            <div class="page-title-right">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-striped mb-0 dt-responsive" id="table">
+                        <tr>
+                            <th>
+                                Role
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td colspan="2">
+                                <!-- @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |-->
+                                <a href="@Url.Action("Create","AspNetUserRoleFacultys", new { RoleId = item.Id })"><p class="fa fa-user-plus"></p> Thêm User</a>
+                            </td>
+                        </tr>
+                            foreach (var user in item.AspNetUsers)
+                            {
+                        <tr>
+                            <td></td>
+                            <td>
+                                @user.UserName
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Delete", "AspNetUserRoleFacultys", new { RoleId = item.Id, UserId = user.Id })"><p class="fa fa-trash"></p> Xóa</a>
+                            </td>
+                        </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

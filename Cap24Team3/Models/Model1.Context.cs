@@ -45,6 +45,7 @@ namespace Cap24Team3.Models
         public virtual DbSet<RangBuocHocPhan> RangBuocHocPhans { get; set; }
         public virtual DbSet<SinhVien> SinhViens { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Thamso> Thamsoes { get; set; }
         public virtual DbSet<ThongBao> ThongBaos { get; set; }
         public virtual DbSet<TinhTrang> TinhTrangs { get; set; }
     }

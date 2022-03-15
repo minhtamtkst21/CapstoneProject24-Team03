@@ -29,7 +29,11 @@
 </head>
 
 <body data-layout="horizontal" data-topbar="dark" data-menu-align="center">
-
+    <style>
+        body.modal-open {
+            overflow: visible;
+        }
+    </style>
     <!-- Begin page -->
     <div id="wrapper">
 
@@ -165,12 +169,20 @@
                         </li>
 
                         <li class="dropdown notification-list">
-                            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
-                                <span class="pro-user-name ml-1">
-                                    Faculty <i class="mdi mdi-chevron-down"></i>
-                                </span>
-                            </a>
+                            @if (Request.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a class="nav-link nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
+                                        <span class="pro-user-name ml-1">
+                                            @User.Identity.Name
+                                            <a href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i></a>
+                                        </span>
+                                    </a>
+                                }
+                            }
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
                                 <div class="dropdown-header noti-title">
@@ -254,13 +266,16 @@
                                 <a href="@Url.Action("ListLop","DanhSachSinhVien")" style="font-family:Roboto">
                                     <i class="mdi mdi-format-list-numbered "></i>Quản lý lớp
                                 </a>
-
-
+                            </li>
                             <li class="has-submenu">
                                 <a href="@Url.Action("Index","DiemHocPhans")" style="font-family:Roboto">
                                     <i class="mdi mdi-format-list-numbered "></i>Quản lý điểm
                                 </a>
-
+                            </li>
+                            <li class="has-submenu">
+                                <a href="@Url.Action("Index","AspNetRoleFacultys")" style="font-family:Roboto">
+                                    <i class="fa fa-user"></i>Quản lý phân quyền
+                                </a>
                             </li>
                             <li class="has-submenu">
                                 <a href="#" style="font-family:Roboto">
