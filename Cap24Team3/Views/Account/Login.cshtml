@@ -22,19 +22,28 @@
     <link href="@Url.Content("~/Faculty_assets/css/app.min.css")" id="app-stylesheet" rel="stylesheet" type="text/css" />
 
 </head>
+<style>
+    .authen-bg.enlarged {
+        min-height: 100px
+    }
 
-<body class="authentication-bg">
-
+    body.authen-bg {
+        background-image: url(../img/bg-light-img.jpg);
+        background-size: cover;
+        background-position: center
+    }
+</style>
+<body class="authen-bg" style="background-image: url(../../Faculty_assets/images/cs3.png);">
     <div class="account-pages mt-5 mb-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-5">
                     <div class="text-center">
-                        <a href="index.html" class="logo">
+                        <span class="logo">
                             <img src="@Url.Content("~/Faculty_assets/images/VL.png")" alt="" height="100" class="logo-light mx-auto">
                             <img src="@Url.Content("~/Faculty_assets/images/VL.png")" alt="" height="100" class="logo-dark mx-auto">
-                        </a>
-                        <p class="text-muted mt-2 mb-4" style="color: blue;">Student E-Profile</p>
+                        </span>
+                        <p class="mt-2 mb-4" style="color: black;">Student E-Profile</p>
                     </div>
                     <div class="card">
 
