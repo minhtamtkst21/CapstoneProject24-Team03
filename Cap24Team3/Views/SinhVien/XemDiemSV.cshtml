@@ -23,6 +23,10 @@
     {
         tongsotinchi = int.Parse(ViewData["Tongsotinchi"].ToString());
         var diemtrungbinh = Math.Round((double)tongtinchi1 / (double)tongsotinchi, 3) * 100;
+        if(diemtrungbinh > 100)
+        {
+            diemtrungbinh = 100;
+        }
         textdiemtb = diemtrungbinh + "%";
     }
 }
