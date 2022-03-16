@@ -36,7 +36,6 @@
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat'; font-weight: 600; font-size: 100px; ">Quản lý lớp</h2>
             <ul>
-                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
@@ -98,309 +97,309 @@
                     </div> <!-- end .table-responsive-->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
-        </div>
-        <!-- Thêm sinh viên -->
-        <div class="modal fade" id="ThemSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto; color: black; font-weight: 600;">Thêm sinh viên vào lớp</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
-                            <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
-                        }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-primary" value="Thêm" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Đổi tình trạng -->
-        <div class="modal fade" id="DoiTinhTrangSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            @{ var svien = Session["SinhVienTT"] as Cap24Team3.Models.SinhVien; }
-            @if (svien != null)
-            {
-                <form method="post">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;">Thay đổi tình trạng sinh viên @svien.Ho @svien.Ten: </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <input type="number" name="idSV" value="@svien.ID" required hidden />
-                                    <select class="form-control" name="tinhtrang">
-                                        @foreach (var tinhtrang in ViewData["DSTT"] as List<Cap24Team3.Models.TinhTrang>)
-                                        {
-                                            <option value="@tinhtrang.ID" style="font-family: Roboto; color: black;"> @tinhtrang.TenTinhTrang</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanDoiTinhTrang")">Lưu</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-            }
-        </div>
-        <!-- Note -->
-        <div class="modal fade" id="NoiDung" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            @{ var nd = Session["Note"] as Cap24Team3.Models.SinhVien; }
-            @if (nd != null)
-            {
-                <form method="post">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @nd.Ho @nd.Ten: </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <input type="number" name="idSV" value="@nd.ID" required hidden />
-                                    <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@nd.Note</textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            }
-        </div>
-        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            @if (sinhvien != null)
-            {
-                <div class="modal-dialog modal-lg" role="document">
+            <!-- Thêm sinh viên -->
+            <div class="modal fade" id="ThemSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <div class="col-1"></div>
-                            <div class="col-10 text-center">
-                                <h4 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;"> Thông tin sinh viên</h4>
-                            </div>
-
+                            <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto; color: black; font-weight: 600;">Thêm sinh viên vào lớp</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                                <div class="mt-3">
-                                    <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@sinhvien.Ho @sinhvien.Ten</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body text-wrap">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mã số sinh viên:</h5>
-                                </div>
-                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                    @sinhvien.MSSV
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngày sinh:</h5>
-                                </div>
-                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                    @sinhvien.NgaySinh
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Giới tính:</h5>
-                                </div>
-                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                    @sinhvien.GioiTinh
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Tình trạng:</h5>
-                                </div>
-                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                    @sinhvien.TinhTrang.TenTinhTrang
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mail trường cấp:</h5>
-                                </div>
-                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                    @sinhvien.Email_1
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="accordion" id="accordionExample">
-                                @if (capnhattt.Count() != 0)
-                                {
-                                    foreach (var dcn in dotcapnhat)
-                                    {
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <h5 class="mb-0">
-                                                    <button class="btn " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Thông tin @dcn.DotChinhSua
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            @{
-                                                string dtdd = "", dtcha = "", dtme = "";
-                                                if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD != null)
-                                                {
-                                                    dtdd = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD;
-                                                }
-                                                if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha != null)
-                                                {
-                                                    dtcha = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha;
-                                                }
-                                                if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD != null)
-                                                {
-                                                    dtme = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTMe;
-                                                }
-                                            }
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email 2:</h5>
-                                                        </div>
-                                                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).MailCaNhan
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
-                                                        </div>
-                                                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @dtdd
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
-                                                        </div>
-                                                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @dtcha
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
-                                                        </div>
-                                                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @dtme
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
-                                                        </div>
-                                                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                            @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DiaChi
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                                <div class="card">
-                                    <div class="card-header" id="headingThree">
-                                        <h5 class="mb-0">
-                                            <button class="btn collapsed" type="button" style="font-family: 'Montserrat'; color: black;" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Thông tin mặc định
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email cá nhân:</h5>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                    @sinhvien.Email_2
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                    @sinhvien.DTDD
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                    @sinhvien.DTCha
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                    @sinhvien.DTMe
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
-                                                    @sinhvien.DiaChi
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
+                                <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
+                            }
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <input type="submit" class="btn btn-primary" value="Thêm" />
                         </div>
                     </div>
-                    }
                 </div>
-            }
+            </div>
+            <!-- Đổi tình trạng -->
+            <div class="modal fade" id="DoiTinhTrangSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                @{ var svien = Session["SinhVienTT"] as Cap24Team3.Models.SinhVien; }
+                @if (svien != null)
+                {
+                    <form method="post">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;">Thay đổi tình trạng sinh viên @svien.Ho @svien.Ten: </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <input type="number" name="idSV" value="@svien.ID" required hidden />
+                                        <select class="form-control" name="tinhtrang">
+                                            @foreach (var tinhtrang in ViewData["DSTT"] as List<Cap24Team3.Models.TinhTrang>)
+                                            {
+                                                <option value="@tinhtrang.ID" style="font-family: Roboto; color: black;"> @tinhtrang.TenTinhTrang</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanDoiTinhTrang")">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                }
+            </div>
+            <!-- Note -->
+            <div class="modal fade" id="NoiDung" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                @{ var nd = Session["Note"] as Cap24Team3.Models.SinhVien; }
+                @if (nd != null)
+                {
+                    <form method="post">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Thay đổi nội dung theo dõi của sinh viên @nd.Ho @nd.Ten: </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <input type="number" name="idSV" value="@nd.ID" required hidden />
+                                        <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@nd.Note</textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                @if (sinhvien != null)
+                {
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="col-1"></div>
+                                <div class="col-10 text-center">
+                                    <h4 class="modal-title" style="font-family: Roboto; color: black; font-weight: 600;"> Thông tin sinh viên</h4>
+                                </div>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                    <div class="mt-3">
+                                        <h4 style="font-family: 'Montserrat'; color: black; font-weight: 600;">@sinhvien.Ho @sinhvien.Ten</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body text-wrap">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mã số sinh viên:</h5>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                        @sinhvien.MSSV
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngày sinh:</h5>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                        @sinhvien.NgaySinh
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Giới tính:</h5>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                        @sinhvien.GioiTinh
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Tình trạng:</h5>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                        @sinhvien.TinhTrang.TenTinhTrang
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mail trường cấp:</h5>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                        @sinhvien.Email_1
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="accordion" id="accordionExample">
+                                    @if (capnhattt.Count() != 0)
+                                    {
+                                        foreach (var dcn in dotcapnhat)
+                                        {
+                                            <div class="card">
+                                                <div class="card-header" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            Thông tin @dcn.DotChinhSua
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                @{
+                                                    string dtdd = "", dtcha = "", dtme = "";
+                                                    if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD != null)
+                                                    {
+                                                        dtdd = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD;
+                                                    }
+                                                    if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha != null)
+                                                    {
+                                                        dtcha = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTCha;
+                                                    }
+                                                    if (capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTDD != null)
+                                                    {
+                                                        dtme = "0" + capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DTMe;
+                                                    }
+                                                }
+                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email 2:</h5>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                                @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).MailCaNhan
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                                @dtdd
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                                @dtcha
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                                @dtme
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                                <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
+                                                            </div>
+                                                            <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                                @capnhattt.Last(s => s.ID_DotChinhSua == dcn.ID).DiaChi
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="card">
+                                        <div class="card-header" id="headingThree">
+                                            <h5 class="mb-0">
+                                                <button class="btn collapsed" type="button" style="font-family: 'Montserrat'; color: black;" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    Thông tin mặc định
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email cá nhân:</h5>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                        @sinhvien.Email_2
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT:</h5>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                        @sinhvien.DTDD
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Cha:</h5>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                        @sinhvien.DTCha
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT Mẹ:</h5>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                        @sinhvien.DTMe
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                                                        @sinhvien.DiaChi
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                }
+            </div>
             <!-- Xem điểm-->
             <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                 @{ var Sinhvien = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
@@ -580,7 +579,7 @@
         var button = $(event.relatedTarget);
         var modal = $(this);
 
-    });s
+    }); s
 </script>
 @*@if (Session["sinhvien2"] != null)
     {

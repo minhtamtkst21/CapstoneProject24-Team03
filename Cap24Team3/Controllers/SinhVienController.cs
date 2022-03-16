@@ -283,7 +283,7 @@ namespace Cap24Team3.Controllers
                             else
                                 dhp.BBTC = false;
                             dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
-                            dhp.LichSuUpLoad = db.LichSuUpLoads.Last();
+                            dhp.LichSu = db.LichSuUpLoads.Last().ID;
                             dhp.QuaMon = false;
                             db.DiemHocPhans.Add(dhp);
                         }

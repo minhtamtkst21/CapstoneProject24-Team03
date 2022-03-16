@@ -1263,6 +1263,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["Lop"] = db.LopQuanLies.Find(id);
             return Redirect(Request.UrlReferrer.ToString());
         }
+
         [HttpPost]
         public ActionResult LuuChuNhiem(string chunhiem, int? idlop)
         {
@@ -1275,10 +1276,17 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 return HttpNotFound();
             }
             var Lop = db.LopQuanLies.Find(idlop);
+            string chunhiemcu = Lop.ChuNhiem;
             var chunhiemlop = db.AspNetUsers.FirstOrDefault(cn => cn.Email == chunhiem);
+            var dslop = db.LopQuanLies.Where(l => l.ChuNhiem == chunhiemcu).ToList();
             var roleCN = db.AspNetRoles.FirstOrDefault(r => r.Name == "CN Lop");
             Lop.ChuNhiem = chunhiem;
             db.Entry(Lop).State = EntityState.Modified;
+            if (dslop.Count() == 0)
+            {
+                db.AspNetRoles.Remove(db.AspNetRoles.Where(r => r.Name == "CN Lop").FirstOrDefault(s=>s.AspNetUsers == db.AspNetUsers.FirstOrDefault(c=>c.UserName == chunhiemcu)));
+            }
+            db.SaveChanges();
             roleCN.AspNetUsers.Add(chunhiemlop);
             db.Entry(roleCN).State = EntityState.Modified;
             db.SaveChanges();
