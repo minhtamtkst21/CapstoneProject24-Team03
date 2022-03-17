@@ -161,7 +161,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public ActionResult DeleteAll()
+        {
+            db.ThongBaos.RemoveRange(db.ThongBaos.ToList());
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

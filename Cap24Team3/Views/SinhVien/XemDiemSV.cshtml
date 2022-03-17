@@ -23,19 +23,27 @@
     {
         tongsotinchi = int.Parse(ViewData["Tongsotinchi"].ToString());
         var diemtrungbinh = Math.Round((double)tongtinchi1 / (double)tongsotinchi, 3) * 100;
-        if(diemtrungbinh > 100)
+        if (diemtrungbinh > 100)
         {
             diemtrungbinh = 100;
         }
         textdiemtb = diemtrungbinh + "%";
     }
 }
+<style type="text/css">
+    .hidden {
+        display: none;
+    }
+
+    .visible {
+        display: block;
+    }
+</style>
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
             <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 100px;">Xem điểm</h2>
             <ul>
-                
             </ul>
         </div><!--pager-content end-->
         <h4 class="page-titlee">E-Profile</h4>
@@ -94,88 +102,196 @@
                         </table>
                     </div>
                 </div>
-                for (int i = 0; i < listHK.Count; i++)
-                {
-                    var tinchi = ViewData["SoTC"] as int[];
-                    tongtinchi = tongtinchi + tinchi[i];
-                    <div class="col-xl-12">
-                        <div class="card-box">
-                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
-                            <div class="table-responsive" style="overflow: auto">
-                                <table class="table table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Tên môn</th>
-                                            <th>Mã môn</th>
-                                            <th>Tín chỉ</th>
-                                            <th>Điểm hệ số 10</th>
-                                            <th>Điểm hệ số 4</th>
-                                            <th>Điểm chữ</th>
-                                            <th>Kết quả</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            if (item.HocKyKeHoach.ToString() == listHK[i])
+                <br />
+                <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
+                <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+                <br>
+                <div class="visible" id="portfolio">
+                    @for (int i = 0; i < listHK.Count; i++)
+                    {
+                        var tinchi = ViewData["SoTC"] as int[];
+                        tongtinchi = tongtinchi + tinchi[i];
+                        <div class="col-xl-12">
+                            <div class="card-box">
+                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                                <div class="table-responsive" style="overflow: auto">
+                                    <table class="table table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên môn</th>
+                                                <th>Mã môn</th>
+                                                <th>Tín chỉ</th>
+                                                <th>Điểm hệ số 10</th>
+                                                <th>Điểm hệ số 4</th>
+                                                <th>Điểm chữ</th>
+                                                <th>Kết quả</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
                                             {
-                                                STT++;
-                                                <tr>
-                                                    <td>@STT</td>
-                                                    <td>@item.TenHocPhan</td>
-                                                    <td>@item.HocPhan</td>
-                                                    <td>@item.SoTinChi</td>
-                                                    <td>@item.Diem10</td>
-                                                    <td>@item.Diem4</td>
-                                                    <td>@item.DiemChu</td>
-                                                    @if (item.QuaMon == true)
-                                                    {
-                                                        <td><i class="fa fa-check" style="color: green;"></i></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
-                                                    }
-                                                </tr>
+                                                if (item.HocKyKeHoach.ToString() == listHK[i])
+                                                {
+                                                    STT++;
+                                                    <tr>
+                                                        <td>@STT</td>
+                                                        <td>@item.TenHocPhan</td>
+                                                        <td>@item.HocPhan</td>
+                                                        <td>@item.SoTinChi</td>
+                                                        <td>@item.Diem10</td>
+                                                        <td>@item.Diem4</td>
+                                                        <td>@item.DiemChu</td>
+                                                        @if (item.QuaMon == true)
+                                                        {
+                                                            <td><i class="fa fa-check" style="color: green;"></i></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
+                                                        }
+                                                    </tr>
+                                                }
                                             }
-                                        }
-                                        @*<td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>*@
-                                    </tbody>
+                                            @*<td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>*@
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end .table-responsive-->
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                    <tr>
+                                        <th>Tổng số tín chỉ</th>
+                                        <td>@tongsotinchi</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số tín chỉ đã hoàn thành</th>
+                                        <td>@tongtinchi</td>
+                                    </tr>
                                 </table>
-                            </div> <!-- end .table-responsive-->
-                        </div> <!-- end col -->
-                    </div> <!-- end row -->
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
-                                <tr>
-                                    <th>Tổng số tín chỉ</th>
-                                    <td>@tongsotinchi</td>
-                                </tr>
-                                <tr>
-                                    <th>Số tín chỉ đã hoàn thành</th>
-                                    <td>@tongtinchi</td>
-                                </tr>
-                            </table>
+                            </div>
+                            <div class="col-xl-6">
+                                <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                    <tr>
+                                        <th>Điểm trung bình học kỳ</th>
+                                        <td>@diemtb[i]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Điểm trung bình chung</th>
+                                        <td>@diemtbchung[i]</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-xl-6">
-                            <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
-                                <tr>
-                                    <th>Điểm trung bình học kỳ</th>
-                                    <td>@diemtb[i]</td>
-                                </tr>
-                                <tr>
-                                    <th>Điểm trung bình chung</th>
-                                    <td>@diemtbchung[i]</td>
-                                </tr>
-                            </table>
+                        <hr>
+                    }
+                </div>
+                <div id="results" class="hidden">
+                    @for (int i = 0; i < listHK.Count; i++)
+                    {
+                        var tinchi = ViewData["SoTC"] as int[];
+                        tongtinchi = tongtinchi + tinchi[i];
+                        <div class="col-xl-12">
+                            <div class="card-box">
+                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                                <div class="table-responsive" style="overflow: auto">
+                                    <table class="table table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên môn</th>
+                                                <th>Mã môn</th>
+                                                <th>Tín chỉ</th>
+                                                <th>Điểm hệ số 10</th>
+                                                <th>Điểm hệ số 4</th>
+                                                <th>Điểm chữ</th>
+                                                <th>Kết quả</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                if (item.HocKyKeHoach.ToString() == listHK[i])
+                                                {
+                                                    STT++;
+                                                    <tr>
+                                                        <td>@STT</td>
+                                                        <td>@item.TenHocPhan</td>
+                                                        <td>@item.HocPhan</td>
+                                                        <td>@item.SoTinChi</td>
+                                                        <td>@item.Diem10</td>
+                                                        <td>@item.Diem4</td>
+                                                        <td>@item.DiemChu</td>
+                                                        @if (item.QuaMon == true)
+                                                        {
+                                                            <td><i class="fa fa-check" style="color: green;"></i></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
+                                                        }
+                                                    </tr>
+                                                }
+                                            }
+                                            @*<td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>*@
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end .table-responsive-->
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                    <tr>
+                                        <th>Tổng số tín chỉ</th>
+                                        <td>@tongsotinchi</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số tín chỉ đã hoàn thành</th>
+                                        <td>@tongtinchi</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xl-6">
+                                <table class="table table-centered mb-0" style="background-color: blanchedalmond;">
+                                    <tr>
+                                        <th>Điểm trung bình học kỳ</th>
+                                        <td>@diemtb[i]</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Điểm trung bình chung</th>
+                                        <td>@diemtbchung[i]</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <hr>
-                }
+                        <hr>
+                    }
+                </div>
             }
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    var portfolioDiv = document.getElementById('portfolio');
+    var resultsDiv = document.getElementById('results');
+
+    var portfolioBtn = document.getElementById('RenderPortfolio_Btn');
+    var resultsBtn = document.getElementById('RenderResults_Btn');
+
+    portfolioBtn.onclick = function () {
+        resultsDiv.setAttribute('class', 'hidden');
+        portfolioDiv.setAttribute('class', 'visible');
+    };
+
+    resultsBtn.onclick = function () {
+        portfolioDiv.setAttribute('class', 'hidden');
+        resultsDiv.setAttribute('class', 'visible');
+    };
+
+</script>

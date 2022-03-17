@@ -31,6 +31,15 @@
     var dotcapnhat = Session["dotcapnhat"] as List<Cap24Team3.Models.DotChinhSuaThongTin>;
     var capnhattt = Session["capnhattt"] as List<Cap24Team3.Models.ChinhSuaThongTin>;
 }
+<style type="text/css">
+    .hidden {
+        display: none;
+    }
+
+    .visible {
+        display: block;
+    }
+</style>
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
@@ -675,4 +684,23 @@
             });
         });
     });
+</script>
+<script type="text/javascript">
+
+    var portfolioDiv = document.getElementById('portfolio');
+    var resultsDiv = document.getElementById('results');
+
+    var portfolioBtn = document.getElementById('RenderPortfolio_Btn');
+    var resultsBtn = document.getElementById('RenderResults_Btn');
+
+    portfolioBtn.onclick = function () {
+        resultsDiv.setAttribute('class', 'hidden');
+        portfolioDiv.setAttribute('class', 'visible');
+    };
+
+    resultsBtn.onclick = function () {
+        portfolioDiv.setAttribute('class', 'hidden');
+        resultsDiv.setAttribute('class', 'visible');
+    };
+
 </script>

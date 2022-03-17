@@ -31,26 +31,29 @@
 
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td colspan="2">
-                                <!-- @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |-->
-                                <a href="@Url.Action("Create","AspNetUserRoleFacultys", new { RoleId = item.Id })"><p class="fa fa-user-plus"></p> Thêm User</a>
-                            </td>
-                        </tr>
-                            foreach (var user in item.AspNetUsers)
+                            if (item.Name == "BCN Khoa")
                             {
-                        <tr>
-                            <td></td>
-                            <td>
-                                @user.UserName
-                            </td>
-                            <td>
-                                <a href="@Url.Action("Delete", "AspNetUserRoleFacultys", new { RoleId = item.Id, UserId = user.Id })"><p class="fa fa-trash"></p> Xóa</a>
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td colspan="2">
+                                        <!-- @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |-->
+                                        <a href="@Url.Action("Create","AspNetUserRoleFacultys", new { RoleId = item.Id })"><p class="fa fa-user-plus"></p> Thêm User</a>
+                                    </td>
+                                </tr>
+                                foreach (var user in item.AspNetUsers)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            @user.UserName
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Delete", "AspNetUserRoleFacultys", new { RoleId = item.Id, UserId = user.Id })"><p class="fa fa-trash"></p> Xóa</a>
+                                        </td>
+                                    </tr>
+                                }
                             }
                         }
                     </table>

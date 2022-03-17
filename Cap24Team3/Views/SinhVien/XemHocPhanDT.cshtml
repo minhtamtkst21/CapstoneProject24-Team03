@@ -64,8 +64,7 @@
                 <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
                 <br>
                 <div class="visible" id="portfolio">
-                    @foreach (var listHK in ViewData["listHK"] as List<string>
-                        )
+                    @foreach (var listHK in ViewData["listHK"] as List<string>)
                     {
                         <div class="col-xl-12">
                             <div class="card-box">
@@ -188,8 +187,7 @@
                     }
                 </div>
                 <div id="results" class="hidden">
-                    @foreach (var khoikienthuc in ViewData["KhoiKienThucXem"] as List<Cap24Team3.Models.KhoiKienThuc>
-                        )
+                    @foreach (var khoikienthuc in ViewData["KhoiKienThucXem"] as List<Cap24Team3.Models.KhoiKienThuc>)
                     {
                         <div class="col-xl-12">
                             <div class="card-box">

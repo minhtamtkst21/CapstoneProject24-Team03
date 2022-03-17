@@ -1,0 +1,155 @@
+﻿@model Cap24Team3.Models.SinhVien
+
+@{
+    ViewBag.Title = "XemThongTinChiTiet";
+    Layout = "~/Views/Shared/Student_layout.cshtml";
+}
+<section class="pager-section">
+    <div class="container">
+        <div class="pager-content text-center">
+            <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 80px;">Thông Tin Chi Tiết</h2>
+            <ul>
+            </ul>
+        </div><!--pager-content end-->
+        <h2 class="page-titlee">E-Profile</h2>
+    </div>
+</section><!--pager-section end-->
+<hr>
+<br />
+<h3 class="text-center" style="font-family: 'Montserrat'; color:black; font-size: 45px">@Model.Ho @Model.Ten</h3>
+<div class="page-content">
+    <div class="content">
+        <div class="container">
+            <div class="col-12">
+                <div class="card-body text-wrap">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Mã số sinh viên:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.MSSV
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Giới tính:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.GioiTinh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngày sinh:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.NgaySinh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.Email_1
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Email cá nhân:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.Email_2
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Di động:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.DTDD
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT cha:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.DTCha
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">SĐT mẹ:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.DTMe
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Địa chỉ:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.DiaChi
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Học kỳ bắt đầu:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.HocKyBatDau
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Khóa:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.KhoaDaoTao.Khoa
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Ngành:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.NganhDaoTao.Nganh
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Lớp:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.LopQuanLy.TenLop
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Tình trạng:</h5>
+                        </div>
+                        <div class="col-sm-9 text-secondary" style="font-family: 'Montserrat'; color: black;">
+                            @Model.TinhTrang.TenTinhTrang
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

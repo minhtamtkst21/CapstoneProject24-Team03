@@ -50,7 +50,7 @@
                                     {
                                         <a class="aaa dropdown-item" href="@Url.Action("ChuongTrinhDaoTao", "Faculty")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-tasks"></i> Chuyển đến trang BCN Khoa</a>
                                     }
-                                    <a class="aaa dropdown-item" href="#" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-pencil-square-o"></i> Xem thông tin chi tiết</a>
+                                    <a class="aaa dropdown-item" href="@Url.Action("XemThongTinChiTiet", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-pencil-square-o"></i> Xem thông tin chi tiết</a>
                                     <a class="aaa dropdown-item" href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-user"></i> Chỉnh sửa thông tin</a>
                                     <hr style="width: 80%; margin: 0 auto;" />
                                     <a class="aaa dropdown-item" href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i> Đăng xuất</a>
@@ -91,7 +91,7 @@
                                 <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
                             </ul>
                         </li>
-                        @*@if (User.IsInRole("CN Lop"))*@
+                        @if (User.IsInRole("CN Lop"))
                         {
                             <li>
                                 <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
@@ -103,8 +103,8 @@
                     </ul>
                 </nav><!--nav end-->
                 <ul class="social-links ml-auto">
-                    <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
+                    <li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
                     <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
                 </ul>
             </div><!--navigation-bar end-->
@@ -232,8 +232,8 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <ul class="social-links">
-                                <li><a href="#" title=""><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#" title=""><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
                                 <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
                             </ul>
                         </div>

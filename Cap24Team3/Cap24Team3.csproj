@@ -996,6 +996,7 @@
     <Content Include="Views\ThongBaos\Bell.cshtml" />
     <Content Include="Views\ThongBaos\ModalTB.cshtml" />
     <Content Include="Views\SinhVien\DangKyKHDT.cshtml" />
+    <Content Include="Views\SinhVien\XemThongTinChiTiet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

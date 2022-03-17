@@ -20,10 +20,18 @@
         <div class="page-title-box d-flex align-sinhviens-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">QUẢN LÝ THÔNG BÁO</h4>
             <div class="page-title-right">
-                <form>
-                    <br />
-                    <a href="@Url.Action("TaoThongBao", "ThongBao")" class="btn btn-secondary btn-rounded">Tạo mới</a>
-                </form>
+                <br />
+                <div class="row">
+                    <div>
+                        <a href="@Url.Action("TaoThongBao", "ThongBao")" class="btn btn-secondary btn-rounded">Tạo mới</a>
+                    </div>
+                    &ensp;
+                    <div>
+                        <form action="@Url.Action("DeleteAll", "ThongBao")">
+                            <button class="btn btn-danger btn-rounded">Xóa tất cả thông báo</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -66,9 +74,9 @@
                                             Chưa đọc
                                         </td>
                                     }
-                                <td>
-                                    <a href="@Url.Action("Delete", "ThongBao" , new {id = s.ID})"><i class="fa fa-trash"></i></a>
-                                </td>
+                                    <td>
+                                        <a href="@Url.Action("Delete", "ThongBao" , new {id = s.ID})"><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>

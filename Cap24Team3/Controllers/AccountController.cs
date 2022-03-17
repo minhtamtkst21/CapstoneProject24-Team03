@@ -418,7 +418,7 @@ namespace Cap24Team3.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("XemHocPhanDT", "SinhVien");
+            return RedirectToAction("NhanThongBao", "ThongBaos");
         }
 
         //
@@ -475,7 +475,7 @@ namespace Cap24Team3.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("XemHocPhanDT", "SinhVien");
+            return RedirectToAction("NhanThongBao", "ThongBaos");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

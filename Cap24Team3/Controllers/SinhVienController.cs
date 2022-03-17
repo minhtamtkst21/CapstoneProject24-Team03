@@ -11,6 +11,19 @@ namespace Cap24Team3.Controllers
     public class SinhVienController : Controller
     {
         private Cap24 db = new Cap24();
+        public ActionResult XemThongTinChiTiet()
+        {
+            var mail = User.Identity.Name;
+            if (mail != null)
+            {
+                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                if (sinhvien != null)
+                {
+                    return View(sinhvien);
+                }
+            }
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         public ActionResult CapNhatThongTin()
         {
             var mail = User.Identity.Name;
