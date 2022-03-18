@@ -63,65 +63,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return View(hocKyDaoTao);
         }
 
-        public ActionResult SuaHocKyDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HocKyDaoTao hocKyDaoTao = db.HocKyDaoTaos.Find(id);
-            if (hocKyDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hocKyDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaHocKyDT(HocKyDaoTao hocKyDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraHK(hocKyDaoTao.HocKy);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaHocKyDT", new { id = hocKyDaoTao.ID });
-                }
-                db.Entry(hocKyDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa học kỳ thành công";
-                return RedirectToAction("ListHocKyDT");
-            }
-            return View(hocKyDaoTao);
-        }
-
-        public ActionResult XoaHocKyDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HocKyDaoTao hocKyDaoTao = db.HocKyDaoTaos.Find(id);
-            if (hocKyDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hocKyDaoTao);
-        }
-
-        // POST: Faculty/NganhDaoTaos/Delete/5
-        [HttpPost, ActionName("XoaHocKyDT")]
-        [ValidateAntiForgeryToken]
-        public ActionResult XacNhanXoaHocKyDT(int id)
-        {
-            HocKyDaoTao hocKyDaoTao = db.HocKyDaoTaos.Find(id);
-            db.HocKyDaoTaos.Remove(hocKyDaoTao);
-            db.SaveChanges();
-            TempData["ThongBao"] = "Xóa học kỳ thành công";
-            return RedirectToAction("ListHocKyDT");
-        }
-
         public string KiemTraKhoa(int khoa)
         {
             string ListLoi = "";
@@ -171,64 +112,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return View(khoaDaoTao);
         }
 
-        public ActionResult SuaKhoaDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KhoaDaoTao khoaDaoTao = db.KhoaDaoTaos.Find(id);
-            if (khoaDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(khoaDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaKhoaDT(KhoaDaoTao khoaDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraKhoa(khoaDaoTao.Khoa);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaKhoaDT", new { id = khoaDaoTao.ID });
-                }
-                db.Entry(khoaDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa khóa thành công";
-                return RedirectToAction("ListKhoaDT");
-            }
-            return View(khoaDaoTao);
-        }
-
-        public ActionResult XoaKhoaDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KhoaDaoTao khoaDaoTao = db.KhoaDaoTaos.Find(id);
-            if (khoaDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(khoaDaoTao);
-        }
-
-        // POST: Faculty/NganhDaoTaos/Delete/5
-        [HttpPost, ActionName("XoaKhoaDT")]
-        [ValidateAntiForgeryToken]
-        public ActionResult XacNhanXoaKhoaDT(int id)
-        {
-            KhoaDaoTao khoaDaoTao = db.KhoaDaoTaos.Find(id);
-            db.KhoaDaoTaos.Remove(khoaDaoTao);
-            db.SaveChanges();
-            TempData["ThongBao"] = "Xóa khóa thành công";
-            return RedirectToAction("ListKhoaDT");
-        }
 
         public string KiemTraNganh(string nganh)
         {
@@ -279,65 +162,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 return RedirectToAction("ListNganhDT");
             }
             return View(nganhDaoTao);
-        }
-
-        public ActionResult SuaNganhDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NganhDaoTao nganhDaoTao = db.NganhDaoTaos.Find(id);
-            if (nganhDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganhDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaNganhDT(NganhDaoTao nganhDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraNganh(nganhDaoTao.Nganh);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaNganhDT", new { id = nganhDaoTao.ID });
-                }
-                db.Entry(nganhDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa ngành thành công";
-                return RedirectToAction("ListNganhDT");
-            }
-            return View(nganhDaoTao);
-        }
-
-        public ActionResult XoaNganhDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NganhDaoTao nganhDaoTao = db.NganhDaoTaos.Find(id);
-            if (nganhDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganhDaoTao);
-        }
-
-        // POST: Faculty/NganhDaoTaos/Delete/5
-        [HttpPost, ActionName("XoaNganhDT")]
-        [ValidateAntiForgeryToken]
-        public ActionResult XacNhanXoaNganhDT(int id)
-        {
-            NganhDaoTao nganhDaoTao = db.NganhDaoTaos.Find(id);
-            db.NganhDaoTaos.Remove(nganhDaoTao);
-            db.SaveChanges();
-            TempData["ThongBao"] = "Xóa ngành thành công";
-            return RedirectToAction("ListNganhDT");
         }
 
         public string KiemTraFile(HttpPostedFileBase file)

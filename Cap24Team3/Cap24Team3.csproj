@@ -529,9 +529,6 @@
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiHocKy.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiKhoa.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiNganh.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaHocKyDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaKhoaDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaNganhDT.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\KhoaSinhVien.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\ListLop.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\ListSinhVien.cshtml" />
