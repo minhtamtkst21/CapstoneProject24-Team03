@@ -35,7 +35,11 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 return View();
             }
         }
-
+        public ActionResult EnableCheckbox(int id)
+        {
+            Session["SinhVienTT"] = db.SinhViens.Find(id);
+            return Redirect(Request.UrlReferrer.ToString());
+        }
         // POST: ThongBaos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

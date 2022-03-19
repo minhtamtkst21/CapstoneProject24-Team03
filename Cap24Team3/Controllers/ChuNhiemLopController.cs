@@ -130,6 +130,12 @@ namespace Cap24Team3.Controllers
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        item.TinhTrang = false;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
                 var chinhSuaThongTins = db.DotChinhSuaThongTins.Include(s => s.LopQuanLy);
                 return View(chinhSuaThongTins.ToList());

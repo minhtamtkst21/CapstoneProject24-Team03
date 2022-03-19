@@ -5723,7 +5723,7 @@ a.close.disabled {
 }
 
 .modal-open {
-    overflow: hidden
+    overflow: visible
 }
 
     .modal-open .modal {
