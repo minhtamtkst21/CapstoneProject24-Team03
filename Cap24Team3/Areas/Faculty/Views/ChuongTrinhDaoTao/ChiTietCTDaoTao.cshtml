@@ -9,6 +9,7 @@
     th, tr {
         color: black;
     }
+
 </style>
 <div class="row">
     <div class="col-12">
@@ -18,7 +19,7 @@
                 <form>
                     <input type="number" value="@Model.ID" name="@Model.ID" hidden />
                     <input type="file" id="file" style="display:none;" />
-                    <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThongKeChinhSua">
                         <i class="mdi mdi-microsoft-excel"></i> Chỉnh sửa
                     </button>
                     &ensp;
@@ -63,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal fade" id="ThongKeChinhSua" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -80,6 +81,11 @@
                                             <input id="excel_file" type="file" name="UploadedFile" class="dropify" required accept=".xls,.xlsx" onclick="Clearform()" />
                                         </div>
                                     </div>
+
+                                    <input name="Khoa" id="Khoa" value="@Model.KhoaDaoTao.Khoa" hidden/>
+                                    <input name="Nganh" id="Nganh" value="@Model.NganhDaoTao.Nganh" hidden/>
+                                    <input name="HocKy" id="HocKy" value="@Model.HocKyDaoTao.HocKy" hidden/>
+                                    <input name="dieuchinh" id="dieuchinh" value="1" hidden/>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
                                         <input type="submit" class="btn btn-primary" value="Tải lên" />
@@ -89,6 +95,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="modal fade" id="ModelCheckFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                     <div class="modal-dialog modal-xl" role="document">
                         <div class="modal-content">
@@ -103,7 +110,8 @@
                                     @Html.Raw(Session["ThongBao"])
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="@Url.Action("ChinhSuaCTDaoTao")">
+                                    <form action="@Url.Action("SuaCTDT")">
+                                        <input id="ID" name="ID" value="@Model.ID" hidden/>
                                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
                                         <input type="submit" class="btn btn-primary" value="Tải lên" />
                                     </form>
@@ -112,6 +120,34 @@
                         </div>
                     </div>
                 </div>
+                @*<div class="modal fade" id="ModelCheckFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto;">Xem trước chương trình đào tạo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("ChinhSuaCTDaoTao", "ChuongTrinhDaoTao", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div>
+                                @Html.Raw(Session["ThongBao"])
+                            </div>
+                            <input name="CTDT" id="CTDT" value="@Model.ID" />
+                            <input name="Khoa" id="Khoa" value="@Model.KhoaDaoTao.Khoa" />
+                            <input name="Nganh" id="Nganh" value="@Model.NganhDaoTao.Nganh" />
+                            <input name="HK" id="HK" value="@Model.HocKyDaoTao.HocKy" />
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
+                                <input type="submit" class="btn btn-primary" value="Tải lên" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>*@
 
                 <script>
                     $('#exampleModal').on('show.bs.modal', event => {
@@ -134,123 +170,136 @@
                     }
                 </script>
             </div>
-    </div>
-</div>
-<!-- end page title -->
-@foreach (var khoikienthuc in ViewData["KhoiKienThuc"] as List<Cap24Team3.Models.KhoiKienThuc>)
-{
-    <div class="col-xl-12">
-        <div class="card-box">
-            <h4 class="header-title mt-0 mb-3" style="font-family: Roboto;">@khoikienthuc.TenKhoiKienThuc</h4>
-            <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr style="background-color:lightblue">
-                            <th>STT</th>
-                            <th>Mã học phần</th>
-                            <th>Tên học phần</th>
-                            <th>Số tín chỉ</th>
-                            <th>BB/TC</th>
-                            <th>Tiên quyết</th>
-                            <th>Học trước</th>
-                            <th>Song hành</th>
-                            <th>Học kỳ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var hocphan in ViewData["HocPhan"] as List<Cap24Team3.Models.HocPhanDaoTao>)
-                        {
-                            if (hocphan.KhoiKienThuc.ID == khoikienthuc.ID)
-                            {
-                                <tr>
-                                    @if (hocphan.ID_HocPhanTuChon == null)
-                                    {
-                                        STT++;
-                                        <td>@STT</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    <td>@hocphan.MaHocPhan</td>
-                                    <td>@hocphan.TenHocPhan</td>
-                                    <td>@hocphan.SoTinChi</td>
-                                    @if (hocphan.ID_HocPhanTuChon == null)
-                                    {
-                                        <td>BB</td>
-                                    }
-                                    else
-                                    {
-                                        <td>TC</td>
-                                    }
-                                    <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                        {
-                                            if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
-                                            {
-                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                {
-                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p>
-                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                    </p>
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                        {
-                                            if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
-                                            {
-                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                {
-                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p>
-                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                    </p>
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                    <td>
-                                        @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                        {
-                                            if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
-                                            {
-                                                if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                {
-                                                    <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                        @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p>
-                                                        @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                    </p>
-                                                }
-                                            }
-                                        }
-                                    </td>
-                                    <td>&emsp;@hocphan.HocKy</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
-}
+    <!-- end page title -->
+    @foreach (var khoikienthuc in ViewData["KhoiKienThuc"] as List<Cap24Team3.Models.KhoiKienThuc>)
+    {
+        <div class="col-xl-12">
+            <div class="card-box">
+                <h4 class="header-title mt-0 mb-3" style="font-family: Roboto;">@khoikienthuc.TenKhoiKienThuc</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr style="background-color:lightblue">
+                                <th>STT</th>
+                                <th>Mã học phần</th>
+                                <th>Tên học phần</th>
+                                <th>Số tín chỉ</th>
+                                <th>BB/TC</th>
+                                <th>Tiên quyết</th>
+                                <th>Học trước</th>
+                                <th>Song hành</th>
+                                <th>Học kỳ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var hocphan in ViewData["HocPhan"] as List<Cap24Team3.Models.HocPhanDaoTao>)
+                            {
+                                if (hocphan.KhoiKienThuc.ID == khoikienthuc.ID)
+                                {
+                                    <tr>
+                                        @if (hocphan.ID_HocPhanTuChon == null)
+                                        {
+                                            STT++;
+                                            <td>@STT</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td>@hocphan.MaHocPhan</td>
+                                        <td>@hocphan.TenHocPhan</td>
+                                        <td>@hocphan.SoTinChi</td>
+                                        @if (hocphan.ID_HocPhanTuChon == null)
+                                        {
+                                            <td>BB</td>
+                                        }
+                                        else
+                                        {
+                                            <td>TC</td>
+                                        }
+                                        <td>
+                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                            {
+                                                if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                {
+                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                    {
+                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>
+                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                        </p>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                            {
+                                                if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                {
+                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                    {
+                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>
+                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                        </p>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                            {
+                                                if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == hocphan.ID)
+                                                {
+                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
+                                                    {
+                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
+                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>
+                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
+                                                        </p>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>&emsp;@hocphan.HocKy</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+@if (Session["ThongBao"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#ModelCheckFile').modal('show');
+        });
+    </script>
+    Session["ThongBao"] = null;
+}

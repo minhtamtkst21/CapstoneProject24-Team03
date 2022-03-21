@@ -542,23 +542,23 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
                                         }
-                                        if (workSheet.Cells[rowIterator, 4].Value != null)
-                                        {
-                                            var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                            if (NgaySinh.Length > 10)
-                                            {
-                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
-                                            }
-                                            if (NgaySinh.Replace(" ", string.Empty) == null)
-                                            {
-                                                TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
-                                            }
-                                            SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                        }
-                                        else
-                                        {
-                                            TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
-                                        }
+                                        //if (workSheet.Cells[rowIterator, 4].Value != null)
+                                        //{
+                                        //    var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                        //    if (NgaySinh.Length > 10)
+                                        //    {
+                                        //        TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
+                                        //    }
+                                        //    if (NgaySinh.Replace(" ", string.Empty) == null)
+                                        //    {
+                                        //        TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+                                        //    }
+                                        //    SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                        //}
+                                        //else
+                                        //{
+                                        //    TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
+                                        //}
                                         if (workSheet.Cells[rowIterator, 5].Value != null)
                                         {
                                             var GT = workSheet.Cells[rowIterator, 5].Value.ToString();
@@ -791,7 +791,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             }           
             catch (Exception)
             {
-                TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
+                TempData["Alert"] = "Có lỗi";
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }

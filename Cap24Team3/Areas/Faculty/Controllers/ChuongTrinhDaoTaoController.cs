@@ -570,7 +570,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return View(ListChuongTrinhDaoTao.ToList());
         }
         [HttpPost]
-        public ActionResult XemTruocThongKe(FormCollection formCollection, string Nganh, string Khoa, string HocKy)
+        public ActionResult XemTruocThongKe(FormCollection formCollection, string Nganh, string Khoa, string HocKy, string dieuchinh)
         {
             if (Nganh is null)
             {
@@ -593,7 +593,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 var LuuHocPhan = new List<HocPhanDaoTao>();
                 var LuuRangBuoc = new List<RangBuocHocPhan>();
                 var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.KhoaDaoTao.Khoa.ToString() == Khoa.ToString()).FirstOrDefault(s => s.NganhDaoTao.Nganh == Nganh);
-                if (Request != null && ctdt == null)
+                if (Request != null && (ctdt == null || dieuchinh == "1"))
                 {
                     ChuongTrinhDaoTao chuongTrinhDaoTao = new ChuongTrinhDaoTao();
                     chuongTrinhDaoTao.ID_Khoa = db.KhoaDaoTaos.ToList().FirstOrDefault(s => s.Khoa.ToString() == Khoa.ToString()).ID;
@@ -773,7 +773,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 }
                             }
                         }
-                        TempData["ThongBao"] = "Thêm mới thành công chương trình đào tạo";
+                        
                     }
                     else
                     {
@@ -917,6 +917,37 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 db.RangBuocHocPhans.Add(item);
             }
             db.SaveChanges();
+            TempData["ThongBao"] = "Thêm mới thành công chương trình đào tạo";
+            Session["Thongbao"] = null;
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult SuaCTDT(int ID)
+        {
+            XoaCTDT(ID);
+            db.Configuration.AutoDetectChangesEnabled = false;
+            db.Configuration.ValidateOnSaveEnabled = false;
+            var ctdt = Session["CTDT"] as ChuongTrinhDaoTao;
+            var khoikienthuc = Session["Khoikienthuc"] as List<KhoiKienThuc>;
+            var hocphan = Session["HocPhan"] as List<HocPhanDaoTao>;
+            var rangbuoc = Session["RangBuoc"] as List<RangBuocHocPhan>;
+            db.ChuongTrinhDaoTaos.Add(ctdt);
+            db.SaveChanges();
+            foreach (var item in khoikienthuc)
+            {
+                db.KhoiKienThucs.Add(item);
+            }
+            db.SaveChanges();
+            foreach (var item in hocphan)
+            {
+                db.HocPhanDaoTaos.Add(item);
+                db.SaveChanges();
+            }
+            foreach (var item in rangbuoc)
+            {
+                db.RangBuocHocPhans.Add(item);
+            }
+            db.SaveChanges();
+            TempData["ThongBao"] = "Chỉnh sửa thành công chương trình đào tạo";
             Session["Thongbao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
         }
