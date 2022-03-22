@@ -1282,7 +1282,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var roleCN = db.AspNetRoles.FirstOrDefault(r => r.Name == "CN Lop");
             Lop.ChuNhiem = chunhiem;
             db.Entry(Lop).State = EntityState.Modified;
-            if (dslop.Count() == 0)
+            if (dslop.Count == 0)
             {
                 db.AspNetRoles.Remove(db.AspNetRoles.Where(r => r.Name == "CN Lop").FirstOrDefault(s=>s.AspNetUsers == db.AspNetUsers.FirstOrDefault(c=>c.UserName == chunhiemcu)));
             }

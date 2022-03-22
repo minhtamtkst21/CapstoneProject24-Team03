@@ -241,7 +241,7 @@ namespace Cap24Team3.Controllers
             {
                 var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
                 var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
-                var diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV);
+                var diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                 if (diemhp == null)
                 {
                     ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
@@ -268,7 +268,8 @@ namespace Cap24Team3.Controllers
                         string hkc = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == (i + db.HocKyDaoTaos.FirstOrDefault(t => t.HocKy == sinhvien.HocKyBatDau).STT - 1)).HocKy.ToString();
                         ListHKDK.Add(hkc);
                     }
-                    foreach (var item in diemhp)
+                    var listDiem = new List<string>();
+                    foreach (var item in diemhp.OrderByDescending(s=>s.ID).ToList())
                     {
                         if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK2))
                         {
@@ -280,9 +281,27 @@ namespace Cap24Team3.Controllers
                             hk.HocKy1 = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == hk2).HocKy.ToString();
                             listHK.Add(hk);
                         }
+                        string check = item.HocPhan + item.HocKyDangKy.ToString();
+                        if (CheckTonTai(check, listDiem))
+                        {
+                            db.DiemHocPhans.Remove(item);
+                            db.SaveChanges();
+                        } else
+                        {
+                            listDiem.Add(check);
+                        }
                         listHPDiem.Add(item.HocPhan.Trim());
                     }
-                    foreach (var item in db.HocPhanDaoTaos.ToList())
+                    var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.NganhDaoTao.Nganh == nganh.Nganh).FirstOrDefault(s => s.KhoaDaoTao.Khoa == khoa.Khoa);
+                    var hocphan = new List<HocPhanDaoTao>();
+                    foreach(var item in db.KhoiKienThucs.Where(s=>s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                    {
+                        foreach(var hp in db.HocPhanDaoTaos.Where(s=>s.ID_KhoiKienThuc == item.ID).ToList())
+                        {
+                            hocphan.Add(hp);
+                        }
+                    }
+                    foreach (var item in hocphan)
                     {
                         if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
                         {
@@ -296,7 +315,7 @@ namespace Cap24Team3.Controllers
                             else
                                 dhp.BBTC = false;
                             dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
-                            dhp.LichSu = db.LichSuUpLoads.Last().ID;
+                            dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
                             dhp.QuaMon = false;
                             db.DiemHocPhans.Add(dhp);
                         }
@@ -306,7 +325,7 @@ namespace Cap24Team3.Controllers
                     ViewData["HocKyHienTai"] = hockyhientai;
                     TempData["ListHKDK"] = ListHKDK.ToArray();
                     ViewData["maxhk"] = maxhk;
-                    TempData["Diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+                    TempData["Diemso"] = diemhp;
                     TempData["Sinhvien"] = sinhvien;
                     return View(diemhp.ToList());
                 }
