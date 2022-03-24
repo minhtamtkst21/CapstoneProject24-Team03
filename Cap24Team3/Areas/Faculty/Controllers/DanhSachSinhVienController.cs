@@ -791,7 +791,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             }           
             catch (Exception)
             {
-                TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
+                TempData["Alert"] = "Có lỗi";
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
