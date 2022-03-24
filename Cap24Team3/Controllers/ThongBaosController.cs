@@ -31,8 +31,9 @@ namespace Cap24Team3.Controllers
             var mail = User.Identity.Name;
             if (mail != "")
             {
-                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
-                var thongBaos = db.ThongBaos.Where(t => t.NguoiNhan == sinhvien.Email_1).ToList();
+                //var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                //var thongBaos = db.ThongBaos.Where(t => t.NguoiNhan == sinhvien.Email_1).ToList(); Longu lam sai
+                var thongBaos = db.ThongBaos.Where(t => t.NguoiNhan == mail).ToList();
                 foreach (var item in thongBaos)
                 {
                     ViewData["thongbao"] = item;
