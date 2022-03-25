@@ -1277,16 +1277,18 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             }
             var Lop = db.LopQuanLies.Find(idlop);
             string chunhiemcu = Lop.ChuNhiem;
-            var chunhiemlop = db.AspNetUsers.FirstOrDefault(cn => cn.Email == chunhiem);
-            var dslop = db.LopQuanLies.Where(l => l.ChuNhiem == chunhiemcu).ToList();
-            var roleCN = db.AspNetRoles.FirstOrDefault(r => r.Name == "CN Lop");
+            var CNcu = db.AspNetUsers.FirstOrDefault(cnc => cnc.Email == chunhiemcu);
             Lop.ChuNhiem = chunhiem;
+            var chunhiemlop = db.AspNetUsers.FirstOrDefault(cn => cn.Email == chunhiem);
+            var roleCN = db.AspNetRoles.FirstOrDefault(r => r.Name == "CN Lop");
             db.Entry(Lop).State = EntityState.Modified;
+            db.SaveChanges();
+            var dslop = db.LopQuanLies.Where(l => l.ChuNhiem == chunhiemcu).ToList();
             if (dslop.Count() == 0)
             {
-                db.AspNetRoles.Remove(db.AspNetRoles.Where(r => r.Name == "CN Lop").FirstOrDefault(s=>s.AspNetUsers == db.AspNetUsers.FirstOrDefault(c=>c.UserName == chunhiemcu)));
+                roleCN.AspNetUsers.Remove(CNcu);
+                //db.AspNetRoles.Remove(db.AspNetRoles.Where(r => r.Name == "CN Lop").FirstOrDefault(s=>s.AspNetUsers == db.AspNetUsers.FirstOrDefault(c=>c.UserName == chunhiemcu)));
             }
-            db.SaveChanges();
             roleCN.AspNetUsers.Add(chunhiemlop);
             db.Entry(roleCN).State = EntityState.Modified;
             db.SaveChanges();
