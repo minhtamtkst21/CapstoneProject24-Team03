@@ -788,7 +788,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     Session["ThongBao"] = thongbao;
                 }
                 return Redirect(Request.UrlReferrer.ToString());
-            }           
+            }
             catch (Exception)
             {
                 TempData["Alert"] = "File bị sai định dạng, vui lòng thử lại";
@@ -1104,9 +1104,20 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 var list = db.SinhViens.Where(s => s.ID_Lop == item.ID).ToList();
                 foreach (var sv in list)
                 {
+                    var Chinhsua = db.ChinhSuaThongTins.Where(s => s.ID_SinhVien == sv.ID).ToList();
+                    foreach (var cs in Chinhsua)
+                    {
+                        db.ChinhSuaThongTins.Remove(cs);
+                        var dotChinhsua = db.ChinhSuaThongTins.Where(s => s.DotChinhSuaThongTin.ID == cs.ID).ToList();
+                        foreach (var dcs in Chinhsua)
+                        {
+                            db.ChinhSuaThongTins.Remove(dcs);
+                        }
+                    }
                     db.SinhViens.Remove(sv);
                     db.SaveChanges();
                 }
+              
                 db.LopQuanLies.Remove(item);
                 db.SaveChanges();
             }
@@ -1126,9 +1137,21 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 var list = db.SinhViens.Where(s => s.ID_Lop == item.ID).ToList();
                 foreach (var sv in list)
                 {
+                    var Chinhsua = db.ChinhSuaThongTins.Where(s => s.ID_SinhVien == sv.ID).ToList();
+                    foreach (var cs in Chinhsua)
+                    {
+                        db.ChinhSuaThongTins.Remove(cs);
+                        var dotChinhsua = db.ChinhSuaThongTins.Where(s => s.DotChinhSuaThongTin.ID == cs.ID).ToList();
+                        foreach (var dcs in Chinhsua)
+                        {
+                            db.ChinhSuaThongTins.Remove(dcs);
+                        }
+                    }
                     db.SinhViens.Remove(sv);
                     db.SaveChanges();
                 }
+
+
                 db.LopQuanLies.Remove(item);
                 db.SaveChanges();
             }
@@ -1148,6 +1171,16 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 var list = db.SinhViens.Where(s => s.ID_Lop == item.ID).ToList();
                 foreach (var sv in list)
                 {
+                    var Chinhsua = db.ChinhSuaThongTins.Where(s => s.ID_SinhVien == sv.ID).ToList();
+                    foreach (var cs in Chinhsua)
+                    {
+                        db.ChinhSuaThongTins.Remove(cs);
+                        var dotChinhsua = db.ChinhSuaThongTins.Where(s => s.DotChinhSuaThongTin.ID == cs.ID).ToList();
+                        foreach (var dcs in Chinhsua)
+                        {
+                            db.ChinhSuaThongTins.Remove(dcs);
+                        }
+                    }
                     db.SinhViens.Remove(sv);
                     db.SaveChanges();
                 }
