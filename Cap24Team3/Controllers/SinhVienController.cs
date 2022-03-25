@@ -211,6 +211,7 @@ namespace Cap24Team3.Controllers
                         if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
                             khoikienthucmoi.Add(item.MaKhoiKienThuc);
                     var tongsotinchi = 0;
+                    var khoikienthuc = new List<string>();
                     foreach (var item in khoikienthucmoi)
                     {
                         var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
@@ -219,12 +220,14 @@ namespace Cap24Team3.Controllers
                             if (hocphan.ID_HocPhanTuChon == null)
                                 tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
                         }
+                        khoikienthuc.Add(ktt.TenKhoiKienThuc);
                     }
                     ViewData["listHK"] = listHK;
                     ViewData["DiemTB"] = diemtb;
                     ViewData["DiemTBChung"] = diemtbchung;
                     ViewData["SoTC"] = sotinchi;
                     ViewData["Tongsotinchi"] = tongsotinchi;
+                    TempData["Khoikienthuc"] = khoikienthuc;
                 }
             }
             return View(listdiem);
@@ -281,7 +284,7 @@ namespace Cap24Team3.Controllers
                             hk.HocKy1 = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == hk2).HocKy.ToString();
                             listHK.Add(hk);
                         }
-                        string check = item.HocPhan + item.HocKyDangKy.ToString();
+                        string check = item.HocPhan.Trim() + item.HocKyDangKy.ToString();
                         if (CheckTonTai(check, listDiem))
                         {
                             db.DiemHocPhans.Remove(item);
