@@ -307,22 +307,23 @@ namespace Cap24Team3.Controllers
                     }
                     foreach (var item in hocphan)
                     {
-                        if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
-                        {
-                            DiemHocPhan dhp = new DiemHocPhan();
-                            dhp.HocPhan = item.MaHocPhan.Trim();
-                            dhp.TenHocPhan = item.TenHocPhan;
-                            dhp.HocKyDangKy = (int)item.HocKy;
-                            dhp.HocKyKeHoach = (int)item.HocKy;
-                            if (item.HocPhanDaoTao2 == null)
-                                dhp.BBTC = true;
-                            else
-                                dhp.BBTC = false;
-                            dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
-                            dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
-                            dhp.QuaMon = false;
-                            db.DiemHocPhans.Add(dhp);
-                        }
+                        if (item.MaHocPhan != null)
+                            if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
+                            {
+                                DiemHocPhan dhp = new DiemHocPhan();
+                                dhp.HocPhan = item.MaHocPhan.Trim();
+                                dhp.TenHocPhan = item.TenHocPhan;
+                                dhp.HocKyDangKy = (int)item.HocKy;
+                                dhp.HocKyKeHoach = (int)item.HocKy;
+                                if (item.HocPhanDaoTao2 == null)
+                                    dhp.BBTC = true;
+                                else
+                                    dhp.BBTC = false;
+                                dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
+                                dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
+                                dhp.QuaMon = false;
+                                db.DiemHocPhans.Add(dhp);
+                            }
                     }
                     db.SaveChanges();
                     ViewData["listHK"] = listHK.OrderBy(s => s.stt).ToList();
