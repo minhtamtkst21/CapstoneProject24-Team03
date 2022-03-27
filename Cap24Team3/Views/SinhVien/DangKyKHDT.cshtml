@@ -1,395 +1,374 @@
-﻿@model IEnumerable<Cap24Team3.Models.DiemHocPhan>
-@{
-    ViewBag.Title = "DangKyKHDT";
-    Layout = "~/Views/Shared/Student_layout.cshtml";
-    int STT = 0;
-    var diem = new List<Cap24Team3.Models.DiemHocPhan>();
-    var sv = new Cap24Team3.Models.SinhVien();
+﻿using Cap24Team3.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-    if (TempData["Diemso"] != null)
+namespace Cap24Team3.Controllers
+{
+    public class SinhVienController : Controller
     {
-        sv = TempData["Sinhvien"] as Cap24Team3.Models.SinhVien;
-    }
-}
-
-<section class="pager-section">
-    <div class="container">
-        <div class="pager-content text-center">
-            <h2 style="font-family: 'Montserrat';font-weight: 600; font-size: 100px;">Kế Hoạch Học Tập</h2>
-            <ul>
-                <li><a href="#" title="">Home</a></li>
-                <li><span>Kế hoạch học tập</span></li>
-            </ul>
-        </div>
-        <h4 class="page-titlee">E-Profile</h4>
-    </div>
-</section>
-<hr>
-<div class="page-content">
-    <div class="content">
-        <div class="container">
-            <br>
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="page-title" style="font-family: 'Dongle2'; color: black; font-size: 50px;"></h4>
-                    </div>
-                </div>
-            </div>
-            @if (TempData["Alert"] == null)
+        private Cap24 db = new Cap24();
+        public ActionResult XemThongTinChiTiet()
+        {
+            var mail = User.Identity.Name;
+            if (mail != null)
             {
-                foreach (var listHK in ViewData["listHK"] as List<Cap24Team3.Controllers.hk>)
+                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                if (sinhvien != null)
                 {
-                    int? tongtinchi = 0;
-                    <div class="col-xl-12">
-                        <div class="card-box">
-                            @if (listHK.HocKy1 == "")
+                    return View(sinhvien);
+                }
+            }
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        public ActionResult CapNhatThongTin()
+        {
+            var mail = User.Identity.Name;
+            if (mail != null)
+            {
+                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                if (sinhvien != null)
+                {
+                    var deadline = db.DotChinhSuaThongTins.Where(s => s.Lop == sinhvien.ID_Lop).Where(s => s.TinhTrang == true).ToList();
+                    if (deadline.Count != 0)
+                    {
+                        foreach (var item in deadline)
+                        {
+                            if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
                             {
-                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
+                                ViewData["CN"] = item;
+                                return View(sinhvien);
                             }
-                            else
-                            {
-                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK.HocKy (@listHK.HocKy1)</h4>
-                            }
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Mã học phần</th>
-                                            <th>Tên học phần</th>
-                                            <th>Số tín chỉ</th>
-                                            <th>BB/TC</th>
-                                            <th>Tiên quyết</th>
-                                            <th>Học trước</th>
-                                            <th>Song hành</th>
-                                            <th>Kết quả</th>
-                                            <th>Thao tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            if (item.HocKyDangKy.ToString() == listHK.HocKy)
-                                            {
-                                                if (item.QuaMon == true || item.Diem10 == "" || item.HocKyKeHoach == (int)ViewData["HocKyHienTai"] || item.HocKyDangKy != item.HocKyKeHoach)
-                                                {
-                                                    <tr>
-                                                        @{STT++; }
-                                                        <td>@STT</td>
-                                                        <td>@item.HocPhan</td>
-                                                        <td>@item.TenHocPhan</td>
-                                                        <td>@item.SoTinChi</td>
-                                                        @{ tongtinchi += item.SoTinChi; }
-                                                        @if (item.BBTC == true)
-                                                        {
-                                                            <td title="Bắt Buộc">BB</td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td title="Tự Chọn">TC</td>
-                                                        }
-                                                        <td>
-                                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                                            {
-                                                                if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                                {
-                                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                                    {
-                                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                        </p>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <p>
-                                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                        </p>
-                                                                    }
-                                                                }
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                                            {
-                                                                if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                                {
-                                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                                    {
-                                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                        </p>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <p>
-                                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                        </p>
-                                                                    }
-                                                                }
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
-                                                            {
-                                                                if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                                {
-                                                                    if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                                    {
-                                                                        <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                            @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                        </p>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <p>
-                                                                            @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                        </p>
-                                                                    }
-                                                                }
-                                                            }
-                                                        </td>
-                                                        @{
-                                                            if (item.Diem10 != null)
-                                                            {
-                                                                <td>
-                                                                    @item.Diem10
-                                                                    @if (item.QuaMon == true)
-                                                                    {
-                                                                        <i class="fa fa-check" style="color: green;"></i>
-
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
-                                                                    }
-                                                                </td>
-                                                                if (item.QuaMon == true)
-                                                                {
-                                                                    <td></td>
-                                                                }
-                                                                else
-                                                                {
-                                                                    if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
-                                                                    {
-                                                                        <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td></td>
-                                                                    }
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <td></td>
-                                                                if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
-                                                                {
-                                                                    <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td></td>
-                                                                }
-                                                            }
-                                                        }
-                                                    </tr>
-                                                }
-                                            }
-                                        }
-                                    </tbody>
-                                </table>
-                                @if (tongtinchi >= 20)
+                        }
+                    }
+                }
+            }
+            TempData["Alert"] = "Chưa đến thời gian đăng ký";
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+        [HttpPost]
+        public ActionResult CapNhatThongTin(int? capnhat, string mail, int? sdt, int? dtcha, int? dtme, string diachi)
+        {
+            var user = User.Identity.Name;
+            if (user != null)
+            {
+                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == user);
+                var thongtin = new ChinhSuaThongTin();
+                if (sinhvien != null)
+                {
+                    if (mail != null)
+                        thongtin.MailCaNhan = mail;
+                    if (sdt != null)
+                        thongtin.DTDD = sdt.ToString();
+                    if (dtcha != null)
+                        thongtin.DTCha = dtcha.ToString();
+                    if (dtme != null)
+                        thongtin.DTMe = dtme.ToString();
+                    if (diachi != null)
+                        thongtin.DiaChi = diachi;
+                    thongtin.SinhVien = sinhvien;
+                    thongtin.DotChinhSuaThongTin = db.DotChinhSuaThongTins.Find(capnhat);
+                    db.Entry(thongtin).State = EntityState.Added;
+                    db.SaveChanges();
+                    return RedirectToAction("XemHocPhanDT");
+                }
+            }
+            return RedirectToAction("XemHocPhanDT");
+        }
+        public ActionResult XemHocPhanDT()
+        {
+            string ListLoi = "";
+            var mailsv = User.Identity.Name;
+            var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mailsv);
+            if (sinhvien != null)
+            {
+                var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
+                if (ctdt == null)
+                {
+                    ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
+                    TempData["Alert"] = ListLoi;
+                    return View();
+                }
+                else
+                {
+                    var hocPhanDaoTaos = db.HocPhanDaoTaos.Include(h => h.KhoiKienThuc).Include(h => h.HocPhanDaoTao2).Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
+                    ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
+                    ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
+                    ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+                    ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
+                    var listHK = new List<string>
+    ();
+    var listHP = db.HocPhanDaoTaos.ToList();
+    foreach (var item in hocPhanDaoTaos.OrderBy(s => s.HocKy))
+    {
+    if (!CheckTonTai(item.HocKy.ToString(), listHK))
+    {
+    listHK.Add(item.HocKy.ToString());
+    }
+    }
+    //var listKKT = new List<string>
+        ();
+        //foreach (var item in hocPhanDaoTaos.OrderBy(s => s.ID_KhoiKienThuc))
+        //{
+        //    if (!CheckTonTai(item.KhoiKienThuc.TenKhoiKienThuc, listKKT))
+        //    {
+        //        listKKT.Add(item.KhoiKienThuc.TenKhoiKienThuc);
+        //    }
+        //}
+        ViewData["listHK"] = listHK;
+        ViewData["KhoiKienThucXem"] = db.KhoiKienThucs.Where(k => k.ID_ChuongTrinhDaoTao == ctdt.ID).ToList();
+        return View(hocPhanDaoTaos.ToList());
+        }
+        }
+        else
+        {
+        TempData["Alert"] = "Bạn chưa đăng nhập!";
+        return View();
+        }
+        }
+        public bool CheckTonTai(string element, List<string>
+            list)
+            {
+            foreach (var item in list)
+            {
+            if (element == item)
+            {
+            return true;
+            }
+            }
+            return false;
+            }
+            public ActionResult XemDiemSV()
+            {
+            var mail = User.Identity.Name;
+            var listdiem = new List<DiemHocPhan>
+                ();
+                var listHK = new List<string>
+                    ();
+                    var diemso2 = new List<string>
+                        ();
+                        if (mail != null)
+                        {
+                        var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mail);
+                        if (sinhvien != null && db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
+                        {
+                        var list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+                        foreach (var item in list)
+                        {
+                        string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
+                        if (!CheckTonTai(s, diemso2))
+                        {
+                        diemso2.Add(s);
+                        listdiem.Add(item);
+                        };
+                        if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                        listHK.Add(item.HocKyKeHoach.ToString());
+                        }
+                        var diemtb = new double[listHK.Count];
+                        var diemtbchung = new double[listHK.Count];
+                        var diemtong = new double[listHK.Count];
+                        var sotinchi = new int[listHK.Count];
+                        var somon = new int[listHK.Count];
+                        for (int i = 0; i < listHK.Count; i++)
+                        {
+                        diemtb[i] = 0;
+                        diemtong[i] = 0;
+                        sotinchi[i] = 0;
+                        somon[i] = 0;
+                        }
+                        for (int i = 0; i < listHK.Count; i++)
+                        {
+                        foreach (var item in listdiem)
+                        {
+                        if (item.HocKyKeHoach.ToString() == listHK[i])
+                        {
+                        if (double.TryParse(item.Diem10, out double diem10))
+                        {
+                        diemtong[i] += diem10;
+                        if (item.QuaMon == true)
+                        sotinchi[i] += (int)item.SoTinChi;
+                        somon[i]++;
+                        }
+                        }
+                        }
+                        }
+                        for (int i = 0; i < diemtb.Length; i++)
+                        {
+                        diemtb[i] = Math.Round(diemtong[i] / somon[i], 2);
+                        }
+                        double Somon = 0;
+                        double DiemTong = 0;
+                        for (int i = 0; i < diemtb.Length; i++)
+                        {
+                        Somon += somon[i];
+                        DiemTong += diemtong[i];
+                        diemtbchung[i] = Math.Round(DiemTong / Somon, 2);
+                        }
+                        var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                        var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                        var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
+                        var khoikienthucmoi = new List<string>
+                            ();
+                            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                            if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
+                            khoikienthucmoi.Add(item.MaKhoiKienThuc);
+                            var tongsotinchi = 0;
+                            var khoikienthuc = new List<string>
+                                ();
+                                foreach (var item in khoikienthucmoi)
                                 {
-                                    <div class="alert alert-warning col-3 div-centerr" align="center">
-                                        <i class="fa fa-exclamation-triangle"></i> Vượt quá 20 tín chỉ
-                                    </div>
+                                var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
+                                foreach (var hocphan in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == ktt.ID).ToList())
+                                {
+                                if (hocphan.ID_HocPhanTuChon == null)
+                                tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
+                                }
+                                khoikienthuc.Add(ktt.TenKhoiKienThuc);
+                                }
+                                ViewData["listHK"] = listHK;
+                                ViewData["DiemTB"] = diemtb;
+                                ViewData["DiemTBChung"] = diemtbchung;
+                                ViewData["SoTC"] = sotinchi;
+                                ViewData["Tongsotinchi"] = tongsotinchi;
+                                TempData["Khoikienthuc"] = khoikienthuc;
+                                }
+                                }
+                                return View(listdiem);
+                                }
+
+                                public ActionResult DangKyKHDT()
+                                {
+                                string ListLoi = "";
+                                var mailsv = User.Identity.Name;
+                                var sinhvien = db.SinhViens.FirstOrDefault(s => s.Email_1 == mailsv);
+                                string tshk = db.Thamsoes.FirstOrDefault(s => s.Ma == "HocKyHienTai").Giatri;
+                                int hockyhientai = db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy.ToString() == tshk).STT - db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == sinhvien.HocKyBatDau).STT + 1;
+                                if (sinhvien != null)
+                                {
+                                var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+                                var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+                                var diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+                                if (diemhp == null)
+                                {
+                                ListLoi += "<p> Chương trình đào tạo của Khóa K" + khoa.Khoa + " - Ngành " + nganh.Nganh + " bị trống</p>";
+                                TempData["Alert"] = ListLoi;
+                                return View();
                                 }
                                 else
                                 {
-                                    <br />
-                                    <p align="center" style="font-family: 'Dongle1'; color: black; font-size: 30px;">Tổng số tín chỉ: @tongtinchi</p>
-                                    <br />
-                                }
-
-                            </div>
-                        </div>
-                    </div>
-                }
-                <div class="col-xl-12">
-                    <div class="card-box">
-                        <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Chưa qua môn</h4>
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã học phần</th>
-                                        <th>Tên học phần</th>
-                                        <th>Số tín chỉ</th>
-                                        <th>BB/TC</th>
-                                        <th>Tiên quyết</th>
-                                        <th>Học trước</th>
-                                        <th>Song hành</th>
-                                        <th>Kết quả</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.Diem10 == null && item.HocKyDangKy != (int)ViewData["HocKyHienTai"] && item.HocKyDangKy == item.HocKyKeHoach)
-                                        {
-                                            <tr>
-                                                @{STT++; }
-                                                <td>@STT</td>
-                                                <td>@item.HocPhan</td>
-                                                <td>@item.TenHocPhan</td>
-                                                <td>@item.SoTinChi</td>
-                                                @if (item.BBTC == true)
+                                ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
+                                ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
+                                ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+                                ViewData["RangBuocHocPhan"] = db.RangBuocHocPhans.ToList();
+                                var listHK = new List<hk>
+                                    ();
+                                    var listHK2 = new List<string>
+                                        ();
+                                        var listHP = db.HocPhanDaoTaos.ToList();
+                                        var listHPDiem = new List<string>
+                                            ();
+                                            var ListHKDK = new List<string>
+                                                ();
+                                                int maxhk = 18;
+                                                if (maxhk - hockyhientai >= 6) maxhk = 15;
+                                                else if (maxhk - hockyhientai >= 3) maxhk = 12;
+                                                else maxhk = 18;
+                                                for (int i = hockyhientai + 1; i <= maxhk; i++)
                                                 {
-                                                    <td title="Bắt Buộc">BB</td>
+                                                string hkc = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == (i + db.HocKyDaoTaos.FirstOrDefault(t => t.HocKy == sinhvien.HocKyBatDau).STT - 1)).HocKy.ToString();
+                                                ListHKDK.Add(hkc);
                                                 }
-                                                else
-                                                {
-                                                    <td title="Tự Chọn">TC</td>
-                                                }
-                                                <td>
-                                                    @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                var listDiem = new List<string>
+                                                    ();
+                                                    foreach (var item in diemhp.OrderByDescending(s => s.ID).ToList())
                                                     {
-                                                        if (rangbuoc.LoaiRangBuoc == "Tiên quyết" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                        {
-                                                            if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                            {
-                                                                <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                    @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                </p>
-                                                            }
-                                                            else
-                                                            {
-                                                                <p>
-                                                                    @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                </p>
-                                                            }
-                                                        }
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                    if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK2))
                                                     {
-                                                        if (rangbuoc.LoaiRangBuoc == "Học trước" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                        {
-                                                            if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                            {
-                                                                <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                    @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                </p>
-                                                            }
-                                                            else
-                                                            {
-                                                                <p>
-                                                                    @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                </p>
-                                                            }
-                                                        }
+                                                    listHK2.Add(item.HocKyDangKy.ToString());
+                                                    hk hk = new hk();
+                                                    hk.stt = item.HocKyDangKy;
+                                                    hk.HocKy = item.HocKyDangKy.ToString();
+                                                    var hk2 = item.HocKyDangKy + db.HocKyDaoTaos.FirstOrDefault(i => i.HocKy == sinhvien.HocKyBatDau).STT - 1;
+                                                    hk.HocKy1 = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == hk2).HocKy.ToString();
+                                                    listHK.Add(hk);
                                                     }
-                                                </td>
-                                                <td>
-                                                    @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
+                                                    string check = item.HocPhan.Trim() + item.HocKyDangKy.ToString();
+                                                    if (CheckTonTai(check, listDiem))
                                                     {
-                                                        if (rangbuoc.LoaiRangBuoc == "Song hành" && rangbuoc.HocPhanDaoTao1.ID == item.ID)
-                                                        {
-                                                            if (rangbuoc.HocPhanDaoTao.MaHocPhan != null)
-                                                            {
-                                                                <p title="@rangbuoc.HocPhanDaoTao.TenHocPhan">
-                                                                    @rangbuoc.HocPhanDaoTao.MaHocPhan
-                                                                </p>
-                                                            }
-                                                            else
-                                                            {
-                                                                <p>
-                                                                    @rangbuoc.HocPhanDaoTao.TenHocPhan
-                                                                </p>
-                                                            }
-                                                        }
+                                                    db.DiemHocPhans.Remove(item);
+                                                    db.SaveChanges();
                                                     }
-                                                </td>
-                                                @if (item.Diem10 != null)
-                                                {
-                                                    <td>
-                                                        @if (item.QuaMon == true)
+                                                    else
+                                                    {
+                                                    listDiem.Add(check);
+                                                    }
+                                                    listHPDiem.Add(item.HocPhan.Trim());
+                                                    }
+                                                    var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.NganhDaoTao.Nganh == nganh.Nganh).FirstOrDefault(s => s.KhoaDaoTao.Khoa == khoa.Khoa);
+                                                    var hocphan = new List<HocPhanDaoTao>
+                                                        ();
+                                                        foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
                                                         {
-                                                            <i class="fa fa-check" style="color: green;"></i>
+                                                        foreach (var hp in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == item.ID).ToList())
+                                                        {
+                                                        hocphan.Add(hp);
+                                                        }
+                                                        }
+                                                        foreach (var item in hocphan)
+                                                        {
+                                                        if (item.MaHocPhan != null)
+                                                        if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
+                                                        {
+                                                        DiemHocPhan dhp = new DiemHocPhan();
+                                                        dhp.HocPhan = item.MaHocPhan.Trim();
+                                                        dhp.TenHocPhan = item.TenHocPhan;
+                                                        dhp.HocKyDangKy = (int)item.HocKy;
+                                                        dhp.HocKyKeHoach = (int)item.HocKy;
+                                                        if (item.HocPhanDaoTao2 == null)
+                                                        dhp.BBTC = true;
+                                                        else
+                                                        dhp.BBTC = false;
+                                                        dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
+                                                        dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
+                                                        dhp.QuaMon = false;
+                                                        db.DiemHocPhans.Add(dhp);
+                                                        }
+                                                        }
+                                                        db.SaveChanges();
+                                                        ViewData["listHK"] = listHK.OrderBy(s => s.stt).ToList();
+                                                        ViewData["HocKyHienTai"] = hockyhientai;
+                                                        TempData["ListHKDK"] = ListHKDK.ToArray();
+                                                        ViewData["maxhk"] = maxhk;
+                                                        TempData["Diemso"] = diemhp;
+                                                        TempData["Sinhvien"] = sinhvien;
+                                                        return View(diemhp.ToList());
+                                                        }
                                                         }
                                                         else
                                                         {
-                                                            <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
+                                                        TempData["Alert"] = "Bạn chưa đăng nhập!";
+                                                        return View();
                                                         }
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
-                                                <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div> <!-- content -->
-</div>
-<hr>
-<!-- Modal -->
-@if (Session["HocPhanDC"] != null)
-{
-    var mh = Session["HocPhanDC"] as Cap24Team3.Models.DiemHocPhan;
-    <div class="modal fade" id="editHK" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="font-family: 'Roboto'; color: black; font-weight: 600;">Điểu chỉnh học kỳ @mh.TenHocPhan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="@Url.Action("LuuHP")">
-                    <div class="modal-body">
-                        <select class="form-control col-6" name="hocky">
-                            @{
-                                var ListHKDK = TempData["ListHKDK"] as string[];
-                                int dem = 0;
-                            }
-                            @for (int i = (int)ViewData["HocKyHienTai"] + 1; i <= (int)ViewData["maxhk"]; i++)
-                            {
-                                <option value="@i.ToString()">@ListHKDK[dem]</option>
-                                dem++;
-                            }
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-primary" value="Lưu" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                                                        }
 
-@if (Session["HocPhanDC"] != null)
-{
-    <script>
-        $(document).ready(function () {
-            $('#editHK').modal('show');
-        });
-    </script>
-}
+                                                        public ActionResult LuuHP(string hocky)
+                                                        {
+                                                        var diem = db.DiemHocPhans.Find((Session["HocPhanDC"] as DiemHocPhan).ID);
+                                                        diem.HocKyDangKy = int.Parse(hocky);
+                                                        db.Entry(diem).State = EntityState.Modified;
+                                                        db.SaveChanges();
+                                                        Session["HocPhanDC"] = null;
+                                                        return RedirectToAction("DangKyKHDT");
+                                                        }
+                                                        public ActionResult SuaHK(int id)
+                                                        {
+                                                        Session["HocPhanDC"] = db.DiemHocPhans.Find(id);
+                                                        return Redirect(Request.UrlReferrer.ToString());
+                                                        }
+                                                        }
+                                                        }

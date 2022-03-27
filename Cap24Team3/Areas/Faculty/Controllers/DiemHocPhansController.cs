@@ -71,12 +71,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     if (sinhvien != null)
                                     {
                                         hockysv = db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == sinhvien.HocKyBatDau).STT;
-                                        hockyhp = db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == HocKy).STT;
+                                        hockyhp = (db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == HocKy) != null) ? db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == HocKy).STT : hockysv;
                                     }
-                                    else
-                                    {
-                                        TempData["Alert"] += "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
-                                    }
+                                    //else
+                                    //{
+                                    //    TempData["Alert"] += "Không có sinh viên " + savediem.MSSV + " trong danh sách sinh viên!!";
+                                    //}
                                     savediem.HocKyKeHoach = hockyhp - hockysv + 1;
                                     savediem.HocKyDangKy = hockyhp - hockysv + 1;
                                     savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
@@ -97,7 +97,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 //catch (Exception ex)
                                 //{
                                 //    TempData["Alert"] = "Lỗi, vui lòng thử lại!! " + ex.Message;
-                                //    return Redirect(Request.UrlReferrer.ToString());
+                                //    return RedirectToAction("Index");
                                 //}
                             }
                         }
@@ -114,13 +114,13 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 if (DanhSachLoi != "")
                 {
                     TempData["Alert"] = DanhSachLoi;
-                    return Redirect(Request.UrlReferrer.ToString());
+                    return RedirectToAction("Index");
                 }
             }
             else
             {
                 TempData["Alert"] = "File bị trống, vui lòng thử lại!!";
-                return Redirect(Request.UrlReferrer.ToString());
+                return RedirectToAction("Index");
             }
             Session["File"] = file;
             string thongbao = "<table class='table table-hover mb-0'>";
@@ -132,7 +132,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             thongbao += "</tr>";
             thongbao += "</table>";
             Session["ThongBao"] = thongbao;
-            return Redirect(Request.UrlReferrer.ToString());
+            return Redirect("Index");
         }
         public ActionResult TaiLenDiem()
         {
@@ -145,6 +145,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             db.SaveChanges();
             foreach (var item in listDiem)
             {
+                item.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
                 db.DiemHocPhans.Add(item);
             }
             db.SaveChanges();

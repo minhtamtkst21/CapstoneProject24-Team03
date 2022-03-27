@@ -640,7 +640,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CP24Team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Cap24" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Thamsoes" EntityType="CP24Team03Model.Thamso" />
           <EntitySet Name="C__MigrationHistory" EntityType="CP24Team03Model.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="CP24Team03Model.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="CP24Team03Model.AspNetUserClaim" />
@@ -660,6 +659,7 @@
           <EntitySet Name="RangBuocHocPhans" EntityType="CP24Team03Model.RangBuocHocPhan" />
           <EntitySet Name="SinhViens" EntityType="CP24Team03Model.SinhVien" />
           <EntitySet Name="sysdiagrams" EntityType="CP24Team03Model.sysdiagram" />
+          <EntitySet Name="Thamsoes" EntityType="CP24Team03Model.Thamso" />
           <EntitySet Name="ThongBaos" EntityType="CP24Team03Model.ThongBao" />
           <EntitySet Name="TinhTrangs" EntityType="CP24Team03Model.TinhTrang" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="CP24Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -747,14 +747,6 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Thamso">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Giatri" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Ma" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -1004,6 +996,14 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Thamso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ma" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Giatri" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ThongBao">
           <Key>
@@ -1280,15 +1280,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CP24Team03ModelStoreContainer" CdmEntityContainer="Cap24">
-          <EntitySetMapping Name="Thamsoes">
-            <EntityTypeMapping TypeName="CP24Team03Model.Thamso">
-              <MappingFragment StoreEntitySet="Thamso">
-                <ScalarProperty Name="Ma" ColumnName="Ma" />
-                <ScalarProperty Name="Giatri" ColumnName="Giatri" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="CP24Team03Model.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -1514,6 +1505,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Thamsoes">
+            <EntityTypeMapping TypeName="CP24Team03Model.Thamso">
+              <MappingFragment StoreEntitySet="Thamso">
+                <ScalarProperty Name="Giatri" ColumnName="Giatri" />
+                <ScalarProperty Name="Ma" ColumnName="Ma" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ThongBaos">
             <EntityTypeMapping TypeName="CP24Team03Model.ThongBao">
               <MappingFragment StoreEntitySet="ThongBao">
@@ -1544,7 +1544,7 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

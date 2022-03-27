@@ -15,7 +15,7 @@ namespace Cap24Team3.Models
     public partial class Thamso
     {
         public int Id { get; set; }
-        public string Giatri { get; set; }
         public string Ma { get; set; }
+        public string Giatri { get; set; }
     }
 }

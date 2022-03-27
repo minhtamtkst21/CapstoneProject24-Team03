@@ -272,7 +272,7 @@ namespace Cap24Team3.Controllers
                         ListHKDK.Add(hkc);
                     }
                     var listDiem = new List<string>();
-                    foreach (var item in diemhp.OrderByDescending(s=>s.ID).ToList())
+                    foreach (var item in diemhp.OrderByDescending(s => s.ID).ToList())
                     {
                         if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK2))
                         {
@@ -289,7 +289,8 @@ namespace Cap24Team3.Controllers
                         {
                             db.DiemHocPhans.Remove(item);
                             db.SaveChanges();
-                        } else
+                        }
+                        else
                         {
                             listDiem.Add(check);
                         }
@@ -297,9 +298,9 @@ namespace Cap24Team3.Controllers
                     }
                     var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.NganhDaoTao.Nganh == nganh.Nganh).FirstOrDefault(s => s.KhoaDaoTao.Khoa == khoa.Khoa);
                     var hocphan = new List<HocPhanDaoTao>();
-                    foreach(var item in db.KhoiKienThucs.Where(s=>s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                    foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
                     {
-                        foreach(var hp in db.HocPhanDaoTaos.Where(s=>s.ID_KhoiKienThuc == item.ID).ToList())
+                        foreach (var hp in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == item.ID).ToList())
                         {
                             hocphan.Add(hp);
                         }
