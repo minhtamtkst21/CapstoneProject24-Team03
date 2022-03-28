@@ -211,6 +211,7 @@ namespace Cap24Team3.Controllers
                         if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
                             khoikienthucmoi.Add(item.MaKhoiKienThuc);
                     var tongsotinchi = 0;
+                    var khoikienthuc = new List<string>();
                     foreach (var item in khoikienthucmoi)
                     {
                         var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
@@ -219,12 +220,14 @@ namespace Cap24Team3.Controllers
                             if (hocphan.ID_HocPhanTuChon == null)
                                 tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
                         }
+                        khoikienthuc.Add(ktt.TenKhoiKienThuc);
                     }
                     ViewData["listHK"] = listHK;
                     ViewData["DiemTB"] = diemtb;
                     ViewData["DiemTBChung"] = diemtbchung;
                     ViewData["SoTC"] = sotinchi;
                     ViewData["Tongsotinchi"] = tongsotinchi;
+                    TempData["Khoikienthuc"] = khoikienthuc;
                 }
             }
             return View(listdiem);
@@ -269,7 +272,7 @@ namespace Cap24Team3.Controllers
                         ListHKDK.Add(hkc);
                     }
                     var listDiem = new List<string>();
-                    foreach (var item in diemhp.OrderByDescending(s=>s.ID).ToList())
+                    foreach (var item in diemhp.OrderByDescending(s => s.ID).ToList())
                     {
                         if (!CheckTonTai(item.HocKyDangKy.ToString(), listHK2))
                         {
@@ -281,12 +284,13 @@ namespace Cap24Team3.Controllers
                             hk.HocKy1 = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == hk2).HocKy.ToString();
                             listHK.Add(hk);
                         }
-                        string check = item.HocPhan + item.HocKyDangKy.ToString();
+                        string check = item.HocPhan.Trim() + item.HocKyDangKy.ToString();
                         if (CheckTonTai(check, listDiem))
                         {
                             db.DiemHocPhans.Remove(item);
                             db.SaveChanges();
-                        } else
+                        }
+                        else
                         {
                             listDiem.Add(check);
                         }
@@ -294,31 +298,32 @@ namespace Cap24Team3.Controllers
                     }
                     var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.NganhDaoTao.Nganh == nganh.Nganh).FirstOrDefault(s => s.KhoaDaoTao.Khoa == khoa.Khoa);
                     var hocphan = new List<HocPhanDaoTao>();
-                    foreach(var item in db.KhoiKienThucs.Where(s=>s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                    foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
                     {
-                        foreach(var hp in db.HocPhanDaoTaos.Where(s=>s.ID_KhoiKienThuc == item.ID).ToList())
+                        foreach (var hp in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == item.ID).ToList())
                         {
                             hocphan.Add(hp);
                         }
                     }
                     foreach (var item in hocphan)
                     {
-                        if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
-                        {
-                            DiemHocPhan dhp = new DiemHocPhan();
-                            dhp.HocPhan = item.MaHocPhan.Trim();
-                            dhp.TenHocPhan = item.TenHocPhan;
-                            dhp.HocKyDangKy = (int)item.HocKy;
-                            dhp.HocKyKeHoach = (int)item.HocKy;
-                            if (item.HocPhanDaoTao2 == null)
-                                dhp.BBTC = true;
-                            else
-                                dhp.BBTC = false;
-                            dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
-                            dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
-                            dhp.QuaMon = false;
-                            db.DiemHocPhans.Add(dhp);
-                        }
+                        if (item.MaHocPhan != null)
+                            if (!CheckTonTai(item.MaHocPhan.Trim(), listHPDiem))
+                            {
+                                DiemHocPhan dhp = new DiemHocPhan();
+                                dhp.HocPhan = item.MaHocPhan.Trim();
+                                dhp.TenHocPhan = item.TenHocPhan;
+                                dhp.HocKyDangKy = (int)item.HocKy;
+                                dhp.HocKyKeHoach = (int)item.HocKy;
+                                if (item.HocPhanDaoTao2 == null)
+                                    dhp.BBTC = true;
+                                else
+                                    dhp.BBTC = false;
+                                dhp.SoTinChi = int.Parse(item.SoTinChi.Split('T').First());
+                                dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
+                                dhp.QuaMon = false;
+                                db.DiemHocPhans.Add(dhp);
+                            }
                     }
                     db.SaveChanges();
                     ViewData["listHK"] = listHK.OrderBy(s => s.stt).ToList();

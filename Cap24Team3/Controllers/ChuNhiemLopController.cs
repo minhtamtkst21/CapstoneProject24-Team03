@@ -332,6 +332,12 @@ namespace Cap24Team3.Controllers
             db.SaveChanges();
             return Redirect(Request.UrlReferrer.ToString());
         }
+        public ActionResult XemDiemThongKe(int idLop)
+        {
+            ViewData["DSTT"] = db.TinhTrangs.ToList();
+            var XemDiemThongKe = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
+            return View(XemDiemThongKe);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

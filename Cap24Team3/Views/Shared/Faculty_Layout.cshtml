@@ -60,24 +60,8 @@
                                 </div>
 
                             </div>
-                            @*@if (Request.IsAuthenticated)
-            {
-                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <a class="nav-link nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
-                        <span class="pro-user-name ml-1">
-                            @User.Identity.Name
-                            <a href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i></a>
-                        </span>
-                    </a>
-                }
-            }*@
                         </li>
                     </ul>
-
-                    <!-- LOGO -->
                     <div class="logo-box">
                         <a href="@Url.Action("ListCTDaoTao","ChuongTrinhDaoTao")" class="logo logo-light">
                             <span class="logo-lg">
@@ -135,7 +119,7 @@
                                 </a>
                             </li>
                             <li class="has-submenu">
-                                <a href="#" style="font-family:Roboto">
+                                <a href="@Url.Action("ThongKe","ThongKe")" style="font-family:Roboto">
                                     <i class="mdi mdi-chart-donut"></i>Thống kê
                                 </a>
                             </li>

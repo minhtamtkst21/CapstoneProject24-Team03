@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ThongKe";
+    Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+}
+<br />
+<div class="dropdown float-right">
+    <button type="button" class="btn btn-secondary"><i class="mdi mdi-microsoft-excel"></i> Export</button>
+</div>
+<form>
+        <div class="row">
+            <div class="col-2">
+                <select class="form-control">
+                    <option selected>Chọn ngành</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <select class="form-control">
+                    <option selected>Chọn khóa</option>
+                </select>
+            </div>
+            <div class="col-1">
+                <input class="btn btn-secondary" type="submit" value="Lưu"/>
+            </div>
+        </div>
+    </form>
+<br>
+<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ 221</h4>
+<br>
+<div class="table-reponsive">
+    <table id="table1" class="table table-hover display" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Tên học phần</th>
+                <th>Tổng số sinh viên đăng ký</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Triết học Mác Lênin</td>
+                <td>120 &emsp;<a href="@Url.Action("XemChiTiet")" style="color: blue;">&emsp; Xem chi tiết</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://kit.fontawesome.com/30492122d1.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table1').DataTable();
+    });
+</script>
