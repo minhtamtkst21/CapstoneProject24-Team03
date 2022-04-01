@@ -773,7 +773,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 }
                             }
                         }
-                        
+
                     }
                     else
                     {
@@ -902,7 +902,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var rangbuoc = Session["RangBuoc"] as List<RangBuocHocPhan>;
             db.ChuongTrinhDaoTaos.Add(ctdt);
             db.SaveChanges();
-            foreach(var item in khoikienthuc)
+            foreach (var item in khoikienthuc)
             {
                 db.KhoiKienThucs.Add(item);
             }
@@ -1384,13 +1384,38 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         }
                         foreach (var hocphan in listhocphan.OrderByDescending(s => s.ID).ToList())
                         {
-                            db.HocPhanDaoTaos.Remove(hocphan);
-                            db.SaveChanges();
+                            if (hocphan.ID_HocPhanTuChon != null)
+                            {
+                                db.HocPhanDaoTaos.Remove(hocphan);
+                                db.SaveChanges();
+                            }
                         }
                     }
-                    db.KhoiKienThucs.Remove(khoikienthuc);
-                    db.SaveChanges();
                 }
+            foreach (var khoikienthuc in listkkt.ToList())
+            {
+                var listhocphan = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ID == khoikienthuc.ID);
+                if (listhocphan != null)
+                {
+                    foreach (var hocphan in listhocphan.ToList())
+                    {
+                        var listRangBuocHP = db.RangBuocHocPhans.Where(s => s.ID_HocPhan == hocphan.ID);
+                        if (listRangBuocHP != null)
+                            foreach (var rangbuoc in listRangBuocHP.ToList())
+                            {
+                                db.RangBuocHocPhans.Remove(rangbuoc);
+                                db.SaveChanges();
+                            }
+                    }
+                    foreach (var hocphan in listhocphan.OrderByDescending(s => s.ID).ToList())
+                    {
+                        db.HocPhanDaoTaos.Remove(hocphan);
+                        db.SaveChanges();
+                    }
+                }
+                db.KhoiKienThucs.Remove(khoikienthuc);
+                db.SaveChanges();
+            }
             db.ChuongTrinhDaoTaos.Remove(ChuongTrinhDaoTao);
             db.SaveChanges();
             TempData["ThongBao"] = "Xóa thành công chương trình đào tạo";

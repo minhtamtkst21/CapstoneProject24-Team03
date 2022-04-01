@@ -20,29 +20,43 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             TempData["nganh"] = nganh;
             return View();
         }
-        public ActionResult LuuThongKe()
+        [HttpPost]
+        public ActionResult LuuThongKe(int? khoa, int? nganh)
         {
+            if (khoa is null)
+            {
+                throw new ArgumentNullException(nameof(khoa));
+            }
+
+            if (nganh is null)
+            {
+                throw new ArgumentNullException(nameof(nganh));
+            }
+
             string tshk = db.Thamsoes.FirstOrDefault(s => s.Ma == "HocKyHienTai").Giatri;
             int hkht = db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy.ToString() == tshk).STT;
-            var listdiem = db.DiemHocPhans.Where(s => s.HocKyDangKy > 1).ToList();
-            var listthongke = new List<thongkehocphan>();
+            var listsv = db.SinhViens.Where(s => s.KhoaDaoTao.ID == khoa).Where(s => s.NganhDaoTao.ID == nganh).ToList();
+            var listthongke = new List<chitietthongke>();
             int d = 0;
-            foreach (var item in listdiem)
+            foreach (var sinhvien in listsv)
             {
                 d++;
-                var mssv = item.MSSV;
-                var sv = db.SinhViens.FirstOrDefault(s => s.MSSV == mssv);
-                int hksv = hkht - db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == sv.HocKyBatDau).STT + 1;
-                var tk = new thongkehocphan();
-                tk.MSSV = mssv;
-                tk.TenHP = item.TenHocPhan;
-                tk.MaHP = item.HocPhan;
-                if (item.HocKyDangKy > hksv)
+                int hksv = hkht - db.HocKyDaoTaos.FirstOrDefault(s => s.HocKy == sinhvien.HocKyBatDau).STT + 1;
+                var listhp = db.DiemHocPhans.Where(s => s.HocKyDangKy > hksv).Where(s => s.MSSV == sinhvien.MSSV).ToList();
+                foreach (var item in listhp)
                 {
-                    listthongke.Add(tk);
+                    var tk = new chitietthongke();
+                    tk.MSSV = sinhvien.Ho + " " + sinhvien.Ten;
+                    tk.TenHP = item.TenHocPhan;
+                    tk.MaHP = item.HocPhan;
+                    if (item.HocKyDangKy > hksv)
+                    {
+                        listthongke.Add(tk);
+                    }
                 }
             }
-            return View();
+            Session["thongke"] = listthongke;
+            return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult XemChiTiet()
         {

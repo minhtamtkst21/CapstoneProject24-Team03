@@ -72,7 +72,7 @@
                                         {
                                             if (item.HocKyDangKy.ToString() == listHK.HocKy)
                                             {
-                                                if (item.QuaMon == true || item.Diem10 == "" || item.HocKyKeHoach <= (int)ViewData["HocKyHienTai"] || item.HocKyDangKy != item.HocKyKeHoach)
+                                                if (item.QuaMon == true || item.Diem10 == "" || item.Diem10 == null || item.HocKyDangKy <= (int)ViewData["HocKyHienTai"] || item.HocKyDangKy != item.HocKyKeHoach)
                                                 {
                                                     <tr>
                                                         @{STT++; }
@@ -238,7 +238,7 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        if (((item.Diem10.Trim() == null || item.Diem10.Trim() == "") && (item.HocKyDangKy == item.HocKyKeHoach && item.HocKyDangKy > (int)ViewData["HocKyHienTai"])) && Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false)
+                                        if (((item.Diem10.Trim() != null || item.Diem10.Trim() != "") && (item.HocKyDangKy == item.HocKyKeHoach && item.HocKyDangKy > (int)ViewData["HocKyHienTai"])) && Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false)
                                         {
                                             <tr>
                                                 @{STT++; }
