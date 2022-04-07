@@ -238,7 +238,7 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        if (((item.Diem10.Trim() != null || item.Diem10.Trim() != "") && (item.HocKyDangKy == item.HocKyKeHoach && item.HocKyDangKy > (int)ViewData["HocKyHienTai"])) && Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false)
+                                        if ((item.HocKyDangKy > (int)ViewData["HocKyHienTai"]) && Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false)
                                         {
                                             <tr>
                                                 @{STT++; }
