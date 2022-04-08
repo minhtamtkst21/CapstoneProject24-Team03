@@ -44,13 +44,16 @@
         <tbody>
             @if (Session["thongke"] != null)
             {
-                var listtk = Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.chitietthongke>;
-                foreach (var item in listtk)
+                var listtk = Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.thongkehocphan>;
+                if (listtk != null)
                 {
+                    foreach (var item in listtk)
+                    {
                     <tr>
                         <td>@item.TenHP</td>
-                        <td>@((Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.chitietthongke>).Where(s=>s.TenHP == item.TenHP)). &emsp;<a href="@Url.Action("XemChiTiet")" style="color: blue;">&emsp; Xem chi tiết</a></td>
+                        <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP })" style="color: blue;">&emsp; Xem chi tiết</a></td>
                     </tr>
+                    }
                 }
             }
         </tbody>
