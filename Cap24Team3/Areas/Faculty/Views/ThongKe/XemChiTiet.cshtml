@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "XemChiTiet";
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    var listtk = Session["chitiet"] as List<Cap24Team3.Areas.Faculty.Controllers.chitietthongke>;
 }
 <br>
 <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Danh sách sinh viên đã đăng ký môn Triết học Mác Lênin</h4>
@@ -10,43 +11,20 @@
     <table id="table1" class="table table-hover display" style="width: 100%;">
         <thead>
             <tr>
-                <th>Họ</th>
-                <th>Tên</th>
+                <th>MSSV</th>
+                <th>Họ tên</th>
                 <th>Email</th>
-                <th>Khóa</th>
             </tr>
         </thead>
         <tbody>
+            @foreach (var item in listtk)
+            {
             <tr>
-                <td>Nguyễn Duy</td>
-                <td>Phương</td>
-                <td>phuong.187pm20547@vanlanguni.vn</td>
-                <td>Khóa 24</td>
+                <td>@item.MSSV</td>
+                <td>@item.tensv</td>
+                <td>@item.mail</td>
             </tr>
-            <tr>
-                <td>Châu Chương</td>
-                <td>Thuận</td>
-                <td>thuan.187pm06720@vanlanguni.vn</td>
-                <td>Khóa 24</td>
-            </tr>
-            <tr>
-                <td>Đinh Trường</td>
-                <td>An</td>
-                <td>an.207ct09922@vanlanguni.vn</td>
-                <td>Khóa 26</td>
-            </tr>
-            <tr>
-                <td>Nguyễn Hoàng Đức</td>
-                <td>Thuận</td>
-                <td>thuan.2174802010031@vanlanguni.vn</td>
-                <td>Khóa 27</td>
-            </tr>
-            <tr>
-                <td>Nguyễn Lê Ngọc</td>
-                <td>Hân</td>
-                <td>han.197ct09687@vanlanguni.vn</td>
-                <td>Khóa 25</td>
-            </tr>
+            }
         </tbody>
     </table>
 </div>

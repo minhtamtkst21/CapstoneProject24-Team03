@@ -7,23 +7,29 @@
 <div class="dropdown float-right">
     <button type="button" class="btn btn-secondary"><i class="mdi mdi-microsoft-excel"></i> Export</button>
 </div>
-<form>
-        <div class="row">
-            <div class="col-2">
-                <select class="form-control">
-                    <option selected>Chọn ngành</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <select class="form-control">
-                    <option selected>Chọn khóa</option>
-                </select>
-            </div>
-            <div class="col-1">
-                <input class="btn btn-secondary" type="submit" value="Lưu"/>
-            </div>
+<form action="@Url.Action("LuuThongKe")" method="post">
+    <div class="row">
+        <div class="col-2">
+            <select class="form-control" name="nganh">
+                @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
+                {
+                    <option value="@item.ID">@item.Nganh</option>
+                }
+            </select>
         </div>
-    </form>
+        <div class="col-2">
+            <select class="form-control" name="khoa">
+                @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                {
+                    <option value="@item.ID">@item.Khoa.ToString()</option>
+                }
+            </select>
+        </div>
+        <div class="col-1">
+            <input class="btn btn-secondary" type="submit" value="Lưu" />
+        </div>
+    </div>
+</form>
 <br>
 <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ 221</h4>
 <br>
@@ -36,10 +42,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Triết học Mác Lênin</td>
-                <td>120 &emsp;<a href="@Url.Action("XemChiTiet")" style="color: blue;">&emsp; Xem chi tiết</a></td>
-            </tr>
+            @if (Session["thongke"] != null)
+            {
+                var listtk = Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.thongkehocphan>;
+                if (listtk != null)
+                {
+                    foreach (var item in listtk)
+                    {
+                    <tr>
+                        <td>@item.TenHP</td>
+                        <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP })" style="color: blue;">&emsp; Xem chi tiết</a></td>
+                    </tr>
+                    }
+                }
+            }
         </tbody>
     </table>
 </div>

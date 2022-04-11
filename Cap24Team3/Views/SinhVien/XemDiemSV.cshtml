@@ -137,8 +137,8 @@
                             visible: false,
                         },
                         scaleK: {
-                            values: '0:5:1',
-                            labels: @Html.Raw(TempData["Khoikienthuc"]),
+                            values: @Html.Raw(Json.Encode(TempData["soluong"])),
+                            labels: @Html.Raw(Json.Encode(TempData["Khoikienthuc"])),
                                 guide: {
                                     alpha: 0.3,
                                     backgroundColor: '#c5c5c5 #718eb4',
@@ -164,7 +164,7 @@
                         },
                                         },
                     series: [{
-                        values: [59, 39, 38, 19, 21, 35],
+                        values: @Html.Raw(Json.Encode(TempData["sotc"])),
                         text: 'farm',
                     },
                     ],
