@@ -23,6 +23,46 @@
             body.modal-open {
                 overflow: visible;
             }
+
+            #btn-btt {
+                display: inline-block;
+                background-color: #ff3333;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                border-radius: 30px;
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                transition: background-color .3s, opacity .5s, visibility .5s;
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1000;
+            }
+
+                #btn-btt::after {
+                    content: "\f077";
+                    font-family: FontAwesome;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-size: 1.5em;
+                    line-height: 50px;
+                    color: #fff;
+                }
+
+                #btn-btt:hover {
+                    cursor: pointer;
+                    background-color: #333;
+                }
+
+                #btn-btt:active {
+                    background-color: #555;
+                }
+
+                #btn-btt.show {
+                    opacity: 1;
+                    visibility: visible;
+                }
         </style>
         <div class="container">
             <div class="header-content d-flex flex-wrap align-items-center">
@@ -113,11 +153,11 @@
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
-                {
-                    <div class="alert alert-warning">
-                        @Html.Raw(TempData["Alert"].ToString())
-                    </div>
-                }*@
+            {
+                <div class="alert alert-warning">
+                    @Html.Raw(TempData["Alert"].ToString())
+                </div>
+            }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">
@@ -160,6 +200,9 @@
                 </div><!--newsletter-sec end-->
             </div>
         </section><!--newsletter-sec end-->
+        <!-- Back to top-->
+        <a id="btn-btt"></a>
+        <!-- Back to top-->
         <footer>
             <div class="container">
                 <div class="top-footer">
@@ -251,6 +294,22 @@
     <script src="@Url.Content("~/Student_assets/js/tweenMax.js")"></script>
     <script src="@Url.Content("~/Student_assets/js/scripts.js")"></script>
     <script src="https://kit.fontawesome.com/30492122d1.js" crossorigin="anonymous"></script>
+    <script>
+        var btn = $('#btn-btt');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 300) {
+                btn.addClass('show');
+            } else {
+                btn.removeClass('show');
+            }
+        });
+
+        btn.on('click', function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, '300');
+        });
+    </script>
 </body>
 
 </html>

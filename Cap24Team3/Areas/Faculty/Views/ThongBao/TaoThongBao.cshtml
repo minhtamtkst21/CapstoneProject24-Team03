@@ -14,13 +14,14 @@
         height: auto;
     }
 
-    #box {
+   /* #box {
         display: none;
     }
 
     .check-box-hide {
         display: none
-    }
+    }*/
+
 </style>
 <div class="row">
     <div class="col-12">
@@ -58,6 +59,8 @@
                     <p style="font-family: 'Montserrat'; color: black; font-size: 25px; font-weight: bold;">Nội dung</p>
                     <br>
                     @*<input type="text" name="noiDung" id="noiDung" class="form-control" required />*@
+                    <input id="noiDung" type="file" name="noiDung" class="dropify" required onclick="Clearform()" />
+                    <br />
                     <textarea class="form-control" id="noiDung" name="noiDung" rows="3" required></textarea>
                     <br>
                     <input type="datetime" name="ngay" id="ngay" class="form-control" value="@DateTime.Now" hidden />
@@ -130,7 +133,7 @@
         })
     </script>*@
 <!-- en/disabled checkbox-->
-<script>
+<!--<script>
     var determine = document.getElementById("idNganh");
     var disableCheckboxConditioned = function () {
         if (determine.checked) {
@@ -142,9 +145,9 @@
     }
     determine.onclick = disableCheckboxConditioned;
     disableCheckboxConditioned();
-</script>
+</script>-->
 <!-- show/hide-->
-<script>
+<!--<script>
     const checkbox = document.getElementById('idKhoa');
 
     const box = document.getElementById('box');
@@ -156,4 +159,4 @@
             box.style.display = 'none';
         }
     });
-</script>
+</script>-->

@@ -44,21 +44,35 @@
                 <div class="container-fluid">
                     <ul class="list-unstyled topnav-menu float-right mb-0">
                         @*<li class="dropdown notification-list">
-                            <button>
-                                <i class="fa fa-circ"></i>
-                            </button>
-                        </li>*@
+                                <button>
+                                    <i class="fa fa-circ"></i>
+                                </button>
+                            </li>*@
                         <li class="dropdown notification-list">
                             <div class="row">
-                                <div>
-                                    <a class="nav-link nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <a class="nav-link nav-user mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                         <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
                                         <span class="pro-user-name ml-1">
                                             @User.Identity.Name
                                         </span>
                                     </a>
-                                </div>
-
+                                }
+                                else
+                                {
+                                    <br />
+                                    <div class="social-links ml-auto">
+                                        <form action="@Url.Action("ExternalLogin","Account")" method="post">
+                                            <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
+                                            <div>
+                                                <p>
+                                                    <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
                             </div>
                         </li>
                     </ul>
