@@ -7,8 +7,8 @@
       <Diagram DiagramId="b93a4cdae0a644b2a4324ab53e607b1c" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="CP24Team03Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="11.125" />
         <EntityTypeShape EntityType="CP24Team03Model.AspNetRole" Width="1.5" PointX="9.75" PointY="12.875" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="11.375" />
-        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="14.125" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="14" />
+        <EntityTypeShape EntityType="CP24Team03Model.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="11.375" />
         <EntityTypeShape EntityType="CP24Team03Model.AspNetUser" Width="1.5" PointX="12" PointY="11.75" />
         <EntityTypeShape EntityType="CP24Team03Model.ChinhSuaThongTin" Width="1.5" PointX="7.5" PointY="10.875" />
         <EntityTypeShape EntityType="CP24Team03Model.ChuongTrinhDaoTao" Width="1.5" PointX="6" PointY="7.25" />

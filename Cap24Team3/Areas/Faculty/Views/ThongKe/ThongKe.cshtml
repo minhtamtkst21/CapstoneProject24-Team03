@@ -31,34 +31,41 @@
     </div>
 </form>
 <br>
-<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ 221</h4>
-<br>
-<div class="table-reponsive">
-    <table id="table1" class="table table-hover display" style="width: 100%;">
-        <thead>
-            <tr>
-                <th>Tên học phần</th>
-                <th>Tổng số sinh viên đăng ký</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Session["thongke"] != null)
-            {
-                var listtk = Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.thongkehocphan>;
-                if (listtk != null)
-                {
-                    foreach (var item in listtk)
-                    {
+@if (Session["thongke"] != null)
+{
+    var hk = Session["listhk"] as List<string>;
+    var listtk = Session["thongke"] as List<Cap24Team3.Areas.Faculty.Controllers.thongkehocphan>;
+    foreach (var hocky in hk)
+    {
+        <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hocky</h4>
+        <br>
+        <div class="table-reponsive">
+            <table id="table1" class="table table-hover display" style="width: 100%;">
+                <thead>
                     <tr>
-                        <td>@item.TenHP</td>
-                        <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP })" style="color: blue;">&emsp; Xem chi tiết</a></td>
+                        <th>Tên học phần</th>
+                        <th>Tổng số sinh viên đăng ký</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @if (listtk != null)
+                    {
+                        foreach (var item in listtk)
+                        {
+                            if (item.HocKy == hocky)
+                            {
+                                <tr>
+                                    <td>@item.TenHP</td>
+                                    <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP })" style="color: blue;">&emsp; Xem chi tiết</a></td>
+                                </tr>
+                            }
+                        }
                     }
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+    }
+}
 <script src="https://kit.fontawesome.com/30492122d1.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>

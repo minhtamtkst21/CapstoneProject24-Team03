@@ -59,7 +59,6 @@
                                             <th>Mã học phần</th>
                                             <th>Tên học phần</th>
                                             <th>Số tín chỉ</th>
-                                            <th>BB/TC</th>
                                             <th>Tiên quyết</th>
                                             <th>Học trước</th>
                                             <th>Song hành</th>
@@ -81,14 +80,6 @@
                                                         <td>@item.TenHocPhan</td>
                                                         <td>@item.SoTinChi</td>
                                                         @{ tongtinchi += item.SoTinChi; }
-                                                        @if (item.BBTC == true)
-                                                        {
-                                                            <td title="Bắt Buộc">BB</td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td title="Tự Chọn">TC</td>
-                                                        }
                                                         <td>
                                                             @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
                                                             {
@@ -157,7 +148,6 @@
                                                                     @if (item.QuaMon == true)
                                                                     {
                                                                         <i class="fa fa-check" style="color: green;"></i>
-
                                                                     }
                                                                     else
                                                                     {
@@ -182,7 +172,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <td></td>
+                                                                <td><i class="fa fa-times" style="color: red; font-size: 20px;"></i></td>
                                                                 if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
                                                                 {
                                                                     <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
@@ -227,18 +217,17 @@
                                         <th>Mã học phần</th>
                                         <th>Tên học phần</th>
                                         <th>Số tín chỉ</th>
-                                        <th>BB/TC</th>
                                         <th>Tiên quyết</th>
                                         <th>Học trước</th>
                                         <th>Song hành</th>
-                                        <th>Kết quả</th>
                                         <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{ STT = 0;}
                                     @foreach (var item in Model)
                                     {
-                                        if ((item.HocKyDangKy > (int)ViewData["HocKyHienTai"]) && Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false)
+                                        if ((Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.HocPhan).QuaMon == false && item.Diem10 != null && item.Diem10.Trim() != "") || (item.HocKyDangKy == item.HocKyKeHoach && item.HocKyDangKy <= (int)ViewData["HocKyHienTai"] && item.Diem10 == null && item.Diem10.Trim() == ""))
                                         {
                                             <tr>
                                                 @{STT++; }
@@ -246,14 +235,6 @@
                                                 <td>@item.HocPhan</td>
                                                 <td>@item.TenHocPhan</td>
                                                 <td>@item.SoTinChi</td>
-                                                @if (item.BBTC == true)
-                                                {
-                                                    <td title="Bắt Buộc">BB</td>
-                                                }
-                                                else
-                                                {
-                                                    <td title="Tự Chọn">TC</td>
-                                                }
                                                 <td>
                                                     @foreach (var rangbuoc in ViewData["RangBuocHocPhan"] as List<Cap24Team3.Models.RangBuocHocPhan>)
                                                     {
@@ -314,23 +295,6 @@
                                                         }
                                                     }
                                                 </td>
-                                                @if (item.Diem10 != null)
-                                                {
-                                                    <td>
-                                                        @if (item.QuaMon == true)
-                                                        {
-                                                            <i class="fa fa-check" style="color: green;"></i>
-                                                        }
-                                                        else
-                                                        {
-                                                            <i class="fa fa-times" style="color: red; font-size: 20px;"></i>
-                                                        }
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
                                                 <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
                                             </tr>
                                         }

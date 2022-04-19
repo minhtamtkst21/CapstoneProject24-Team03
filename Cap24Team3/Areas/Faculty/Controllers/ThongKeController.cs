@@ -11,6 +11,17 @@ namespace Cap24Team3.Areas.Faculty.Controllers
     {
         private Cap24 db = new Cap24();
         // GET: Faculty/ThongKe
+        public bool CheckTonTai(string element, List<string> list)
+        {
+            foreach (var item in list)
+            {
+                if (element == item)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public ActionResult ThongKe()
         {
             var khoa = db.KhoaDaoTaos.ToList();
@@ -38,8 +49,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var listsv = db.SinhViens.Where(s => s.KhoaDaoTao.ID == khoa).Where(s => s.NganhDaoTao.ID == nganh).ToList();
             var listthongke = new List<chitietthongke>();
             var thongke = new List<thongkehocphan>();
+            var checkhp = new List<string>();
+            var listhk = new List<string>();
             int d = 0;
-            string ch = "";
             foreach (var sinhvien in listsv)
             {
                 d++;
@@ -52,23 +64,30 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     cttk.tensv = sinhvien.Ho + " " + sinhvien.Ten;
                     cttk.mail = sinhvien.Email_1;
                     cttk.TenHP = item.TenHocPhan;
+                    cttk.HocKy = db.HocKyDaoTaos.FirstOrDefault(s => s.STT == (item.HocKyDangKy + db.HocKyDaoTaos.FirstOrDefault(t => t.HocKy == sinhvien.HocKyBatDau).STT - 1)).HocKy.ToString();
                     if (item.HocKyDangKy > hksv)
                     {
                         listthongke.Add(cttk);
                     }
                 }
-                foreach (var item in listthongke.OrderBy(s => s.TenHP).ToList())
+            }
+            foreach (var item in listthongke)
+            {
+                if (!CheckTonTai(item.TenHP, checkhp))
                 {
-                    if(item.TenHP != ch)
-                    {
-                        ch = item.TenHP;
-                        var tk = new thongkehocphan();
-                        tk.TenHP = ch;
-                        tk.soluong = listthongke.Where(s=>s.TenHP == ch).Count();
-                        thongke.Add(tk);
-                    }
+                    var tk = new thongkehocphan();
+                    tk.TenHP = item.TenHP;
+                    tk.HocKy = item.HocKy;
+                    tk.soluong = listthongke.Where(s => s.TenHP == item.TenHP).Count();
+                    thongke.Add(tk);
+                    checkhp.Add(item.TenHP);
+                }
+                if (!CheckTonTai(item.HocKy, listhk))
+                {
+                    listhk.Add(item.HocKy);
                 }
             }
+            Session["listhk"] = listhk;
             Session["thongke"] = thongke;
             Session["chitiet"] = listthongke;
             return Redirect(Request.UrlReferrer.ToString());

@@ -5,12 +5,15 @@
         public string TenHP { get; set; }
         public string MSSV { get; set; }
         public string tensv { get; set; }
+        public string HocKy { get; set; }
         public string mail { get; set; }
+
 
     }
     public class thongkehocphan
     {
         public string TenHP { get; set; }
+        public string HocKy { get; set; }
         public int soluong { get; set; }
     }
 }

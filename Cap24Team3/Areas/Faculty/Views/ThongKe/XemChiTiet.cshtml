@@ -5,7 +5,7 @@
     var listtk = Session["chitiet"] as List<Cap24Team3.Areas.Faculty.Controllers.chitietthongke>;
 }
 <br>
-<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Danh sách sinh viên đã đăng ký môn Triết học Mác Lênin</h4>
+<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Danh sách sinh viên đã đăng ký môn @TempData["tenhp"]</h4>
 <br>
 <div class="table-reponsive">
     <table id="table1" class="table table-hover display" style="width: 100%;">
@@ -19,11 +19,14 @@
         <tbody>
             @foreach (var item in listtk)
             {
-            <tr>
-                <td>@item.MSSV</td>
-                <td>@item.tensv</td>
-                <td>@item.mail</td>
-            </tr>
+                if (item.TenHP == TempData["tenhp"] as string)
+                {
+                    <tr>
+                        <td>@item.MSSV</td>
+                        <td>@item.tensv</td>
+                        <td>@item.mail</td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
