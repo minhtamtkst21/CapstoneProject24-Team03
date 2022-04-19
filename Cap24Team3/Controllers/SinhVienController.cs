@@ -322,8 +322,8 @@ namespace Cap24Team3.Controllers
                                 dhp.MSSV = sinhvien.MSSV;
                                 dhp.HocPhan = item.MaHocPhan.Trim();
                                 dhp.TenHocPhan = item.TenHocPhan;
-                                dhp.HocKyDangKy = (item.HocKy == null) ? hockyhientai + 1 : (int)item.HocKy;
-                                dhp.HocKyKeHoach = (item.HocKy == null) ? hockyhientai + 1 : (int)item.HocKy;
+                                dhp.HocKyDangKy = hockyhientai + 1;
+                                dhp.HocKyKeHoach = hockyhientai + 1;
                                 if (item.HocPhanDaoTao2 == null)
                                     dhp.BBTC = true;
                                 else

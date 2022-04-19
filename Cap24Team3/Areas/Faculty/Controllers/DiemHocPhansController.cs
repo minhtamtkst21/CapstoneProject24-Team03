@@ -149,10 +149,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 db.DiemHocPhans.Add(item);
             }
             db.SaveChanges();
-            if (System.IO.File.Exists(Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx"))
-            {
-                System.IO.File.Delete(Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx");
-            }
             System.IO.File.Move(Server.MapPath(UPLOAD_PATH) + "0.xlsx", Server.MapPath(UPLOAD_PATH) + LichSu.ID + ".xlsx");
             Session["ThongBao"] = null;
             return Redirect(Request.UrlReferrer.ToString());
