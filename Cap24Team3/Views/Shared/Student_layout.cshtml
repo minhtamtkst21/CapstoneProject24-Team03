@@ -143,9 +143,9 @@
                     </ul>
                 </nav><!--nav end-->
                 <ul class="social-links ml-auto">
-                    <li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
+                    @*<li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>*@
                 </ul>
             </div><!--navigation-bar end-->
         </div>
@@ -153,11 +153,11 @@
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
-            {
-                <div class="alert alert-warning">
-                    @Html.Raw(TempData["Alert"].ToString())
-                </div>
-            }*@
+                {
+                    <div class="alert alert-warning">
+                        @Html.Raw(TempData["Alert"].ToString())
+                    </div>
+                }*@
             @RenderBody()
         </div>
         <section class="newsletter-section">
@@ -252,12 +252,7 @@
                             <div class="widget widget-links">
                                 <h3 class="widget-title" style="font-family: 'Montserrat';font-weight: 600;">Mục khác</h3>
                                 <ul>
-                                    <li><a href="about.html" title="">About Us </a></li>
-                                    <li><a href="classes.html" title="">Our Classes</a></li>
-                                    <li><a href="teachers.html" title="">School Teachers </a></li>
-                                    <li><a href="events.html" title="">Recent Events </a></li>
-                                    <li><a href="blog.html" title="">Our News </a></li>
-                                    <li><a href="schedule.html" title="">Schedule </a></li>
+                                    <li><a href="#" title="">About Us </a></li>
                                 </ul>
                             </div><!--widget-links end-->
                         </div>
@@ -271,13 +266,13 @@
                 <div class="bottom-footer">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <p>© Copyrights 2020 Shelly All rights reserved</p>
+                            <p>From Team 03 with Love <i class="fa fa-heart"></i></p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <ul class="social-links">
-                                <li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>
+                                @*<li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>*@
                             </ul>
                         </div>
                     </div>
@@ -310,6 +305,13 @@
             $('html, body').animate({ scrollTop: 0 }, '300');
         });
     </script>
+    @if (TempData["Alert3"] != null)
+    {
+        <script>
+            alert("Chưa đến thời gian chỉnh sửa thông tin!!!");
+        </script>
+        TempData["Alert3"] = null;
+    }
 </body>
 
 </html>

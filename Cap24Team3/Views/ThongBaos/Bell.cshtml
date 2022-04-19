@@ -41,34 +41,41 @@
             <div class="noti-title">
                 <br />
                 <h5 class="m-0" style=" font-family: 'Montserrat', bold; color: black; font-size:25px; text-align:center">
-                    Notification
+                    Thông báo
                 </h5>
-                <br />
+                <hr style="width: 85%" />
             </div>
-            @foreach (var item in ViewData["BellDB"] as List<Cap24Team3.Models.ThongBao>)
+            @if (TempData["AlertBell"] != null)
             {
-
-                if (item.TrangThai == true)
+                <br />
+                <p class="text" style="text-align: center">@Html.Raw(TempData["AlertBell"].ToString())</p>
+            }
+            else
+            {
+                foreach (var item in ViewData["BellDB"] as List<Cap24Team3.Models.ThongBao>)
                 {
-                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
-                        &emsp;
-                        @item.TieuDe
-                        <p class="text" style="text-align: left">@item.NoiDung</p>
-                    </a>
-                    <hr style="width: 85%" />
-                }
-                else
-                {
-                    countTB++;
-                    <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #bfbfbf; border-radius: 5px; width: 315px;">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
-                        &emsp;
-                        @item.TieuDe
-                        <i class="fa fa-eye-slash float-right"></i>
-                        <p class="text" style="text-align: left">@item.NoiDung</p>
-                    </a>
-                    <hr style="width: 85%" />
+                    if (item.TrangThai == true)
+                    {
+                        <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                            &emsp;
+                            @item.TieuDe
+                            <p class="text" style="text-align: left">@item.NoiDung</p>
+                        </a>
+                        <hr style="width: 85%" />
+                    }
+                    else
+                    {
+                        countTB++;
+                        <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #bfbfbf; border-radius: 5px; width: 315px;">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
+                            &emsp;
+                            @item.TieuDe
+                            <i class="fa fa-eye-slash float-right"></i>
+                            <p class="text" style="text-align: left">@item.NoiDung</p>
+                        </a>
+                        <hr style="width: 85%" />
+                    }
                 }
             }
         </div>

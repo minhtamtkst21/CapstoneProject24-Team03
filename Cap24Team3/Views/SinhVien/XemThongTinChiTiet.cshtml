@@ -4,6 +4,25 @@
     ViewBag.Title = "XemThongTinChiTiet";
     Layout = "~/Views/Shared/Student_layout.cshtml";
 }
+<style>
+    #profileImage {
+        font-family: Arial, Helvetica, sans-serif;
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        background: #ffc107;
+        font-size: 3.5rem;
+        color: #fff;
+        text-align: center;
+        line-height: 10rem;
+        margin: 2rem 0;
+    }
+    .div-centerr {
+                margin: auto;
+                width: 60%;
+                padding: 10px;
+            }
+</style>
 <section class="pager-section">
     <div class="container">
         <div class="pager-content text-center">
@@ -16,6 +35,12 @@
 </section><!--pager-section end-->
 <hr>
 <br />
+<div class="card-body">
+    <div class="d-flex flex-column align-items-center text-center">
+        <div id="profileImage"></div>
+        <span id="firstName" hidden>@Model.Ten</span>
+    </div>
+</div>
 <h3 class="text-center" style="font-family: 'Montserrat'; color:black; font-size: 45px">@Model.Ho @Model.Ten</h3>
 <div class="page-content">
     <div class="content">
@@ -153,3 +178,11 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var firstName = $('#firstName').text();
+        var lastName = $('#lastName').text();
+        var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
+        var profileImage = $('#profileImage').text(intials);
+    });
+</script>

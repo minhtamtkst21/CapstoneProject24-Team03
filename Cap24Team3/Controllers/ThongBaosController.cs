@@ -18,8 +18,16 @@ namespace Cap24Team3.Controllers
         {
             var mail = User.Identity.Name;
             var listTb = db.ThongBaos.Where(t => t.NguoiNhan == mail).ToList();
-            ViewData["BellDB"] = listTb;
-            return PartialView("Bell", new ThongBao());
+            if(listTb.Count > 0)
+            {
+                ViewData["BellDB"] = listTb;
+                return PartialView("Bell", new ThongBao());
+            }
+            else
+            {
+                TempData["AlertBell"] = "Hiện chưa có thông báo nào";
+                return PartialView("Bell", new ThongBao());
+            }
         }
         [ChildActionOnly]
         public ActionResult ModalXemTB()

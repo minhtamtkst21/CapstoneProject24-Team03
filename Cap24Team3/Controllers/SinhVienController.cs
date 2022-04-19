@@ -46,7 +46,7 @@ namespace Cap24Team3.Controllers
                     }
                 }
             }
-            TempData["Alert"] = "Chưa đến thời gian đăng ký";
+            TempData["Alert3"] = "Chưa đến thời gian đăng ký";
             return Redirect(Request.UrlReferrer.ToString());
         }
         [HttpPost]
