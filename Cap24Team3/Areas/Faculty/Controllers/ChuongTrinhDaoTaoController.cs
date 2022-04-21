@@ -15,86 +15,52 @@ namespace Cap24Team3.Areas.Faculty.Controllers
     public class ChuongTrinhDaoTaoController : Controller
     {
         private Cap24 db = new Cap24();
-        public string KiemTraHK(int HK)
+        public string KiemTraHK(string hk)
         {
             string ListLoi = "";
-            if (HK < 100 || HK >= 1000)
+            if (int.TryParse(hk, out int HK))
             {
-                ListLoi += "<p> Học kỳ phải có 3 chữ số </p>";
-            }
-            var listDBHK = db.HocKyDaoTaos.ToList();
-            var listHK = new List<string>();
-            foreach (var item in listDBHK)
+                if (HK < 100 || HK >= 1000)
+                {
+                    ListLoi += "<p> Học kỳ phải có 3 chữ số </p>";
+                }
+                var listDBHK = db.HocKyDaoTaos.ToList();
+                var listHK = new List<string>();
+                foreach (var item in listDBHK)
+                {
+                    listHK.Add(item.HocKy.ToString());
+                }
+                if (CheckTonTai(HK.ToString(), listHK))
+                {
+                    ListLoi += "<p> Học kỳ đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                }
+            } else
             {
-                listHK.Add(item.HocKy.ToString());
-            }
-            if (CheckTonTai(HK.ToString(), listHK))
-            {
-                ListLoi += "<p> Học kỳ đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                ListLoi += "<p> Học kỳ phải là số nguyên dương </p>";
             }
             return ListLoi;
         }
-        public ActionResult ListHocKyDT()
-        {
-            return View(db.HocKyDaoTaos.ToList());
-        }
-
-        public ActionResult TaoMoiHocKy()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiHocKy(HocKyDaoTao hocKyDaoTao)
+        public ActionResult TaoMoiHocKy(string hocky)
         {
             if (ModelState.IsValid)
             {
-                var ListLoi = KiemTraHK(hocKyDaoTao.HocKy);
+                var ListLoi = KiemTraHK(hocky);
                 if (ListLoi != "")
                 {
                     TempData["Alert"] = ListLoi;
                     return RedirectToAction("TaoMoiHocKy");
                 }
-                db.HocKyDaoTaos.Add(hocKyDaoTao);
+                var hk = new HocKyDaoTao();
+                hk.STT = db.HocKyDaoTaos.OrderByDescending(s => s.STT).First().STT + 1;
+                hk.HocKy = int.Parse(hocky);
+                db.HocKyDaoTaos.Add(hk);
                 db.SaveChanges();
                 TempData["ThongBao"] = "Tạo mới học kỳ thành công";
-                return RedirectToAction("ListHocKyDT");
+                return Redirect(Request.UrlReferrer.ToString());
             }
-            return View(hocKyDaoTao);
-        }
-
-        public ActionResult SuaHocKyDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HocKyDaoTao hocKyDaoTao = db.HocKyDaoTaos.Find(id);
-            if (hocKyDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hocKyDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaHocKyDT(HocKyDaoTao hocKyDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraHK(hocKyDaoTao.HocKy);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaHocKyDT", new { id = hocKyDaoTao.ID });
-                }
-                db.Entry(hocKyDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa học kỳ thành công";
-                return RedirectToAction("ListHocKyDT");
-            }
-            return View(hocKyDaoTao);
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult XoaHocKyDT(int? id)
@@ -123,88 +89,48 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return RedirectToAction("ListHocKyDT");
         }
 
-        public string KiemTraKhoa(int khoa)
+        public string KiemTraKhoa(string khoadt)
         {
             string ListLoi = "";
-            if (khoa <= 0)
+            if (int.TryParse(khoadt, out int khoa))
             {
-                ListLoi += "<p> Khóa đào tạo phải là số nguyên dương lớn hơn 0, khóa đào tạo bạn nhập là: " + khoa + "</p>";
+                if (khoa <= 0)
+                {
+                    ListLoi += "<p> Khóa đào tạo phải là số nguyên dương lớn hơn 0, khóa đào tạo bạn nhập là: " + khoa + "</p>";
+                }
+                var listDBKhoa = db.KhoaDaoTaos.ToList();
+                var listKhoa = new List<string>();
+                foreach (var item in listDBKhoa)
+                {
+                    listKhoa.Add(item.Khoa.ToString());
+                }
+                if (CheckTonTai(khoa.ToString(), listKhoa))
+                {
+                    ListLoi += "<p> Khóa đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                }
             }
-            var listDBKhoa = db.KhoaDaoTaos.ToList();
-            var listKhoa = new List<string>();
-            foreach (var item in listDBKhoa)
+            else
             {
-                listKhoa.Add(item.Khoa.ToString());
-            }
-            if (CheckTonTai(khoa.ToString(), listKhoa))
-            {
-                ListLoi += "<p> Khóa đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                ListLoi += "<p> Khóa đào tạo phải là số nguyên, vui lòng thử lại!</p>";
             }
             return ListLoi;
         }
-        public ActionResult ListKhoaDT()
-        {
-            return View(db.KhoaDaoTaos.ToList());
-        }
-
-        public ActionResult TaoMoiKhoa()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiKhoa(KhoaDaoTao khoaDaoTao)
+        public ActionResult TaoMoiKhoa(string khoa)
         {
-            if (ModelState.IsValid)
+            var ListLoi = KiemTraKhoa(khoa);
+            if (ListLoi != "")
             {
-                var ListLoi = KiemTraKhoa(khoaDaoTao.Khoa);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("TaoMoiKhoa");
-                }
-                db.KhoaDaoTaos.Add(khoaDaoTao);
-                db.SaveChanges();
-                TempData["ThongBao"] = "Tạo mới khóa thành công";
-                return RedirectToAction("ListKhoaDT");
+                TempData["Alert"] = ListLoi;
+                return RedirectToAction("TaoMoiKhoa");
             }
-            return View(khoaDaoTao);
+            var khoadt = new KhoaDaoTao();
+            khoadt.Khoa = int.Parse(khoa);
+            db.KhoaDaoTaos.Add(khoadt);
+            db.SaveChanges();
+            TempData["ThongBao"] = "Tạo mới khóa thành công";
+            return Redirect(Request.UrlReferrer.ToString());
         }
-
-        public ActionResult SuaKhoaDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KhoaDaoTao khoaDaoTao = db.KhoaDaoTaos.Find(id);
-            if (khoaDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(khoaDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaKhoaDT(KhoaDaoTao khoaDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraKhoa(khoaDaoTao.Khoa);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaKhoaDT", new { id = khoaDaoTao.ID });
-                }
-                db.Entry(khoaDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa khóa thành công";
-                return RedirectToAction("ListKhoaDT");
-            }
-            return View(khoaDaoTao);
-        }
-
         public ActionResult XoaKhoaDT(int? id)
         {
             if (id == null)
@@ -231,10 +157,13 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return RedirectToAction("ListKhoaDT");
         }
 
-        public string KiemTraNganh(string nganh)
+        public string KiemTraNganh(string manganh, string nganh)
         {
             string ListLoi = "";
-
+            if (!int.TryParse(manganh, out int mn))
+            {
+                ListLoi += "<p> Mã ngành phải là số nguyên dương </p>";
+            }
             if (nganh.Length > 100)
             {
                 ListLoi += "<p> Ngành đào tạo không được lớn hơn 100 ký tự, số ký tự của ngành đào tạo bạn nhập là: " + nganh.Length + "</p>";
@@ -256,65 +185,23 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         {
             return View(db.NganhDaoTaos.ToList());
         }
-
-        public ActionResult TaoMoiNganh()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiNganh(NganhDaoTao nganhDaoTao)
+        public ActionResult TaoMoiNganh(string manganh, string tennganh)
         {
-            if (ModelState.IsValid)
+            var ListLoi = KiemTraNganh(manganh, tennganh);
+            if (ListLoi != "")
             {
-                var ListLoi = KiemTraNganh(nganhDaoTao.Nganh);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("TaoMoiNganh");
-                }
-                db.NganhDaoTaos.Add(nganhDaoTao);
-                db.SaveChanges();
-                TempData["ThongBao"] = "Tạo mới ngành thành công";
-                return RedirectToAction("ListNganhDT");
+                TempData["Alert"] = ListLoi;
+                return RedirectToAction("TaoMoiNganh");
             }
-            return View(nganhDaoTao);
+            var nganhmoi = new NganhDaoTao();
+            nganhmoi.MaNganh = int.Parse(manganh);
+            nganhmoi.Nganh = tennganh;
+            db.NganhDaoTaos.Add(nganhmoi);
+            db.SaveChanges();
+            TempData["ThongBao"] = "Tạo mới ngành thành công";
+            return Redirect(Request.UrlReferrer.ToString());
         }
-
-        public ActionResult SuaNganhDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NganhDaoTao nganhDaoTao = db.NganhDaoTaos.Find(id);
-            if (nganhDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganhDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaNganhDT(NganhDaoTao nganhDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraNganh(nganhDaoTao.Nganh);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaNganhDT", new { id = nganhDaoTao.ID });
-                }
-                db.Entry(nganhDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa ngành thành công";
-                return RedirectToAction("ListNganhDT");
-            }
-            return View(nganhDaoTao);
-        }
-
         public ActionResult XoaNganhDT(int? id)
         {
             if (id == null)
@@ -338,7 +225,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             db.NganhDaoTaos.Remove(nganhDaoTao);
             db.SaveChanges();
             TempData["ThongBao"] = "Xóa ngành thành công";
-            return RedirectToAction("ListNganhDT");
+            return RedirectToAction("ListCTDaoTao");
         }
 
         public string KiemTraFile(HttpPostedFileBase file)

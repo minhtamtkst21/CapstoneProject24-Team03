@@ -11,6 +11,7 @@ using Cap24Team3.Models;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class DanhSachSinhVienController : Controller
     {
         public Cap24 db = new Cap24();

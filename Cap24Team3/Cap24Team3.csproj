@@ -530,14 +530,7 @@
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ChiTietCTDaoTao.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListCTDaoTao.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListHocKyDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListKhoaDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListNganhDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\SuaHocKyDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\SuaKhoaDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\SuaNganhDT.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiHocKy.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiKhoa.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiNganh.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaHocKyDT.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaKhoaDT.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaNganhDT.cshtml" />

@@ -13,6 +13,7 @@ using OfficeOpenXml;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class DiemHocPhansController : Controller
     {
         private Cap24 db = new Cap24();
