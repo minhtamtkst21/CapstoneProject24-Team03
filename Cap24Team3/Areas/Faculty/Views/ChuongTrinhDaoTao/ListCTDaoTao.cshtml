@@ -65,7 +65,6 @@
                             <th>STT</th>
                             <th>Mã ngành</th>
                             <th>Tên ngành</th>
-                            <th>Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,9 +75,6 @@
                                 <td>@STT</td>
                                 <td>@item.MaNganh</td>
                                 <td>@item.Nganh</td>
-                                <td>
-                                    <a href="@Url.Action("XoaNganhDT", new { id = item.ID })">Xóa</a>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -111,7 +107,6 @@
                         <tr>
                             <th>STT</th>
                             <th>Khóa</th>
-                            <th>Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,9 +116,6 @@
                             <tr>
                                 <td>@STT</td>
                                 <td>@item.Khoa</td>
-                                <td>
-                                    <a href="@Url.Action("XoaKhoaDT", new { id = item.ID })">Xóa</a>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -157,7 +149,6 @@
                             <th>STT</th>
                             <th>Thứ tự</th>
                             <th>Học kỳ</th>
-                            <th>Điều chỉnh</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,9 +159,6 @@
                                 <td>@STT</td>
                                 <td>@item.STT</td>
                                 <td>@item.HocKy</td>
-                                <td>
-                                    <a href="@Url.Action("XoaHocKyDT", new { id = item.ID })">Xóa</a>
-                                </td>
                             </tr>
                         }
                     </tbody>
