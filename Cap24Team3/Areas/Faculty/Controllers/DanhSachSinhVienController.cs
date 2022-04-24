@@ -479,7 +479,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         SinhVien SaveSV = new SinhVien();
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            var mssv = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            var mssv = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                             if (CheckTonTai(mssv, listMSSV))
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột A: Dữ liệu bị trùng, dữ liệu trùng: " + mssv + "</p>";
@@ -511,7 +511,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 2].Value != null)
                                         {
-                                            var Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            var Ho = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             if (Ho.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ho + " là " + Ho.Length + "<p>";
@@ -520,7 +520,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Dữ liệu không được để trống <p>";
                                             }
-                                            SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                         }
                                         else
                                         {
@@ -528,7 +528,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 3].Value != null)
                                         {
-                                            var Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            var Ten = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             if (Ten.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được quá 100 ký tự, số ký tự của " + Ten + " là " + Ten.Length + "<p>";
@@ -537,7 +537,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột C: Dữ liệu không được để trống <p>";
                                             }
-                                            SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                         }
                                         else
                                         {
@@ -545,7 +545,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 4].Value != null)
                                         {
-                                            var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                            var NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                             if (NgaySinh.Length > 10)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được quá 10 ký tự, số ký tự của " + NgaySinh + " là " + NgaySinh.Length + "<p>";
@@ -554,7 +554,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột D: Dữ liệu không được để trống <p>";
                                             }
-                                            SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                            SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                         }
                                         else
                                         {
@@ -562,7 +562,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 5].Value != null)
                                         {
-                                            var GT = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                            var GT = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                             if (GT.Length > 10)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được quá 10 ký tự, số ký tự của " + GT + " là " + GT.Length + "<p>";
@@ -571,7 +571,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột E: Dữ liệu không được để trống <p>";
                                             }
-                                            SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                            SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                         }
                                         else
                                         {
@@ -585,12 +585,12 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                             {
                                                 listKhoaMoi.Add(item.Khoa.ToString());
                                             }
-                                            var tenKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                            var tenKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty).Trim();
                                             if (CheckTonTai(tenKhoa, listKhoaMoi) == false)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột G: Khóa K" + tenKhoa + " chưa có trong hệ thống <p>";
                                             }
-                                            var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                            var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty).Trim();
                                             SaveSV.ID_Khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.Khoa.ToString() == khoa).ID;
                                         }
                                         else
@@ -599,7 +599,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 9].Value != null)
                                         {
-                                            var Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                            var Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
                                             if (CheckTonTai(Email_1, listEmail))
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu bị trùng, dữ liệu trùng: " + Email_1 + "</p>";
@@ -613,7 +613,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Dữ liệu không được để trống <p>";
                                             }
                                             listEmail.Add(Email_1);
-                                            SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                            SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
                                         }
                                         else
                                         {
@@ -621,16 +621,16 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 10].Value != null)
                                         {
-                                            var Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                            var Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString().Trim();
                                             if (Email_2.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột J: Dữ liệu không được quá 100 ký tự, số ký tự của " + Email_2 + " là " + Email_2.Length + "<p>";
                                             }
-                                            SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                            SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString().Trim();
                                         }
                                         if (workSheet.Cells[rowIterator, 11].Value != null)
                                         {
-                                            var nganh = workSheet.Cells[rowIterator, 11].Value.ToString();
+                                            var nganh = workSheet.Cells[rowIterator, 11].Value.ToString().Trim();
                                             var listNganh = db.NganhDaoTaos.ToList();
                                             var listNganhMoi = new List<string>();
                                             foreach (var item in listNganh)
@@ -649,45 +649,45 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 12].Value != null)
                                         {
-                                            var DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                            var DTDD = workSheet.Cells[rowIterator, 12].Value.ToString().Trim();
                                             if (DTDD.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột L: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTDD + " là " + DTDD.Length + "<p>";
                                             }
-                                            SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                            SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString().Trim();
                                         }
                                         if (workSheet.Cells[rowIterator, 13].Value != null)
                                         {
-                                            var DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                            var DTCha = workSheet.Cells[rowIterator, 13].Value.ToString().Trim();
                                             if (DTCha.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột M: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTCha + " là " + DTCha.Length + "<p>";
                                             }
-                                            SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                            SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString().Trim();
                                         }
                                         if (workSheet.Cells[rowIterator, 14].Value != null)
                                         {
-                                            var DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                            var DTMe = workSheet.Cells[rowIterator, 14].Value.ToString().Trim();
                                             if (DTMe.Length > 100)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột N: Dữ liệu không được quá 100 ký tự, số ký tự của " + DTMe + " là " + DTMe.Length + "<p>";
                                             }
-                                            SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                            SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString().Trim();
                                         }
                                         if (workSheet.Cells[rowIterator, 15].Value != null)
                                         {
-                                            var DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                            var DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString().Trim();
                                             if (DiaChi.Replace(" ", string.Empty) == null)
                                             {
                                                 TempData["Alert"] += "<p> Lỗi ở dòng " + rowIterator + ", cột O: Dữ liệu không được để trống <p>";
                                             }
-                                            SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                            SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString().Trim();
                                         }
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
-                                            var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                            var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString();
-                                            var maKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                            var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                            var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString().Trim();
+                                            var maKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty).Trim();
                                             if (!CheckTonTai(tenLop, listTenLop))
                                             {
                                                 var lopQL = new LopQuanLy();
@@ -713,7 +713,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
-                                            var tinhtrang = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                            var tinhtrang = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
                                             if (!CheckTonTai(tinhtrang, listTinhTrangMoi))
                                             {
                                                 var TinhTrangMoi = new TinhTrang();
@@ -946,9 +946,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 {
                                     if (workSheet.Cells[rowIterator, 8].Value != null)
                                     {
-                                        var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                        var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString();
-                                        var maKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                        var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                        var maNganh = workSheet.Cells[rowIterator, 11].Value.ToString().Trim();
+                                        var maKhoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty).Trim();
 
                                         if (!CheckTonTai(tenLop, listTenLop))
                                         {
@@ -963,7 +963,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     }
                                     if (workSheet.Cells[rowIterator, 6].Value != null)
                                     {
-                                        var tenTinhTrang = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                        var tenTinhTrang = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
 
                                         if (!CheckTonTai(tenTinhTrang, listTinhTrangMoi))
                                         {
@@ -986,66 +986,66 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     SinhVien SaveSV = new SinhVien();
                                     if (workSheet.Cells[rowIterator, 1].Value != null)
                                     {
-                                        SaveSV.MSSV = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                        SaveSV.MSSV = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 2].Value != null)
                                     {
-                                        SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                        SaveSV.Ho = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 3].Value != null)
                                     {
-                                        SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                        SaveSV.Ten = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 4].Value != null)
                                     {
-                                        SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                        SaveSV.NgaySinh = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 5].Value != null)
                                     {
-                                        SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                        SaveSV.GioiTinh = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 7].Value != null)
                                     {
-                                        var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty);
+                                        var khoa = workSheet.Cells[rowIterator, 7].Value.ToString().Replace("K", string.Empty).Trim();
                                         SaveSV.ID_Khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.Khoa.ToString() == khoa).ID;
                                     }
                                     if (workSheet.Cells[rowIterator, 9].Value != null)
                                     {
-                                        SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                        SaveSV.Email_1 = workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 10].Value != null)
                                     {
-                                        SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                        SaveSV.Email_2 = workSheet.Cells[rowIterator, 10].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 11].Value != null)
                                     {
-                                        var nganh = workSheet.Cells[rowIterator, 11].Value.ToString();
+                                        var nganh = workSheet.Cells[rowIterator, 11].Value.ToString().Trim();
                                         SaveSV.ID_Nganh = db.NganhDaoTaos.FirstOrDefault(s => s.MaNganh.ToString() == nganh).ID;
                                     }
                                     if (workSheet.Cells[rowIterator, 12].Value != null)
                                     {
-                                        SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                        SaveSV.DTDD = workSheet.Cells[rowIterator, 12].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 13].Value != null)
                                     {
-                                        SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                        SaveSV.DTCha = workSheet.Cells[rowIterator, 13].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 14].Value != null)
                                     {
-                                        SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                        SaveSV.DTMe = workSheet.Cells[rowIterator, 14].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 15].Value != null)
                                     {
-                                        SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                        SaveSV.DiaChi = workSheet.Cells[rowIterator, 15].Value.ToString().Trim();
                                     }
                                     if (workSheet.Cells[rowIterator, 8].Value != null)
                                     {
-                                        var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString();
+                                        var tenLop = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
                                         SaveSV.LopQuanLy = db.LopQuanLies.FirstOrDefault(s => s.TenLop == tenLop);
                                     }
                                     if (workSheet.Cells[rowIterator, 6].Value != null)
                                     {
-                                        var tinhtrang = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                        var tinhtrang = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
                                         SaveSV.TinhTrang = db.TinhTrangs.FirstOrDefault(s => s.TenTinhTrang == tinhtrang);
                                     }
                                     db.SinhViens.Add(SaveSV);
@@ -1262,7 +1262,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 {
                                     if (workSheet.Cells[rowIterator, 1].Value != null)
                                     {
-                                        var MSSV = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                        var MSSV = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                         XoaSinhVien(MSSV);
                                     }
                                 }

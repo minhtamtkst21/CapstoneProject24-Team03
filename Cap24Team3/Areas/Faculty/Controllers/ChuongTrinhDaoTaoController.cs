@@ -285,7 +285,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 2].Value != null)
                                         {
-                                            var tenktt = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            var tenktt = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             if (tenktt.Length > 200)
                                             {
                                                 DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Tên khối kiến thức không được quá 200 ký tự, độ dài ký tự: " + stt + " là: " + stt.Length + "</p>";
@@ -307,7 +307,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             {
                                 if (workSheet.Cells[rowIterator, 1].Value != null)
                                 {
-                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     if (!int.TryParse(stt, out int i))
                                     {
                                         DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Tên kiến thức bắt buộc phải có, vui lòng thử lại!!</p>";
@@ -316,10 +316,10 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             }
                             if (workSheet.Cells[rowIterator, 3].Value != null)
                             {
-                                var item = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                var item = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                 if (workSheet.Cells[rowIterator, 1].Value != null)
                                 {
-                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     if (int.TryParse(stt, out int i))
                                     {
                                         if (item != "Chuyên ngành tự chọn")
@@ -343,7 +343,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             }
                             else if (workSheet.Cells[rowIterator, 1].Value != null)
                             {
-                                var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                 if (int.TryParse(stt, out int i))
                                 {
                                     if (workSheet.Cells[rowIterator, 3].Value == null)
@@ -396,7 +396,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             {
                                 if (int.TryParse(workSheet.Cells[rowIterator, 9].Value.ToString(), out int i))
                                 {
-                                    var item = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                    var item = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                     if (item <= 0)
                                     {
                                         DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Học kỳ phải là số nguyên dương, học kỳ bị sai:" + item + "</p>";
@@ -404,7 +404,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 }
                                 else
                                 {
-                                    var item = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                    var item = workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
                                     DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Học kỳ phải là số nguyên dương, học kỳ bị sai:" + item + "</p>";
                                 }
                             }
@@ -517,42 +517,42 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                         }
                                         if (int.TryParse(khoikienthuc, out int stt))
                                         {
                                             HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
                                             if (workSheet.Cells[rowIterator, 2].Value != null)
                                             {
-                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 3].Value != null)
                                             {
-                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 4].Value != null)
                                             {
-                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 5].Value != null)
                                             {
-                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                                 if (LoaiHP == "TC")
                                                 {
                                                     hocPhanDaoTao.HocPhanDaoTao2 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
                                                 }
                                                 else
                                                 {
-                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                                 }
                                             }
                                             else
                                             {
-                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 9].Value != null)
                                             {
-                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                             }
                                             hocPhanDaoTao.KhoiKienThuc = LuuKhoikienthuc.FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
                                             LuuHocPhan.Add(hocPhanDaoTao);
@@ -561,7 +561,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             KhoiKienThuc taoKKT = new KhoiKienThuc();
                                             taoKKT.MaKhoiKienThuc = khoikienthuc;
-                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             taoKKT.ChuongTrinhDaoTao = LuuCtdt;
                                             LuuKhoikienthuc.Add(taoKKT);
                                             KHOIKIENTHUC = taoKKT.TenKhoiKienThuc;
@@ -572,8 +572,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -601,8 +601,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 7].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -630,8 +630,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -897,42 +897,42 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                         }
                                         if (int.TryParse(khoikienthuc, out int stt))
                                         {
                                             HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
                                             if (workSheet.Cells[rowIterator, 2].Value != null)
                                             {
-                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 3].Value != null)
                                             {
-                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 4].Value != null)
                                             {
-                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 5].Value != null)
                                             {
-                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                                 if (LoaiHP == "TC")
                                                 {
                                                     hocPhanDaoTao.HocPhanDaoTao2 = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == CHUONGTRINHDAOTAO.ID).Where(s => s.KhoiKienThuc.TenKhoiKienThuc == KHOIKIENTHUC).FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
                                                 }
                                                 else
                                                 {
-                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                                 }
                                             }
                                             else
                                             {
-                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 9].Value != null)
                                             {
-                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                             }
                                             hocPhanDaoTao.KhoiKienThuc = db.KhoiKienThucs.Where(s => s.ChuongTrinhDaoTao.ID == CHUONGTRINHDAOTAO.ID).FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
                                             db.HocPhanDaoTaos.Add(hocPhanDaoTao);
@@ -942,7 +942,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             KhoiKienThuc taoKKT = new KhoiKienThuc();
                                             taoKKT.MaKhoiKienThuc = khoikienthuc;
-                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             taoKKT.ChuongTrinhDaoTao = CHUONGTRINHDAOTAO;
                                             db.KhoiKienThucs.Add(taoKKT);
                                             db.SaveChanges();
@@ -954,8 +954,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -985,8 +985,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 7].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -1016,8 +1016,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
