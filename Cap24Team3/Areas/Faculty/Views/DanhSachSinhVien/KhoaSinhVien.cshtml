@@ -13,10 +13,10 @@
                     <input type="text" class="btn btn-rounded" placeholder="Tìm kiếm..." name="texttimkiem" style="background-color: white; color: black; cursor: auto;" />
                     <button type="submit" class="btn btn-secondary btn-rounded" formaction="@Url.Action("TimKiemSinhVien")"><i class="fa fa-search"></i> Tìm kiếm</button>
                     <input type="file" id="file" style="display:none;" />
-                    <button type="button" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
+                    <button type="button" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
                         <i class="mdi mdi-microsoft-excel"></i> Import
                     </button>
-                    <button type="submit" formaction="@Url.Action("XuatDSSV")" value="" class="btn btn-secondary btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
+                    <button type="submit" formaction="@Url.Action("XuatDSSV")" value="" class="btn btn-success btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
                 </form>
             </div>
         </div>
@@ -63,7 +63,7 @@
                             <form method="post">
                                 <input type="number" name="IDKhoa" value="@Session["KhoaSV"]" hidden />
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="submit" formaction="@Url.Action("XoaKhoaSV", new { IDKhoa = Session["KhoaSV"]})" id="XacNhanBtn" class="btn btn-primary" disabled>Xóa</button>
+                                <button type="submit" formaction="@Url.Action("XoaKhoaSV", new { IDKhoa = Session["KhoaSV"]})" id="XacNhanBtn" class="btn btn-danger" disabled>Xóa</button>
                             </form>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                                    <input type="submit" class="btn btn-primary" value="Tải lên" formmethod="post" formaction="@Url.Action("XemTruocThongKe", "DanhSachSinhVien", new { enctype = "multipart/form-data" })" />
+                                    <input type="submit" class="btn btn-success" value="Tải lên" formmethod="post" formaction="@Url.Action("XemTruocThongKe", "DanhSachSinhVien", new { enctype = "multipart/form-data" })" />
                                 </div>
                             }
                         </div>
@@ -113,7 +113,7 @@
                             <div class="modal-footer">
                                 <form action="@Url.Action("UpdateSinhVien")" method="post">
                                     <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                                    <input type="submit" class="btn btn-primary" value="Tải lên" />
+                                    <input type="submit" class="btn btn-success" value="Tải lên" />
                                 </form>
                             </div>
                         </div>

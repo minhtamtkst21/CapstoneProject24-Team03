@@ -62,18 +62,18 @@
                                     <td>@s.NguoiGui</td>
                                     @if (s.TrangThai == true)
                                     {
-                                        <td>
+                                        <td style="color: #10c469">
                                             Đã đọc
                                         </td>
                                     }
                                     else
                                     {
-                                        <td>
+                                        <td style="color: #ff5b5b">
                                             Chưa đọc
                                         </td>
                                     }
                                     <td>
-                                        <a href="@Url.Action("Delete", "ThongBao" , new {id = s.ID})"><i class="fa fa-trash"></i></a>
+                                        <a href="@Url.Action("Delete", "ThongBao" , new {id = s.ID})" style="color: #ff5b5b"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }

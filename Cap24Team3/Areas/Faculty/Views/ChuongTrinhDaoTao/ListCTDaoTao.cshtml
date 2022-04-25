@@ -5,17 +5,23 @@
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
     int STT = 0;
 }
+<style>
+    .modal-open[style] {
+        padding-right: 0px !important;
+        position: relative !important;
+    }
+</style>
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">&emsp;CHƯƠNG TRÌNH ĐÀO TẠO</h4>
             <div class="page-title-right">
                 <a href="@Url.Content("~/Models/ChuongTrinhDaoTao.xlsx")">
-                    <button type="submit" id="button" name="button" value="Export" class="btn btn-secondary btn-rounded">
+                    <button type="submit" id="button" name="button" value="Export" class="btn btn-success btn-rounded">
                         <i class="mdi mdi-microsoft-excel"></i> Template
                     </button>
                 </a>
-                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#exampleModal" onclick="Clearform()">
                     <i class="mdi mdi-microsoft-excel"></i> Import
                 </button>
             </div>
@@ -47,7 +53,7 @@
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">&emsp;NGÀNH HỌC</h4>
             <div class="page-title-right">
-                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiNganh">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#TaoMoiNganh">
                     <i class="mdi mdi-database-edit"></i> Tạo mới
                 </button>
             </div>
@@ -89,7 +95,7 @@
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">&emsp;KHÓA HỌC</h4>
             <div class="page-title-right">
-                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiKhoa">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#TaoMoiKhoa">
                     <i class="mdi mdi-database-edit"></i> Tạo mới
                 </button>
             </div>
@@ -130,7 +136,7 @@
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="page-title" style="font-family:Roboto">&emsp;HỌC KỲ</h4>
             <div class="page-title-right">
-                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiHocKy">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#TaoMoiHocKy">
                     <i class="mdi mdi-database-edit"></i> Tạo mới
                 </button>
             </div>
@@ -180,15 +186,15 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <label for="recipient-name" class="col-form-label">Mã ngành:</label>
-                        <input class="form-control" type="text" id="MaNganh" name="manganh" value="" required />
+                        <input class="form-control" type="text" id="MaNganh" name="manganh" value="" placeholder="Nhập mã ngành" required />
                         <br />
                         <label for="recipient-name" class="col-form-label">Tên ngành:</label>
-                        <input class="form-control" type="text" id="TenNganh" name="tennganh" value="" required />
+                        <input class="form-control" type="text" id="TenNganh" name="tennganh" value="" placeholder="Nhập tên ngành" required />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiNganh")">Lưu</button>
+                    <button type="submit" class="btn btn-success" formaction="@Url.Action("TaoMoiNganh")">Lưu</button>
                 </div>
             </div>
         </div>
@@ -207,12 +213,12 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <label for="recipient-name" class="col-form-label">Khóa:</label>
-                        <input class="form-control" type="text" id="khoa" name="khoa" value="" required />
+                        <input class="form-control" type="text" id="khoa" name="khoa" value="" placeholder="Nhập khóa" required />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
+                    <button type="submit" class="btn btn-success" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
                 </div>
             </div>
         </div>
@@ -231,12 +237,12 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <label for="recipient-name" class="col-form-label">Học kỳ:</label>
-                        <input class="form-control" type="text" id="hocky" name="hocky" value="" required />
+                        <input class="form-control" type="text" id="hocky" name="hocky" value="" placeholder="Nhập tên học kỳ" required />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
+                    <button type="submit" class="btn btn-success" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
                 </div>
             </div>
         </div>
@@ -288,7 +294,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                        <input type="submit" class="btn btn-success" value="Tải lên" />
                     </div>
                 }
             </div>
@@ -311,7 +317,7 @@
                 <div class="modal-footer">
                     <form action="@Url.Action("TaiLenCTDT")">
                         <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Đóng" />
-                        <input type="submit" class="btn btn-primary" value="Tải lên" />
+                        <input type="submit" class="btn btn-success" value="Tải lên" />
                     </form>
                 </div>
             </div>
