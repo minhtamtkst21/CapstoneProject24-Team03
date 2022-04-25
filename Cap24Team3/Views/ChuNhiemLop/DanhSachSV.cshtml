@@ -39,6 +39,7 @@
     .visible {
         display: block;
     }
+
     #profileImage {
         font-family: Arial, Helvetica, sans-serif;
         width: 10rem;
@@ -136,14 +137,14 @@
                             {
                                 <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
                                 <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
-                            
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <input type="submit" class="btn btn-primary" value="Thêm" />
+                                    <input type="submit" class="btn btn-success" value="Thêm" />
                                 </div>
                             }
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -174,7 +175,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("XacNhanDoiTinhTrang")">Lưu</button>
+                                    <button type="submit" class="btn btn-success" formaction="@Url.Action("XacNhanDoiTinhTrang")">Lưu</button>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +205,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                                    <button type="submit" class="btn btn-success" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
                                 </div>
                             </div>
                         </div>
@@ -606,7 +607,7 @@
         var button = $(event.relatedTarget);
         var modal = $(this);
 
-    }); s
+    });
 </script>
 @*@if (Session["sinhvien2"] != null)
     {
