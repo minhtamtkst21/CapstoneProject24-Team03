@@ -13,6 +13,7 @@ using OfficeOpenXml;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class DiemHocPhansController : Controller
     {
         private Cap24 db = new Cap24();
@@ -62,7 +63,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 //try
                                 {
                                     DiemHocPhan savediem = new DiemHocPhan();
-                                    savediem.MSSV = (workSheet.Cells[rowIterator, 1].Value == null) ? "" : workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    savediem.MSSV = (workSheet.Cells[rowIterator, 1].Value == null) ? "" : workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     var HocKy = int.Parse(workSheet.Cells[rowIterator, 5].Value.ToString().Substring(0, 3));
                                     var sinhvien = db.SinhViens.FirstOrDefault(s => s.MSSV == savediem.MSSV);
                                     var listhk = new List<HocKyDaoTao>();
@@ -79,13 +80,13 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     //}
                                     savediem.HocKyKeHoach = hockyhp - hockysv + 1;
                                     savediem.HocKyDangKy = hockyhp - hockysv + 1;
-                                    savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString();
-                                    savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString();
+                                    savediem.HocPhan = (workSheet.Cells[rowIterator, 4].Value == null) ? null : workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
+                                    savediem.TenHocPhan = (workSheet.Cells[rowIterator, 6].Value == null) ? null : workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
                                     savediem.SoTinChi = (workSheet.Cells[rowIterator, 7].Value == null) ? -1 : int.Parse(workSheet.Cells[rowIterator, 7].Value.ToString().Trim());
-                                    savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString();
-                                    savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString();
-                                    savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString();
-                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null || workSheet.Cells[rowIterator, 11].Value.ToString() != "x") ? false : true;
+                                    savediem.Diem10 = (workSheet.Cells[rowIterator, 8].Value == null) ? null : workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                    savediem.Diem4 = (workSheet.Cells[rowIterator, 9].Value == null) ? null : workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
+                                    savediem.DiemChu = (workSheet.Cells[rowIterator, 10].Value == null) ? null : workSheet.Cells[rowIterator, 10].Value.ToString().Trim();
+                                    savediem.QuaMon = (workSheet.Cells[rowIterator, 11].Value == null || workSheet.Cells[rowIterator, 11].Value.ToString().Trim() != "x") ? false : true;
                                     savediem.LichSu = (Session["LuuLichSu"] as LichSuUpLoad).ID;
                                     if (mssvmoi != savediem.MSSV.ToLower())
                                     {

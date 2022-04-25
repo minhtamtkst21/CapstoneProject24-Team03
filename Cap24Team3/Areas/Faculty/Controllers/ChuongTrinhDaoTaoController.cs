@@ -15,86 +15,52 @@ namespace Cap24Team3.Areas.Faculty.Controllers
     public class ChuongTrinhDaoTaoController : Controller
     {
         private Cap24 db = new Cap24();
-        public string KiemTraHK(int HK)
+        public string KiemTraHK(string hk)
         {
             string ListLoi = "";
-            if (HK < 100 || HK >= 1000)
+            if (int.TryParse(hk, out int HK))
             {
-                ListLoi += "<p> Học kỳ phải có 3 chữ số </p>";
-            }
-            var listDBHK = db.HocKyDaoTaos.ToList();
-            var listHK = new List<string>();
-            foreach (var item in listDBHK)
+                if (HK < 100 || HK >= 1000)
+                {
+                    ListLoi += "<p> Học kỳ phải có 3 chữ số </p>";
+                }
+                var listDBHK = db.HocKyDaoTaos.ToList();
+                var listHK = new List<string>();
+                foreach (var item in listDBHK)
+                {
+                    listHK.Add(item.HocKy.ToString());
+                }
+                if (CheckTonTai(HK.ToString(), listHK))
+                {
+                    ListLoi += "<p> Học kỳ đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                }
+            } else
             {
-                listHK.Add(item.HocKy.ToString());
-            }
-            if (CheckTonTai(HK.ToString(), listHK))
-            {
-                ListLoi += "<p> Học kỳ đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                ListLoi += "<p> Học kỳ phải là số nguyên dương </p>";
             }
             return ListLoi;
         }
-        public ActionResult ListHocKyDT()
-        {
-            return View(db.HocKyDaoTaos.ToList());
-        }
-
-        public ActionResult TaoMoiHocKy()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiHocKy(HocKyDaoTao hocKyDaoTao)
+        public ActionResult TaoMoiHocKy(string hocky)
         {
             if (ModelState.IsValid)
             {
-                var ListLoi = KiemTraHK(hocKyDaoTao.HocKy);
+                var ListLoi = KiemTraHK(hocky);
                 if (ListLoi != "")
                 {
                     TempData["Alert"] = ListLoi;
                     return RedirectToAction("TaoMoiHocKy");
                 }
-                db.HocKyDaoTaos.Add(hocKyDaoTao);
+                var hk = new HocKyDaoTao();
+                hk.STT = db.HocKyDaoTaos.OrderByDescending(s => s.STT).First().STT + 1;
+                hk.HocKy = int.Parse(hocky);
+                db.HocKyDaoTaos.Add(hk);
                 db.SaveChanges();
                 TempData["ThongBao"] = "Tạo mới học kỳ thành công";
-                return RedirectToAction("ListHocKyDT");
+                return Redirect(Request.UrlReferrer.ToString());
             }
-            return View(hocKyDaoTao);
-        }
-
-        public ActionResult SuaHocKyDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HocKyDaoTao hocKyDaoTao = db.HocKyDaoTaos.Find(id);
-            if (hocKyDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hocKyDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaHocKyDT(HocKyDaoTao hocKyDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraHK(hocKyDaoTao.HocKy);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaHocKyDT", new { id = hocKyDaoTao.ID });
-                }
-                db.Entry(hocKyDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa học kỳ thành công";
-                return RedirectToAction("ListHocKyDT");
-            }
-            return View(hocKyDaoTao);
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         public ActionResult XoaHocKyDT(int? id)
@@ -123,88 +89,48 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return RedirectToAction("ListHocKyDT");
         }
 
-        public string KiemTraKhoa(int khoa)
+        public string KiemTraKhoa(string khoadt)
         {
             string ListLoi = "";
-            if (khoa <= 0)
+            if (int.TryParse(khoadt, out int khoa))
             {
-                ListLoi += "<p> Khóa đào tạo phải là số nguyên dương lớn hơn 0, khóa đào tạo bạn nhập là: " + khoa + "</p>";
+                if (khoa <= 0)
+                {
+                    ListLoi += "<p> Khóa đào tạo phải là số nguyên dương lớn hơn 0, khóa đào tạo bạn nhập là: " + khoa + "</p>";
+                }
+                var listDBKhoa = db.KhoaDaoTaos.ToList();
+                var listKhoa = new List<string>();
+                foreach (var item in listDBKhoa)
+                {
+                    listKhoa.Add(item.Khoa.ToString());
+                }
+                if (CheckTonTai(khoa.ToString(), listKhoa))
+                {
+                    ListLoi += "<p> Khóa đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                }
             }
-            var listDBKhoa = db.KhoaDaoTaos.ToList();
-            var listKhoa = new List<string>();
-            foreach (var item in listDBKhoa)
+            else
             {
-                listKhoa.Add(item.Khoa.ToString());
-            }
-            if (CheckTonTai(khoa.ToString(), listKhoa))
-            {
-                ListLoi += "<p> Khóa đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                ListLoi += "<p> Khóa đào tạo phải là số nguyên, vui lòng thử lại!</p>";
             }
             return ListLoi;
         }
-        public ActionResult ListKhoaDT()
-        {
-            return View(db.KhoaDaoTaos.ToList());
-        }
-
-        public ActionResult TaoMoiKhoa()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiKhoa(KhoaDaoTao khoaDaoTao)
+        public ActionResult TaoMoiKhoa(string khoa)
         {
-            if (ModelState.IsValid)
+            var ListLoi = KiemTraKhoa(khoa);
+            if (ListLoi != "")
             {
-                var ListLoi = KiemTraKhoa(khoaDaoTao.Khoa);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("TaoMoiKhoa");
-                }
-                db.KhoaDaoTaos.Add(khoaDaoTao);
-                db.SaveChanges();
-                TempData["ThongBao"] = "Tạo mới khóa thành công";
-                return RedirectToAction("ListKhoaDT");
+                TempData["Alert"] = ListLoi;
+                return RedirectToAction("TaoMoiKhoa");
             }
-            return View(khoaDaoTao);
+            var khoadt = new KhoaDaoTao();
+            khoadt.Khoa = int.Parse(khoa);
+            db.KhoaDaoTaos.Add(khoadt);
+            db.SaveChanges();
+            TempData["ThongBao"] = "Tạo mới khóa thành công";
+            return Redirect(Request.UrlReferrer.ToString());
         }
-
-        public ActionResult SuaKhoaDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            KhoaDaoTao khoaDaoTao = db.KhoaDaoTaos.Find(id);
-            if (khoaDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(khoaDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaKhoaDT(KhoaDaoTao khoaDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraKhoa(khoaDaoTao.Khoa);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaKhoaDT", new { id = khoaDaoTao.ID });
-                }
-                db.Entry(khoaDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa khóa thành công";
-                return RedirectToAction("ListKhoaDT");
-            }
-            return View(khoaDaoTao);
-        }
-
         public ActionResult XoaKhoaDT(int? id)
         {
             if (id == null)
@@ -231,10 +157,13 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return RedirectToAction("ListKhoaDT");
         }
 
-        public string KiemTraNganh(string nganh)
+        public string KiemTraNganh(string manganh, string nganh)
         {
             string ListLoi = "";
-
+            if (!int.TryParse(manganh, out int mn))
+            {
+                ListLoi += "<p> Mã ngành phải là số nguyên dương </p>";
+            }
             if (nganh.Length > 100)
             {
                 ListLoi += "<p> Ngành đào tạo không được lớn hơn 100 ký tự, số ký tự của ngành đào tạo bạn nhập là: " + nganh.Length + "</p>";
@@ -256,65 +185,23 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         {
             return View(db.NganhDaoTaos.ToList());
         }
-
-        public ActionResult TaoMoiNganh()
-        {
-            return View();
-        }
-        // POST: Faculty/Nganh/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TaoMoiNganh(NganhDaoTao nganhDaoTao)
+        public ActionResult TaoMoiNganh(string manganh, string tennganh)
         {
-            if (ModelState.IsValid)
+            var ListLoi = KiemTraNganh(manganh, tennganh);
+            if (ListLoi != "")
             {
-                var ListLoi = KiemTraNganh(nganhDaoTao.Nganh);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("TaoMoiNganh");
-                }
-                db.NganhDaoTaos.Add(nganhDaoTao);
-                db.SaveChanges();
-                TempData["ThongBao"] = "Tạo mới ngành thành công";
-                return RedirectToAction("ListNganhDT");
+                TempData["Alert"] = ListLoi;
+                return RedirectToAction("TaoMoiNganh");
             }
-            return View(nganhDaoTao);
+            var nganhmoi = new NganhDaoTao();
+            nganhmoi.MaNganh = int.Parse(manganh);
+            nganhmoi.Nganh = tennganh;
+            db.NganhDaoTaos.Add(nganhmoi);
+            db.SaveChanges();
+            TempData["ThongBao"] = "Tạo mới ngành thành công";
+            return Redirect(Request.UrlReferrer.ToString());
         }
-
-        public ActionResult SuaNganhDT(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NganhDaoTao nganhDaoTao = db.NganhDaoTaos.Find(id);
-            if (nganhDaoTao == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganhDaoTao);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SuaNganhDT(NganhDaoTao nganhDaoTao)
-        {
-            if (ModelState.IsValid)
-            {
-                var ListLoi = KiemTraNganh(nganhDaoTao.Nganh);
-                if (ListLoi != "")
-                {
-                    TempData["Alert"] = ListLoi;
-                    return RedirectToAction("SuaNganhDT", new { id = nganhDaoTao.ID });
-                }
-                db.Entry(nganhDaoTao).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["ThongBao"] = "Sửa ngành thành công";
-                return RedirectToAction("ListNganhDT");
-            }
-            return View(nganhDaoTao);
-        }
-
         public ActionResult XoaNganhDT(int? id)
         {
             if (id == null)
@@ -338,7 +225,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             db.NganhDaoTaos.Remove(nganhDaoTao);
             db.SaveChanges();
             TempData["ThongBao"] = "Xóa ngành thành công";
-            return RedirectToAction("ListNganhDT");
+            return RedirectToAction("ListCTDaoTao");
         }
 
         public string KiemTraFile(HttpPostedFileBase file)
@@ -398,7 +285,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         }
                                         if (workSheet.Cells[rowIterator, 2].Value != null)
                                         {
-                                            var tenktt = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            var tenktt = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             if (tenktt.Length > 200)
                                             {
                                                 DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Tên khối kiến thức không được quá 200 ký tự, độ dài ký tự: " + stt + " là: " + stt.Length + "</p>";
@@ -420,7 +307,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             {
                                 if (workSheet.Cells[rowIterator, 1].Value != null)
                                 {
-                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     if (!int.TryParse(stt, out int i))
                                     {
                                         DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột B: Tên kiến thức bắt buộc phải có, vui lòng thử lại!!</p>";
@@ -429,10 +316,10 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             }
                             if (workSheet.Cells[rowIterator, 3].Value != null)
                             {
-                                var item = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                var item = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                 if (workSheet.Cells[rowIterator, 1].Value != null)
                                 {
-                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                     if (int.TryParse(stt, out int i))
                                     {
                                         if (item != "Chuyên ngành tự chọn")
@@ -456,7 +343,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             }
                             else if (workSheet.Cells[rowIterator, 1].Value != null)
                             {
-                                var stt = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                var stt = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                 if (int.TryParse(stt, out int i))
                                 {
                                     if (workSheet.Cells[rowIterator, 3].Value == null)
@@ -509,7 +396,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                             {
                                 if (int.TryParse(workSheet.Cells[rowIterator, 9].Value.ToString(), out int i))
                                 {
-                                    var item = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                    var item = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                     if (item <= 0)
                                     {
                                         DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Học kỳ phải là số nguyên dương, học kỳ bị sai:" + item + "</p>";
@@ -517,7 +404,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                 }
                                 else
                                 {
-                                    var item = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                    var item = workSheet.Cells[rowIterator, 9].Value.ToString().Trim();
                                     DanhSachLoi += "<p> Lỗi ở dòng " + rowIterator + ", cột I: Học kỳ phải là số nguyên dương, học kỳ bị sai:" + item + "</p>";
                                 }
                             }
@@ -630,42 +517,42 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                         }
                                         if (int.TryParse(khoikienthuc, out int stt))
                                         {
                                             HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
                                             if (workSheet.Cells[rowIterator, 2].Value != null)
                                             {
-                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 3].Value != null)
                                             {
-                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 4].Value != null)
                                             {
-                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 5].Value != null)
                                             {
-                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                                 if (LoaiHP == "TC")
                                                 {
                                                     hocPhanDaoTao.HocPhanDaoTao2 = LuuHocPhan.FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
                                                 }
                                                 else
                                                 {
-                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                                 }
                                             }
                                             else
                                             {
-                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 9].Value != null)
                                             {
-                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                             }
                                             hocPhanDaoTao.KhoiKienThuc = LuuKhoikienthuc.FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
                                             LuuHocPhan.Add(hocPhanDaoTao);
@@ -674,7 +561,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             KhoiKienThuc taoKKT = new KhoiKienThuc();
                                             taoKKT.MaKhoiKienThuc = khoikienthuc;
-                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             taoKKT.ChuongTrinhDaoTao = LuuCtdt;
                                             LuuKhoikienthuc.Add(taoKKT);
                                             KHOIKIENTHUC = taoKKT.TenKhoiKienThuc;
@@ -685,8 +572,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -714,8 +601,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 7].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -743,8 +630,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -1010,42 +897,42 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                     {
                                         if (workSheet.Cells[rowIterator, 1].Value != null)
                                         {
-                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                            khoikienthuc = workSheet.Cells[rowIterator, 1].Value.ToString().Trim();
                                         }
                                         if (int.TryParse(khoikienthuc, out int stt))
                                         {
                                             HocPhanDaoTao hocPhanDaoTao = new HocPhanDaoTao();
                                             if (workSheet.Cells[rowIterator, 2].Value != null)
                                             {
-                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                                hocPhanDaoTao.MaHocPhan = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 3].Value != null)
                                             {
-                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                hocPhanDaoTao.TenHocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 4].Value != null)
                                             {
-                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                                hocPhanDaoTao.SoTinChi = workSheet.Cells[rowIterator, 4].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 5].Value != null)
                                             {
-                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                                var LoaiHP = workSheet.Cells[rowIterator, 5].Value.ToString().Trim();
                                                 if (LoaiHP == "TC")
                                                 {
                                                     hocPhanDaoTao.HocPhanDaoTao2 = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == CHUONGTRINHDAOTAO.ID).Where(s => s.KhoiKienThuc.TenKhoiKienThuc == KHOIKIENTHUC).FirstOrDefault(s => s.TenHocPhan == HPBATBUOC);
                                                 }
                                                 else
                                                 {
-                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                    HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                                 }
                                             }
                                             else
                                             {
-                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                                HPBATBUOC = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             }
                                             if (workSheet.Cells[rowIterator, 9].Value != null)
                                             {
-                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString());
+                                                hocPhanDaoTao.HocKy = int.Parse(workSheet.Cells[rowIterator, 9].Value.ToString().Trim());
                                             }
                                             hocPhanDaoTao.KhoiKienThuc = db.KhoiKienThucs.Where(s => s.ChuongTrinhDaoTao.ID == CHUONGTRINHDAOTAO.ID).FirstOrDefault(s => s.TenKhoiKienThuc == KHOIKIENTHUC);
                                             db.HocPhanDaoTaos.Add(hocPhanDaoTao);
@@ -1055,7 +942,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         {
                                             KhoiKienThuc taoKKT = new KhoiKienThuc();
                                             taoKKT.MaKhoiKienThuc = khoikienthuc;
-                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                            taoKKT.TenKhoiKienThuc = workSheet.Cells[rowIterator, 2].Value.ToString().Trim();
                                             taoKKT.ChuongTrinhDaoTao = CHUONGTRINHDAOTAO;
                                             db.KhoiKienThucs.Add(taoKKT);
                                             db.SaveChanges();
@@ -1067,8 +954,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 6].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 6].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -1098,8 +985,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 7].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 7].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {
@@ -1129,8 +1016,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                                         if (workSheet.Cells[rowIterator, 8].Value != null)
                                         {
                                             RangBuocHocPhan rangBuocHocPhan = new RangBuocHocPhan();
-                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                            string HocPhanRangBuoc = workSheet.Cells[rowIterator, 8].Value.ToString().Trim();
+                                            string HocPhan = workSheet.Cells[rowIterator, 3].Value.ToString().Trim();
                                             string[] ListHP = HocPhanRangBuoc.Split(new char[] { ',' });
                                             foreach (string HP in ListHP)
                                             {

@@ -8,6 +8,7 @@ using Cap24Team3.Models;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class AspNetUserRoleFacultysController : Controller
     {
         private Cap24 db = new Cap24();

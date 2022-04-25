@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Cap24Team3.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "BCN Khoa")]
     public class ThongBaoController : Controller
     {
         private Cap24 db = new Cap24();

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "ListCTDaoTao";
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    int STT = 0;
 }
 <div class="row">
     <div class="col-12">
@@ -39,6 +40,207 @@
             </ul>
         </div>
     </div>
+</div>
+<hr style="border-color:black" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">&emsp;NGÀNH HỌC</h4>
+            <div class="page-title-right">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiNganh">
+                    <i class="mdi mdi-database-edit"></i> Tạo mới
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box taskboard-box">
+            <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                <table class="table table-striped mb-0 dt-responsive" id="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã ngành</th>
+                            <th>Tên ngành</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewData["NganhDaoTao"] as List<Cap24Team3.Models.NganhDaoTao>)
+                        {
+                            STT++;
+                            <tr>
+                                <td>@STT</td>
+                                <td>@item.MaNganh</td>
+                                <td>@item.Nganh</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr style="border-color:black" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">&emsp;KHÓA HỌC</h4>
+            <div class="page-title-right">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiKhoa">
+                    <i class="mdi mdi-database-edit"></i> Tạo mới
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@{ STT = 0;}
+<!-- end page title -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box taskboard-box">
+            <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                <table class="table table-striped mb-0 dt-responsive" id="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Khóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewData["KhoaDaoTao"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                        {
+                            STT++;
+                            <tr>
+                                <td>@STT</td>
+                                <td>@item.Khoa</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+    </div>
+</div>
+<hr style="border-color:black" />
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="page-title" style="font-family:Roboto">&emsp;HỌC KỲ</h4>
+            <div class="page-title-right">
+                <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#TaoMoiHocKy">
+                    <i class="mdi mdi-database-edit"></i> Tạo mới
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@{ STT = 0;}
+<!-- end page title -->
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box taskboard-box">
+            <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                <table class="table table-striped mb-0 dt-responsive" id="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Thứ tự</th>
+                            <th>Học kỳ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewData["HocKyDaoTao"] as List<Cap24Team3.Models.HocKyDaoTao>)
+                        {
+                            STT++;
+                            <tr>
+                                <td>@STT</td>
+                                <td>@item.STT</td>
+                                <td>@item.HocKy</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="TaoMoiNganh" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <form method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: Roboto">Tạo ngành mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <label for="recipient-name" class="col-form-label">Mã ngành:</label>
+                        <input class="form-control" type="text" id="MaNganh" name="manganh" value="" required />
+                        <br />
+                        <label for="recipient-name" class="col-form-label">Tên ngành:</label>
+                        <input class="form-control" type="text" id="TenNganh" name="tennganh" value="" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiNganh")">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="TaoMoiKhoa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <form method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: Roboto">Tạo khóa mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <label for="recipient-name" class="col-form-label">Khóa:</label>
+                        <input class="form-control" type="text" id="khoa" name="khoa" value="" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="TaoMoiHocKy" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <form method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-family: Roboto">Tạo học kỳ mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <label for="recipient-name" class="col-form-label">Học kỳ:</label>
+                        <input class="form-control" type="text" id="hocky" name="hocky" value="" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("TaoMoiKhoa")">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog modal-xl" role="document">
