@@ -805,8 +805,97 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         public ActionResult XemDiemSinhVien(int id)
         {
             var sinhvien = db.SinhViens.Find(id);
+            var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
+            var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
+            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).First(s => s.ID_Khoa == khoa.ID);
+            if (ctdt == null)
+                return Redirect(Request.UrlReferrer.ToString());
+            var hocPhanDaoTaos = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
+            ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
+            ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
+            ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+            Session["HocPhan"] = db.HocPhanDaoTaos.ToList();
+            var list = new List<DiemHocPhan>();
+            if (db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
+                list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            var listHK = new List<string>();
+            var listHP = db.HocPhanDaoTaos.ToList();
+            var diemso2 = new List<DiemHocPhan>();
+            var l = new List<string>();
+            foreach (var item in list.OrderByDescending(s => s.ID))
+            {
+                if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
+                    listHK.Add(item.HocKyKeHoach.ToString());
+                string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
+                if (!CheckTonTai(s, l))
+                {
+                    l.Add(s);
+                    diemso2.Add(item);
+                };
+            }
+
             Session["sinhvien1"] = sinhvien;
-            Session["diemso"] = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            Session["diemso"] = list;
+            var listdiem = new List<DiemHocPhan>();
+            var diemtb = new double[listHK.Count];
+            var diemtbchung = new double[listHK.Count];
+            var diemtong = new double[listHK.Count];
+            var sotinchi = new int[listHK.Count];
+            var somon = new int[listHK.Count];
+            for (int i = 0; i < listHK.Count; i++)
+            {
+                diemtb[i] = 0;
+                diemtong[i] = 0;
+                sotinchi[i] = 0;
+                somon[i] = 0;
+            }
+            for (int i = 0; i < listHK.Count; i++)
+            {
+                foreach (var item in diemso2)
+                {
+                    if (item.HocKyKeHoach.ToString() == listHK[i])
+                    {
+                        if (double.TryParse(item.Diem10, out double diem10))
+                        {
+                            diemtong[i] += diem10;
+                            if (item.QuaMon == true)
+                                sotinchi[i] += (int)item.SoTinChi;
+                            somon[i]++;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < diemtb.Length; i++)
+            {
+                diemtb[i] = Math.Round(diemtong[i] / somon[i], 2);
+            }
+            double Somon = 0;
+            double DiemTong = 0;
+            for (int i = 0; i < diemtb.Length; i++)
+            {
+                Somon += somon[i];
+                DiemTong += diemtong[i];
+                diemtbchung[i] = Math.Round(DiemTong / Somon, 2);
+            }
+            var khoikienthucmoi = new List<string>();
+            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+                if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
+                    khoikienthucmoi.Add(item.MaKhoiKienThuc);
+            var tongsotinchi = 0;
+            foreach (var item in khoikienthucmoi)
+            {
+                var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
+                foreach (var hocphan in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == ktt.ID).ToList())
+                {
+                    if (hocphan.ID_HocPhanTuChon == null)
+                        tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
+                }
+            }
+            Session["listHK"] = listHK;
+            ViewData["DiemTB"] = diemtb;
+            ViewData["DiemTBChung"] = diemtbchung;
+            Session["SoTC"] = sotinchi;
+            ViewData["Tongsotinchi"] = tongsotinchi;
             return Redirect(Request.UrlReferrer.ToString());
         }
         public ActionResult XemKHHTSinhVien(int id)
