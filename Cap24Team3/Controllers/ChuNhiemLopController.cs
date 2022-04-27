@@ -84,14 +84,14 @@ namespace Cap24Team3.Controllers
             db.SaveChanges();
             return Redirect(Request.UrlReferrer.ToString());
         }
-        public ActionResult DanhSachNoteSV(int idLop)
+        public ActionResult DanhSachNoteSV(string idLop)
         {
-            return View(db.SinhViens.Where(l => l.LopQuanLy.ID == idLop).ToList());
+            return View(db.SinhViens.Where(l => l.LopQuanLy.TenLop == idLop).ToList());
         }
-        public ActionResult DanhSachSV(int idLop)
+        public ActionResult DanhSachSV(string idLop)
         {
             ViewData["DSTT"] = db.TinhTrangs.ToList();
-            var danhSachSV = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
+            var danhSachSV = db.SinhViens.Where(s => s.LopQuanLy.TenLop == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
             return View(danhSachSV);
         }
         public ActionResult DoiTinhTrang(int id)
@@ -127,12 +127,6 @@ namespace Cap24Team3.Controllers
                     if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
                     {
                         item.TinhTrang = true;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        item.TinhTrang = false;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -198,10 +192,10 @@ namespace Cap24Team3.Controllers
             var sinhvien = db.SinhViens.Find(id);
             var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
             var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
-            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).First(s => s.ID_Khoa == khoa.ID);
+            var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).Where(s => s.ID_Khoa == khoa.ID).ToList();
             if (ctdt == null)
                 return Redirect(Request.UrlReferrer.ToString());
-            var hocPhanDaoTaos = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
+            var hocPhanDaoTaos = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ChuongTrinhDaoTao.ID == ctdt.FirstOrDefault().ID).ToList();
             ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
             ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
@@ -269,7 +263,7 @@ namespace Cap24Team3.Controllers
                 diemtbchung[i] = Math.Round(DiemTong / Somon, 2);
             }
             var khoikienthucmoi = new List<string>();
-            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
+            foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.FirstOrDefault().ID).ToList())
                 if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
                     khoikienthucmoi.Add(item.MaKhoiKienThuc);
             var tongsotinchi = 0;
@@ -332,9 +326,9 @@ namespace Cap24Team3.Controllers
             db.SaveChanges();
             return Redirect(Request.UrlReferrer.ToString());
         }
-        public ActionResult XemDiemThongKe(int idLop)
+        public ActionResult XemDiemThongKe(string idLop)
         {
-            var XemDiemThongKe = db.SinhViens.Where(s => s.LopQuanLy.ID == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
+            var XemDiemThongKe = db.SinhViens.Where(s => s.LopQuanLy.TenLop == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
             var mail = User.Identity.Name;
             var listdiem = new List<DiemHocPhan>();
             var listHK = new List<string>();

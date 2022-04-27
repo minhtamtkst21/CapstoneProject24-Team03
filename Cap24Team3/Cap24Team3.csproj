@@ -213,6 +213,7 @@
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuNhiemLopController.cs" />
+    <Compile Include="Controllers\Error404Controller.cs" />
     <Compile Include="Models\hk.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -692,6 +693,7 @@
     <Content Include="Student_assets\css\app.css" />
     <Content Include="Student_assets\css\app.min.css" />
     <Content Include="Student_assets\css\bootstrap.min.css" />
+    <Content Include="Student_assets\css\Error404.css" />
     <Content Include="Student_assets\css\font-awesome.min.css" />
     <Content Include="Student_assets\css\icons.css" />
     <Content Include="Student_assets\css\icons.min.css" />
@@ -782,6 +784,7 @@
     <Content Include="Student_assets\js\app.min.js" />
     <Content Include="Student_assets\js\bootstrap.js" />
     <Content Include="Student_assets\js\bootstrap.min.js" />
+    <Content Include="Student_assets\js\Error404.js" />
     <Content Include="Student_assets\js\froogaloop2.min.js" />
     <Content Include="Student_assets\js\html5lightbox.js" />
     <Content Include="Student_assets\js\isotope.js" />
@@ -1050,6 +1053,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Error404\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
