@@ -55,13 +55,13 @@
     <div class="content">
         <!-- Start Content-->
         <div class="container">
-            <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
+            <button type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#ThemSV">
                 Thêm sinh viên
             </button>
-            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop", new { idLop = @Model.First().LopQuanLy.TenLop})" id="button" name="button" class="btn btn-secondary btn-rounded">
+            <a href="@Url.Action("DanhSachNoteSV","ChuNhiemLop", new { idLop = @Model.First().LopQuanLy.TenLop})" id="button" name="button" class="btn btn-info btn-rounded">
                 Sinh viên cần theo dõi
             </a>
-            <a href="@Url.Action("XemDiemThongKe","ChuNhiemLop", new { idLop = @Model.First().LopQuanLy.TenLop})" id="button" name="button" class="btn btn-secondary btn-rounded">
+            <a href="@Url.Action("XemDiemThongKe","ChuNhiemLop", new { idLop = @Model.First().LopQuanLy.TenLop})" id="button" name="button" class="btn btn-info btn-rounded">
                 Xem điểm và thống kê
             </a>
             <hr />
@@ -96,11 +96,11 @@
                                         </td>
                                         <td>@s.Email_1</td>
                                         <td>
-                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })"><i class="fa fa-address-book"></i> Chi tiết</a>
+                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })" style="color: cornflowerblue"><i class="fa fa-address-book" style="color:black"></i> Chi tiết</a>
                                             <br />
-                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"><i class="fa fa-clipboard"></i> Xem điểm</a>
+                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"style="color: cornflowerblue"><i class="fa fa-clipboard" style="color:black"></i> Xem điểm</a>
                                             <br />
-                                            <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-sticky-note-o"></i>Note</a>
+                                            <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"style="color: cornflowerblue"><i class="fa fa-sticky-note-o" style="color:black"></i> Note</a>
                                         </td>
                                     </tr>
                                 }

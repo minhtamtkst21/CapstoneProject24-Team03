@@ -19,20 +19,20 @@
                 <form>
                     <input type="number" value="@Model.ID" name="@Model.ID" hidden />
                     <input type="file" id="file" style="display:none;" />
-                    <button type="button" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThongKeChinhSua">
+                    <button type="button" id="button" name="button" value="Upload" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#ThongKeChinhSua">
                         <i class="mdi mdi-microsoft-excel"></i> Chỉnh sửa
                     </button>
                     &ensp;
-                    <button type="submit" id="button" name="button" value="Export" class="btn btn-secondary btn-rounded" formaction="@Url.Action("XuatCTDaoTao", new { id = Model.ID })">
+                    <button type="submit" id="button" name="button" value="Export" class="btn btn-blue btn-rounded" formaction="@Url.Action("XuatCTDaoTao", new { id = Model.ID })">
                         <i class="mdi mdi-microsoft-excel"></i> Xuất excel
                     </button>
 
                     &ensp;
-                    <button type="submit" id="button" name="button" value="Upload" class="btn btn-secondary btn-rounded" onclick="PrintCTDT()">
+                    <button type="submit" id="button" name="button" value="Upload" class="btn btn-blue btn-rounded" onclick="PrintCTDT()">
                         <i class="mdi mdi-cloud-print-outline"></i> In
                     </button>
                     &ensp;
-                    <button type="button" id="button" name="button" value="Xóa" class="btn btn-secondary btn-rounded " data-toggle="modal" data-target="#modelId">
+                    <button type="button" id="button" name="button" value="Xóa" class="btn btn-danger btn-rounded " data-toggle="modal" data-target="#modelId">
                         <i class="mdi mdi-delete-outline"></i> Xóa
                     </button>
                 </form>
