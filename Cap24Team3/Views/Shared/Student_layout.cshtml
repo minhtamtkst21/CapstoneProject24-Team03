@@ -14,104 +14,72 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/bootstrap.min.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/font-awesome.min.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/main.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/updateCss.css")">
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Student_assets/css/responsive.css")">
     <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <style>
-            body.modal-open {
-                overflow: visible;
-            }
-
-            #btn-btt {
-                display: inline-block;
-                background-color: #ff3333;
-                width: 50px;
-                height: 50px;
-                text-align: center;
-                border-radius: 30px;
-                position: fixed;
-                bottom: 30px;
-                right: 30px;
-                transition: background-color .3s, opacity .5s, visibility .5s;
-                opacity: 0;
-                visibility: hidden;
-                z-index: 1000;
-            }
-
-                #btn-btt::after {
-                    content: "\f077";
-                    font-family: FontAwesome;
-                    font-weight: normal;
-                    font-style: normal;
-                    font-size: 1.5em;
-                    line-height: 50px;
-                    color: #fff;
-                }
-
-                #btn-btt:hover {
-                    cursor: pointer;
-                    background-color: #333;
-                }
-
-                #btn-btt:active {
-                    background-color: #555;
-                }
-
-                #btn-btt.show {
-                    opacity: 1;
-                    visibility: visible;
-                }
-        </style>
-        <div class="container">
-            <div class="header-content d-flex flex-wrap align-items-center">
-                <div class="logo">
+    <header class="header">
+        <div class="container-fluid">
+            <div class="header-content d-flex flex-wrap align-items-center" style="padding: 0 0 0;">
+                <div class="logo" style="flex: 0 0 25%">
                     <a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 35px;">
                         E-Profile
                     </a>
                 </div><!--logo end-->
+                <div class="navigation-bar d-flex flex-wrap align-items-center" style="width: 1000px">
+                    <nav>
+                        <ul>
+                            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+                            <li>
+                                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                                <ul style="width: 300px">
+                                    <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
+                                    <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Đăng ký kế hoạch học tập</a></li>
+                                </ul>
+                            </li>
+                            @if (User.IsInRole("CN Lop"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                                    <ul style="width: 300px">
+                                        <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Quản lý đợt chỉnh sửa</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </nav><!--nav end-->
+                </div><!--navigation-bar end-->
                 @if (User.Identity.Name != "")
                 {
                     @Html.Action("BellTB", "ThongBaos")
                 }
-
-                @Html.Action("ModalXemTB", "ThongBaos")
-                @if (Request.IsAuthenticated)
-                {
-                    <div class="ml-auto">
-                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="dropdown" style="border-radius:30px">
-                                <a href="" class="drop-btn aaa dropdown-toggle" data-toggle="dropdown" style="font-family: 'Montserrat'; color: black;">Chào @User.Identity.Name!</a>
-                                <div class="dropdown-content dropdown-menu-right" style="border-radius: 25px; background-color: #f2f2f2; ">
-                                    @if (User.IsInRole("BCN Khoa"))
-                                    {
-                                        <a class="aaa dropdown-item" href="@Url.Action("ChuongTrinhDaoTao", "Faculty")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-tasks"></i> Chuyển đến trang BCN Khoa</a>
-                                    }
-                                    <a class="aaa dropdown-item" href="@Url.Action("XemThongTinChiTiet", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-pencil-square-o"></i> Xem thông tin chi tiết</a>
-                                    <a class="aaa dropdown-item" href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-user"></i> Chỉnh sửa thông tin</a>
-                                    <hr style="width: 80%; margin: 0 auto;" />
-                                    <a class="aaa dropdown-item" href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                <div class="d-flex flex-wrap align-items-center">
+                    @Html.Action("ModalXemTB", "ThongBaos")
+                    @if (Request.IsAuthenticated)
+                    {
+                        <div class="ml-auto">
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Action("UserNameLogin", "SinhVien")
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="social-links ml-auto">
+                            <form action="@Url.Action("ExternalLogin","Account")" method="post">
+                                <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
+                                <div>
+                                    <p>
+                                        <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
+                                    </p>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                }
-                else
-                {
-                    <div class="social-links ml-auto">
-                        <form action="@Url.Action("ExternalLogin","Account")" method="post">
-                            <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
-                            <div>
-                                <p>
-                                    <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
-                                </p>
-                            </div>
-                        </form>
-                    </div>
-                }
+                            </form>
+                        </div>
+                    }
+                </div>
                 <div class="menu-btn">
                     <a href="#">
                         <span class="bar1"></span>
@@ -120,36 +88,30 @@
                     </a>
                 </div><!--menu-btn end-->
             </div><!--header-content end-->
-            <div class="navigation-bar d-flex flex-wrap align-items-center">
-                <nav>
-                    <ul>
-                        <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
-                        <li>
-                            <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
-                            <ul>
-                                <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
-                                <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
-                            </ul>
-                        </li>
-                        @if (User.IsInRole("CN Lop"))
-                        {
-                            <li>
-                                <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
-                                <ul>
-                                    <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
-                                </ul>
-                            </li>
-                        }
-                    </ul>
-                </nav><!--nav end-->
-                <ul class="social-links ml-auto">
-                    @*<li><a href="https://www.facebook.com/thuan.chauchuong" target="_blank" title=""><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" title=""><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" title=""><i class="fab fa-instagram"></i></a></li>*@
-                </ul>
-            </div><!--navigation-bar end-->
+
         </div>
     </header><!--header end-->
+    <div class="responsive-menu">
+        <ul>
+            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+            <li>
+                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                <ul>
+                    <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
+                    <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
+                </ul>
+            </li>
+            @if (User.IsInRole("CN Lop"))
+            {
+                <li>
+                    <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                    <ul>
+                        <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 25px;">Quản lý đợt chỉnh sửa</a></li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div><!--responsive-menu end-->
     <div class="wrapper">
         <div class="main-section">
             @*@if (TempData["Alert"] != null)
@@ -266,7 +228,7 @@
                 <div class="bottom-footer">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <p>From Team 03 with Love <i class="fa fa-heart"></i></p>
+                            <p>K24 Capstone Project 2021 Team 03 | Van Lang E-Profile</p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <ul class="social-links">

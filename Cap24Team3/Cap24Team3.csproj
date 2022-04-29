@@ -700,6 +700,7 @@
     <Content Include="Student_assets\css\main.css" />
     <Content Include="Student_assets\css\responsive.css" />
     <Content Include="Student_assets\css\slick.css" />
+    <Content Include="Student_assets\css\updateCss.css" />
     <Content Include="Student_assets\icons\css\animation.css" />
     <Content Include="Student_assets\icons\css\mhfontello-codes.css" />
     <Content Include="Student_assets\icons\css\mhfontello-embedded.css" />
@@ -1054,6 +1055,7 @@
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Error404\Index.cshtml" />
+    <Content Include="Views\SinhVien\UserName.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

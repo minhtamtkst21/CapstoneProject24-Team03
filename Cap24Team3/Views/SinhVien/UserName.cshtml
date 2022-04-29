@@ -1,0 +1,49 @@
+﻿@model Cap24Team3.Models.SinhVien
+<div class="dropdown">
+    <div id="profileImage1" class="dropbtn" onclick="dropDownFunc()" style="cursor: pointer"></div>
+    <span id="firstName1" hidden>@User.Identity.Name</span>
+    <div id="dropdownbtn" class="dropdown-menu" style="right: 4px; left: auto; border-radius: 8px;">
+        <a class="dropdown-item info" href="@Url.Action("XemThongTinChiTiet", "SinhVien")" style="font-family: 'Montserrat'; color: black;">           
+            <ul>
+                <li>
+                    <span>@User.Identity.Name</span>
+                    <ul>
+                        <li><p>Xem thông tin chi tiết</p></li>
+                    </ul>
+                </li>  
+            </ul>            
+        </a>
+        @if (User.IsInRole("BCN Khoa"))
+        {
+            <a class="dropdown-item" href="@Url.Action("ChuongTrinhDaoTao", "Faculty")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-tasks"></i> Chuyển đến trang BCN Khoa</a>
+        }
+        <a class="dropdown-item" href="@Url.Action("CapNhatThongTin", "SinhVien")" style="font-family: 'Montserrat'; color: black;"><i class="fa fa-user"></i> Chỉnh sửa thông tin</a>
+        <hr style="width: 80%; margin: 0 auto;" />
+        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+    </div>
+</div>
+<script>
+    function dropDownFunc() {
+        document.getElementById("dropdownbtn").classList.toggle("show");
+    }
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        var firstName = $('#firstName1').text();
+        var lastName = $('#lastName1').text();
+        var intials = $('#firstName1').text().charAt(0) + $('#lastName1').text().charAt(0);
+        var profileImage = $('#profileImage1').text(intials);
+    });
+</script>

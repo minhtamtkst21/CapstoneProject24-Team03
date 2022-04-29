@@ -366,7 +366,11 @@ namespace Cap24Team3.Controllers
                 return View();
             }
         }
-
+        [ChildActionOnly]
+        public ActionResult UserNameLogin()
+        {
+            return PartialView("UserName", new SinhVien());
+        }
         public ActionResult LuuHP(string hocky)
         {
             var diem = db.DiemHocPhans.Find((Session["HocPhanDC"] as DiemHocPhan).ID);

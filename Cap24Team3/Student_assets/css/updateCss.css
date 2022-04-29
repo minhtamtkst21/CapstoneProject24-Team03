@@ -1,0 +1,249 @@
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #999;
+}
+
+.modal-backdrop {
+    position: relative;
+}
+
+#btn-btt {
+    display: inline-block;
+    background-color: #ff3333;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 30px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+    #btn-btt::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 1.5em;
+        line-height: 50px;
+        color: #fff;
+    }
+
+    #btn-btt:hover {
+        cursor: pointer;
+        background-color: #333;
+    }
+
+    #btn-btt:active {
+        background-color: #555;
+    }
+
+    #btn-btt.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+.header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 100;
+    height: var(--heightHeader);
+    max-width: 100%;
+    font-family: GR-M;
+    font-size: 16px;
+}
+
+#profileImage {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background: #ffc107;
+    font-size: 3.5rem;
+    color: #fff;
+    text-align: center;
+    line-height: 10rem;
+    margin: 2rem 0;
+}
+
+#profileImage1 {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #ffc107;
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+    line-height: 0.1rem;
+    margin: 10px 0;
+}
+
+.div-centerr {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1.5rem;
+}
+
+.dropdown-menu {
+    padding: 5px 5px;
+}
+
+    .dropdown-menu a:hover {
+        background-color: #ffecb3;
+        border-radius: 10px;
+    }
+
+.dropdown-menu1 {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem
+}
+
+.dropdown-menu1 {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: .125rem
+}
+
+.dropdown-menu1 {
+    top: 0;
+    right: auto;
+    left: 100%;
+    margin-top: 0;
+    margin-left: .125rem
+}
+
+.dropdown-menu1 {
+    top: 0;
+    right: 100%;
+    left: auto;
+    margin-top: 0;
+    margin-right: .125rem
+}
+
+    .dropdown-menu1[x-placement^=bottom], .dropdown-menu1[x-placement^=left], .dropdown-menu1[x-placement^=right], .dropdown-menu1[x-placement^=top] {
+        right: auto;
+        bottom: auto
+    }
+
+    .dropdown-menu1.show {
+        display: block
+    }
+
+.dropdown-menu1 {
+    margin-top: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0
+}
+
+.dropdown-menu1 {
+    position: static;
+    float: none
+}
+
+.dropdown-menu1 {
+    position: absolute
+}
+
+.dropdown-menu1 {
+    position: absolute
+}
+
+.dropdown-menu1 {
+    position: absolute
+}
+
+.dropdown-menu1 {
+    position: absolute
+}
+
+.dropdown-menu1 {
+    padding: 5px 5px;
+}
+
+    .dropdown-menu1 a:hover {
+        background-color: #ffecb3;
+        border-radius: 10px;
+    }
+
+.info {
+    display: flex;
+    align-items: center;
+    padding-block: 18px;
+    padding-inline: 18px;
+    color: #000;
+    transition: .3s ease-in;
+    -webkit-transition: .3s ease-in;
+    -moz-transition: .3s ease-in;
+    -ms-transition: .3s ease-in;
+    -o-transition: .3s ease-in;
+}
+
+.fas:hover {
+    color: #ff3333;
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+
+    20%, 60% {
+        transform: rotate(6deg);
+    }
+
+    40%, 80% {
+        transform: rotate(-6deg);
+    }
+}
+
+.dropdown-header {
+    background: #ffdf80;
+    padding: 15px;
+    position: relative;
+    text-align: center;
+    color: #999;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    @include notification-border(1px);
+    box-shadow: 0px 2px 10px -2px lighten(cyan, 15%);
+}

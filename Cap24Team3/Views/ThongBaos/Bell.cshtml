@@ -23,7 +23,7 @@
         background-color: red;
         color: white;
         font-weight: bold;
-        font-size: 9px;
+        font-size: 11px;
         border-radius: 30px;
         box-shadow: 1px 1px 1px white;
     }
@@ -34,17 +34,15 @@
         padding: 10px;
     }
 </style>
-<div class="col-4" align="right">
+<div class="d-flex flex-wrap align-items-center">
     <div class="nav-link waves-effect dropdown" style="width: max-content !important;">
-
-        <div class="dropdown-content dropdown-menu-right" style="border-radius: 10px; background-color: #f2f2f2; width: 350px; overflow: auto; height: 230px;">
-            <div class="noti-title">
-                <br />
+        <div id="dropdownbtn-bell" class="dropdown-content" style="right: 4px; left: auto; border-radius: 5px; background-color: #f2f2f2; width: 350px; overflow: auto;">
+            <div class="dropdown-header">
                 <h5 class="m-0" style=" font-family: 'Montserrat', bold; color: black; font-size:25px; text-align:center">
                     Thông báo
                 </h5>
-                <hr style="width: 85%" />
             </div>
+            <hr style="width: 85%" />
             @if (TempData["AlertBell"] != null)
             {
                 <br />
@@ -56,7 +54,7 @@
                 {
                     if (item.TrangThai == true)
                     {
-                        <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
+                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 315px;">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe
@@ -67,7 +65,7 @@
                     else
                     {
                         countTB++;
-                        <a class="aaa dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #bfbfbf; border-radius: 5px; width: 315px;">
+                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 315px; ">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe
@@ -81,16 +79,33 @@
         </div>
         @if (countTB == 0)
         {
-            <a href="" class="drop-btn aaa" data-toggle="dropdown" style="color: black">
-                <i class="fa fa-bell noti-icon"></i>
-            </a>
+            <div class="dropbtn-bell" onclick="bellDropdown()" style="font-size: 23px; color: black; cursor: pointer">
+                <i class="fas fa fa-bell noti-icon"></i>
+            </div>
         }
         else
         {
-            <a href="" class="drop-btn aaa" data-toggle="dropdown" style="color: black">
-                <i class="fa fa-bell noti-icon"></i>
+            <div class="dropbtn-bell" onclick="bellDropdown()" style="font-size: 23px; color: black; cursor: pointer ">
+                <i class="fas fa fa-bell noti-icon"></i>
                 <span class="noti_bubble">@countTB</span>
-            </a>
+            </div>
         }
     </div>
 </div>
+@*<script>
+    function bellDropdown() {
+        document.getElementById("dropdownbtn-bell").classList.toggle("show");
+    }
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn-bell')) {
+            var dropdowns = document.getElementsByClassName("dropdown-menu1");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>*@
