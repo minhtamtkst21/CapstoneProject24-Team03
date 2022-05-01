@@ -268,42 +268,41 @@
                     @{ STT = 0;}
                     <div class="col-xl-12">
                         <div class="card-box">
-                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Trong chương trình</h4>
-                            @for (int i = 0; i < listHK.Count; i++)
+                            @foreach (var kkt in TempData["khoikt"] as List<string>)
                             {
-                                if ((TempData["trong"] as List<Cap24Team3.Models.DiemHocPhan>).Where(s => s.HocKyDangKy.ToString() == listHK[i]).Count() != 0)
-                                {
-                                    <div class="table-responsive" style="overflow: auto">
-                                        <table class="table table-centered mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Tên môn</th>
-                                                    <th>Mã môn</th>
-                                                    <th>Tín chỉ</th>
-                                                    <th>Điểm hệ số 10</th>
-                                                    <th>Điểm hệ số 4</th>
-                                                    <th>Điểm chữ</th>
-                                                    <th>Kết quả</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">HK @listHK[i]</h4>
-                                                @foreach (var item in TempData["trong"] as List<Cap24Team3.Models.DiemHocPhan>)
+                                <div class="table-responsive" style="overflow: auto">
+                                    <table class="table table-centered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên môn</th>
+                                                <th>Mã môn</th>
+                                                <th>Tín chỉ</th>
+                                                <th>Điểm hệ số 10</th>
+                                                <th>Điểm hệ số 4</th>
+                                                <th>Điểm chữ</th>
+                                                <th>Kết quả</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">@kkt</h4>
+                                            @foreach (var item in TempData["hp"] as List<Cap24Team3.Models.HocPhanDaoTao>)
+                                            {
+                                                if (item.KhoiKienThuc.TenKhoiKienThuc == kkt)
                                                 {
-                                                    if (item.HocKyDangKy.ToString() == listHK[i])
-                                                    {
-                                                        STT++;
-                                                        <tr>
-                                                            <td>@STT</td>
-                                                            <td>@item.TenHocPhan</td>
-                                                            <td>@item.HocPhan</td>
-                                                            <td>@item.SoTinChi</td>
-                                                            <td>@item.Diem10</td>
-                                                            <td>@item.Diem4</td>
-                                                            <td>@item.DiemChu</td>
-                                                            @if (item.QuaMon == true)
+                                                    STT++;
+                                                    <tr>
+                                                        <td>@STT</td>
+                                                        <td>@item.TenHocPhan</td>
+                                                        <td>@item.MaHocPhan</td>
+                                                        <td>@item.SoTinChi</td>
+                                                        @if (Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan) != null)
+                                                        {
+                                                            <td>@Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan).Diem10</td>
+                                                            <td>@Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan).Diem4</td>
+                                                            <td>@Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan).DiemChu</td>
+                                                            if (Model.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan).QuaMon == true)
                                                             {
                                                                 <td><i class="fa fa-check" style="color: green;"></i></td>
                                                             }
@@ -311,69 +310,20 @@
                                                             {
                                                                 <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
                                                             }
-                                                        </tr>
-                                                    }
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                            <td>0</td>
+                                                            <td>0</td>
+                                                            <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
+                                                        }
+                                                    </tr>
                                                 }
-                                            </tbody>
-                                        </table>
-                                    </div> <!-- end .table-responsive-->
-                                }
-                            }
-                        </div>
-                    </div> <!-- end row -->
-                    <hr />
-                    <div class="col-xl-12">
-                        <div class="card-box">
-                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Trong chương trình</h4>
-                            @for (int i = 0; i < listHK.Count; i++)
-                            {
-                                if ((TempData["ngoai"] as List<Cap24Team3.Models.DiemHocPhan>).Where(s => s.HocKyDangKy.ToString() == listHK[i]).Count() != 0)
-                                {
-                                    <div class="table-responsive" style="overflow: auto">
-                                        <table class="table table-centered mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>STT</th>
-                                                    <th>Tên môn</th>
-                                                    <th>Mã môn</th>
-                                                    <th>Tín chỉ</th>
-                                                    <th>Điểm hệ số 10</th>
-                                                    <th>Điểm hệ số 4</th>
-                                                    <th>Điểm chữ</th>
-                                                    <th>Kết quả</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">HK @listHK[i]</h4>
-                                                @foreach (var item in TempData["ngoai"] as List<Cap24Team3.Models.DiemHocPhan>)
-                                                {
-                                                    if (item.HocKyDangKy.ToString() == listHK[i])
-                                                    {
-                                                        STT++;
-                                                        <tr>
-                                                            <td>@STT</td>
-                                                            <td>@item.TenHocPhan</td>
-                                                            <td>@item.HocPhan</td>
-                                                            <td>@item.SoTinChi</td>
-                                                            <td>@item.Diem10</td>
-                                                            <td>@item.Diem4</td>
-                                                            <td>@item.DiemChu</td>
-                                                            @if (item.QuaMon == true)
-                                                            {
-                                                                <td><i class="fa fa-check" style="color: green;"></i></td>
-                                                            }
-                                                            else
-                                                            {
-                                                                <td><i class="fa fa-times" style="color: red; font-size: 23px;"></i></td>
-                                                            }
-                                                        </tr>
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div> <!-- end .table-responsive-->
-                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end .table-responsive-->
                             }
                         </div>
                     </div> <!-- end row -->

@@ -179,7 +179,7 @@ namespace Cap24Team3.Controllers
                     {
                         foreach (var item in listdiem)
                         {
-                            if (item.HocKyKeHoach.ToString() == listHK[i])
+                            if (item.HocKyDangKy.ToString() == listHK[i])
                             {
                                 if (double.TryParse(item.Diem10, out double diem10))
                                 {
