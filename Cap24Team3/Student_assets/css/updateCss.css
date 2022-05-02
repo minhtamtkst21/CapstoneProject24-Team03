@@ -247,3 +247,7 @@
     @include notification-border(1px);
     box-shadow: 0px 2px 10px -2px lighten(cyan, 15%);
 }
+.dropdown-content a:hover {
+    background-color: #ffecb3;
+    border-radius: 10px;
+}

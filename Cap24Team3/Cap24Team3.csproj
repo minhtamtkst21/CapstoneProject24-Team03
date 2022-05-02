@@ -728,6 +728,10 @@
     <Content Include="Student_assets\img\circle3.png" />
     <Content Include="Student_assets\img\circle4.png" />
     <Content Include="Student_assets\img\circle5.png" />
+    <Content Include="Student_assets\img\edu.png" />
+    <Content Include="Student_assets\img\edu2.png" />
+    <Content Include="Student_assets\img\edu3.png" />
+    <Content Include="Student_assets\img\edu4.png" />
     <Content Include="Student_assets\img\element-bg.png" />
     <Content Include="Student_assets\img\element-bg2.png" />
     <Content Include="Student_assets\img\elements-bg2.png" />
@@ -781,6 +785,7 @@
     <Content Include="Student_assets\img\VLU3.PNG" />
     <Content Include="Student_assets\img\VLU4.png" />
     <Content Include="Student_assets\img\VLU5.png" />
+    <Content Include="Student_assets\img\VLU6.png" />
     <Content Include="Student_assets\js\app.js" />
     <Content Include="Student_assets\js\app.min.js" />
     <Content Include="Student_assets\js\bootstrap.js" />

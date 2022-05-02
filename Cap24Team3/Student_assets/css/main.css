@@ -227,16 +227,16 @@ a {
     z-index: -1;
 }
 .bg1 {
-    background-image: url(../images/resources/bg1.jpg);
+    background-image: url(../img/VLU4.png);
 }
 .bg2 {
-    background-image: url(../images/resources/bg2.jpg);
+    background-image: url(../img/VLU3.png);
 }
 .bg3 {
-    background-image: url(../images/resources/bg3.jpg);
+    background-image: url(../img/VLU5.png);
 }
 .bg4 {
-    background-image: url(../images/resources/bg4.jpg);
+    background-image: url(../img/VLU4.png);
 }
 a {
     transition: all 0.4s ease-in-out;
@@ -470,7 +470,7 @@ header .navigation-bar nav ul ul ul {
     font-size: 182px;
     font-weight: 600;
     position: absolute;
-    bottom: 65%;
+    bottom: 80%;
     left: 100px;
     opacity: 0.1;
 /*    z-index: -1;*/
@@ -484,7 +484,6 @@ header .navigation-bar nav ul ul ul {
     line-height: 81.29px;
     font-weight: 600;
     margin-bottom: 26px;
-    padding-right: 20px;
 }
 .main-banner .banner-text > h2 span {
     display: inline-block;
