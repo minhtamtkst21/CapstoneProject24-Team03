@@ -436,7 +436,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult XemTruocThongKe(FormCollection formCollection)
         {
-            try
+            //try
             {
                 var LuuSinhVien = new List<SinhVien>();
                 var LuuLop = new List<LopQuanLy>();
@@ -755,7 +755,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         }
                     }
                 }
-                if (TempData["Alert"].ToString() != "")
+                if (TempData["Alert"] == null)
                 {
                     Session["LuuSinhVien"] = LuuSinhVien;
                     Session["LuuLop"] = LuuLop;
@@ -790,11 +790,11 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 }
                 return Redirect(Request.UrlReferrer.ToString());
             }           
-            catch (Exception e)
-            {
-                TempData["Alert"] = "Có lỗi" + e.Message;
-                return Redirect(Request.UrlReferrer.ToString());
-            }
+            //catch (Exception e)
+            //{
+            //    TempData["Alert"] = "Có lỗi" + e.Message;
+            //    return Redirect(Request.UrlReferrer.ToString());
+            //}
         }
         public ActionResult XemChiTiet(int id)
         {
