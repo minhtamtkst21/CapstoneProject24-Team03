@@ -2,58 +2,48 @@
 @{
     ViewBag.Title = "ThongKe";
     Layout = "~/Views/Shared/Faculty_Layout.cshtml";
+    var TK = TempData["thongke"];
 }
 <br />
 <div class="dropdown float-right">
     <button type="button" class="btn btn-success"><i class="mdi mdi-microsoft-excel"></i> Export</button>
 </div>
-<form action="@Url.Action("LuuThongKe")" method="post">
-    <div class="row">
-        <div class="col-2">
-            <select class="form-control" name="nganh">
-                @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
-                {
-                    <option value="@item.ID">@item.Nganh</option>
-                }
-            </select>
+<div>
+    <form action="@Url.Action("LuuThongKe")" method="post">
+        <div class="row">
+            <div class="col-2">
+                <select class="form-control" name="nganh">
+                    @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
+                    {
+                        <option value="@item.ID">@item.Nganh</option>
+                    }
+                </select>
+            </div>
+            <div class="col-2">
+                <select class="form-control" name="khoa">
+                    @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                    {
+                        <option value="@item.ID">@item.Khoa.ToString()</option>
+                    }
+                </select>
+            </div>
+            <div class="col-1">
+                <input class="btn btn-success btn-rounded" type="submit" value="Xem" />
+            </div>
         </div>
-        <div class="col-2">
-            <select class="form-control" name="khoa">
-                @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
-                {
-                    <option value="@item.ID">@item.Khoa.ToString()</option>
-                }
-            </select>
+    </form>
+    <br>
+    <form action="@Url.Action("XuatThongKe")" method="post">
+        <div class="row">
+            <input value="@Session["Khoa"]" name="khoa" id="khoa" hidden>
+            <input value="@Session["Nganh"]" name="nganh" id="nganh" hidden>
+            <div class="col-1">
+                <input class="btn btn-success btn-rounded" type="submit" value="Export" />
+            </div>
         </div>
-        <div class="col-1">
-            <input class="btn btn-success btn-rounded" type="submit" value="Xem" />
-        </div>
-    </div>
-</form>
-<br>
-<form action="@Url.Action("XuatThongKe")" method="post">
-    <div class="row">
-        <div class="col-2">
-            <select class="form-control" name="nganh">
-                @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
-                {
-                    <option value="@item.ID">@item.Nganh</option>
-                }
-            </select>
-        </div>
-        <div class="col-2">
-            <select class="form-control" name="khoa">
-                @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
-                {
-                    <option value="@item.ID">@item.Khoa.ToString()</option>
-                }
-            </select>
-        </div>
-        <div class="col-1">
-            <input class="btn btn-success" type="submit" value="Export" />
-        </div>
-    </div>
-</form>
+    </form>
+</div>
+
 @if (Session["thongke"] != null)
 {
     var hk = Session["listhk"] as List<string>;

@@ -33,7 +33,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             TempData["nganh"] = nganh;
             return View();
         }
-       
+
+        [HttpPost]
         public ActionResult XuatThongKe(int? khoa, int? nganh)
         {
             ExcelPackage ep = new ExcelPackage();
@@ -177,6 +178,8 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     listhk.Add(item.HocKy);
                 }
             }
+            Session["Khoa"] = khoa;
+            Session["Nganh"] = nganh;
             Session["listhk"] = listhk;
             Session["thongke"] = thongke;
             Session["chitiet"] = listthongke;
