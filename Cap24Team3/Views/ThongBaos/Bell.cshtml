@@ -54,7 +54,7 @@
                 {
                     if (item.TrangThai == true)
                     {
-                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 350px;">
+                        <a class="dropdown-item div-centerr item" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 350px;">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe
@@ -65,7 +65,7 @@
                     else
                     {
                         countTB++;
-                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 350px; ">
+                        <a class="dropdown-item div-centerr item" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 350px; ">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe

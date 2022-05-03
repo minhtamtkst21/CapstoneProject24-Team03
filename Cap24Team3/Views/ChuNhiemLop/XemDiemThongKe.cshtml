@@ -83,31 +83,6 @@
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>
-        <!-- Thêm sinh viên -->
-        <div class="modal fade" id="ThemSV" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="font-family: Roboto; color: black; font-weight: 600;">Thêm sinh viên vào lớp</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("ThemSinhVienVaoLop", "ChuNhiemLop", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <input type="number" name="idLop" id="idLop" value="@Model.First().ID_Lop" hidden />
-                            <input type="text" name="SinhVien" id="SinhVien" placeholder="Nhập MSSV" class="form-control" />
-                        }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-primary" value="Thêm" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        
             <!-- Xem điểm-->
         <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             @{ var Sinhvien = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
@@ -115,9 +90,15 @@
             {
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
-                        &ensp;
-                        <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+                        <div class="modal-header">
+                            <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
+                            &ensp;
+                            <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <!-- end page title -->
                         <div class="visible" id="portfolio">
                             @for (int i = 0; i < listHK.Count; i++)
@@ -243,7 +224,9 @@
                                 </div><!-- end col -->
                             }
                         </div>
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
                         <style type="text/css">
                             .hidden {
                                 display: none;

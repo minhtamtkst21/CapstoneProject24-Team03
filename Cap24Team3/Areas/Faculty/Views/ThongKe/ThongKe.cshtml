@@ -5,44 +5,35 @@
     var TK = TempData["thongke"];
 }
 <br />
-<div class="dropdown float-right">
-    <button type="button" class="btn btn-success"><i class="mdi mdi-microsoft-excel"></i> Export</button>
-</div>
-<div>
-    <form action="@Url.Action("LuuThongKe")" method="post">
-        <div class="row">
-            <div class="col-2">
-                <select class="form-control" name="nganh">
-                    @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
-                    {
-                        <option value="@item.ID">@item.Nganh</option>
-                    }
-                </select>
-            </div>
-            <div class="col-2">
-                <select class="form-control" name="khoa">
-                    @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
-                    {
-                        <option value="@item.ID">@item.Khoa.ToString()</option>
-                    }
-                </select>
-            </div>
-            <div class="col-1">
-                <input class="btn btn-success btn-rounded" type="submit" value="Xem" />
-            </div>
-        </div>
-    </form>
-    <br>
+<div class="float-right">
     <form action="@Url.Action("XuatThongKe")" method="post">
-        <div class="row">
-            <input value="@Session["Khoa"]" name="khoa" id="khoa" hidden>
-            <input value="@Session["Nganh"]" name="nganh" id="nganh" hidden>
-            <div class="col-1">
-                <input class="btn btn-success btn-rounded" type="submit" value="Export" />
-            </div>
-        </div>
+        <input value="@Session["Khoa"]" name="khoa" id="khoa" hidden>
+        <input value="@Session["Nganh"]" name="nganh" id="nganh" hidden>
+        <button type="submit" class="btn btn-success" id="btn2" value="Export"><i class="mdi mdi-microsoft-excel"></i> Export</button>
     </form>
 </div>
+<form action="@Url.Action("LuuThongKe")" method="post">
+    <div class="row">
+        <div class="col-2">
+            <select class="form-control" name="nganh">
+                @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
+                {
+                    <option value="@item.ID">@item.Nganh</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <select class="form-control" name="khoa">
+                @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                {
+                    <option value="@item.ID">@item.Khoa.ToString()</option>
+                }
+            </select>
+        </div>
+        <input class="btn btn-success" id="Xem" type="submit" value="Xem" onclick="enableButton2()" />
+    </div>
+</form>
+<br>
 
 @if (Session["thongke"] != null)
 {
@@ -87,4 +78,9 @@
     $(document).ready(function () {
         $('#table1').DataTable();
     });
+</script>
+<script>
+    function enableButton2() {
+        document.getElementById("btn2").disabled = false;
+    }
 </script>

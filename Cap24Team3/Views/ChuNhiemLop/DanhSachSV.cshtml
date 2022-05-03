@@ -188,13 +188,14 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="container-fluid">
+                                        <h5 class="mb-0" style="font-family: 'Montserrat'; color: black; font-weight: 600;">Nội dung ghi chú:</h5>
                                         <input type="number" name="idSV" value="@nd.ID" required hidden />
-                                        <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3">@nd.Note</textarea>
+                                        <textarea class="form-control" id="NoiDung" name="NoiDung" rows="3" placeholder="Nhập nội dung">@nd.Note</textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                                    <button type="submit" class="btn btn-success" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
                                 </div>
                             </div>
                         </div>
@@ -424,9 +425,15 @@
                 {
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
-                            <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
-                            &ensp;
-                            <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+                            <div class="modal-header">
+                                <button id="RenderPortfolio_Btn" class="btn btn-secondary">Xem theo học kỳ</button>
+                                &ensp;
+                                <button id="RenderResults_Btn" class="btn btn-secondary">Xem theo khối kiến thức</button>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                             <!-- end page title -->
                             <div class="visible" id="portfolio">
                                 @for (int i = 0; i < listHK.Count; i++)
@@ -552,7 +559,9 @@
                                     </div><!-- end col -->
                                 }
                             </div>
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            </div>
                             <style type="text/css">
                                 .hidden {
                                     display: none;

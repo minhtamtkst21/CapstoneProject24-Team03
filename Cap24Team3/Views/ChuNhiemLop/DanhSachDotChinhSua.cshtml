@@ -40,7 +40,7 @@
                     else
                     {
                         <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 40px;">Danh sách các đợt chỉnh sửa thông tin sinh viên</h4>
-                        <button onclick="location.href='@Url.Action("TaoDotChinhSua")'" type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-secondary btn-rounded" data-toggle="modal" data-target="#ThemSV">
+                        <button onclick="location.href='@Url.Action("TaoDotChinhSua")'" type="button" id="button" name="button" value="Thêm sinh viên" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#ThemSV">
                             <i class="mdi mdi-microsoft-excel"></i> Tạo mới
                         </button>
                         <hr />
@@ -72,14 +72,14 @@
                                         @if (item.TinhTrang == true)
                                         {
                                             <td style="color: green;">Đang mở</td>
-                                            <td><a href="@Url.Action("CapNhatDCS", new { txt = "Dong", id = item.ID })"><i class="fa fa-toggle-on" style="font-size: 20px"></i></a></td>
+                                            <td><a href="@Url.Action("CapNhatDCS", new { txt = "Dong", id = item.ID })"><i class="fa fa-toggle-on" style="font-size: 25px"></i></a></td>
                                         }
                                         else
                                         {
                                             <td style="color: red;">Đã đóng</td>
                                             if (DateTimeOffset.Now >= item.NgayBatDau && DateTimeOffset.Now <= item.NgayKetThuc)
                                             {
-                                                <td><a href="@Url.Action("CapNhatDCS", new { txt = "Mo", id = item.ID })"><i class="fa fa-toggle-off" style="font-size: 20px"></i></a></td>
+                                                <td><a href="@Url.Action("CapNhatDCS", new { txt = "Mo", id = item.ID })"><i class="fa fa-toggle-off" style="font-size: 25px"></i></a></td>
                                             }
                                         }
                                     </tr>

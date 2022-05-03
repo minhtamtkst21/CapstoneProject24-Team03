@@ -47,7 +47,7 @@
                                             <td>
                                                 <span style="white-space: pre-wrap;">@s.Note</span>
                                             </td>
-                                            <td><a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"><i class="fa fa-edit" style="color: red;"></i></a></td>
+                                            <td><a href="@Url.Action("UpdateNoiDung", new { id = s.ID })" class="btn btn-danger"><i class="fa fa-edit"></i></a></td>
                                         </tr>
                                     }
                                 }
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                <button type="submit" class="btn btn-primary" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
+                                                <button type="submit" class="btn btn-success" formaction="@Url.Action("ThemNoiDung")">Lưu</button>
                                             </div>
                                         </div>
                                     </div>
