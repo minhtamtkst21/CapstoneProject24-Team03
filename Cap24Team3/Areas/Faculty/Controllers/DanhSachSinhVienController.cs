@@ -790,9 +790,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 }
                 return Redirect(Request.UrlReferrer.ToString());
             }           
-            catch (Exception)
+            catch (Exception e)
             {
-                TempData["Alert"] = "Có lỗi";
+                TempData["Alert"] = "Có lỗi" + e.Message;
                 return Redirect(Request.UrlReferrer.ToString());
             }
         }
