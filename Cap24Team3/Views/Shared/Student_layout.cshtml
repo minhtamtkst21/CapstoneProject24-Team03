@@ -27,12 +27,19 @@
                         E-Profile
                     </a>
                 </div><!--logo end-->
+                <div class="menu-btn">
+                    <a href="#">
+                        <span class="bar1"></span>
+                        <span class="bar2"></span>
+                        <span class="bar3"></span>
+                    </a>
+                </div><!--menu-btn end-->
                 <div class="navigation-bar d-flex flex-wrap align-items-center" style="width: 950px">
                     <nav>
                         <ul>
-                            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
+                            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Home</a></li>
                             <li>
-                                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Chương trình đào tạo</a>
                                 <ul style="width: 300px">
                                     <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
                                     <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Đăng ký kế hoạch học tập</a></li>
@@ -41,7 +48,7 @@
                             @if (User.IsInRole("CN Lop"))
                             {
                                 <li>
-                                    <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Quản lý lớp</a>
+                                    <a href="@Url.Action("DanhSachLop","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Quản lý lớp</a>
                                     <ul style="width: 300px">
                                         <li><a href="@Url.Action("DanhSachDotChinhSua","ChuNhiemLop")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Quản lý đợt chỉnh sửa</a></li>
                                     </ul>
@@ -73,22 +80,14 @@
                                 <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
                                 <div>
                                     <p>
-                                        <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
+                                        <button type="submit" class="btn btn-outline-danger hover-btn" style="border-radius: 15px; width: 150px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account"><img src="@Url.Content("~/Student_assets/img/VL-removebg.png")" style="width: 25px" />  Đăng nhập</button>
                                     </p>
                                 </div>
                             </form>
                         </div>
                     }
                 </div>
-                <div class="menu-btn">
-                    <a href="#">
-                        <span class="bar1"></span>
-                        <span class="bar2"></span>
-                        <span class="bar3"></span>
-                    </a>
-                </div><!--menu-btn end-->
             </div><!--header-content end-->
-
         </div>
     </header><!--header end-->
     <div class="responsive-menu">

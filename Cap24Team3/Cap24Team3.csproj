@@ -734,6 +734,8 @@
     <Content Include="Student_assets\img\edu2.png" />
     <Content Include="Student_assets\img\edu3.png" />
     <Content Include="Student_assets\img\edu4.png" />
+    <Content Include="Student_assets\img\edu5.png" />
+    <Content Include="Student_assets\img\edu7.png" />
     <Content Include="Student_assets\img\element-bg.png" />
     <Content Include="Student_assets\img\element-bg2.png" />
     <Content Include="Student_assets\img\elements-bg2.png" />
@@ -781,6 +783,7 @@
     <Content Include="Student_assets\img\ro3.png" />
     <Content Include="Student_assets\img\sec-bg.png" />
     <Content Include="Student_assets\img\shape3.png" />
+    <Content Include="Student_assets\img\VL-removebg.png" />
     <Content Include="Student_assets\img\VL.png" />
     <Content Include="Student_assets\img\VLU.png" />
     <Content Include="Student_assets\img\VLU2.png" />
