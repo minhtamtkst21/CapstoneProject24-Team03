@@ -5,7 +5,7 @@
 }
 <br />
 <div class="dropdown float-right">
-    <button type="button" class="btn btn-blue btn-rounded"><i class="mdi mdi-microsoft-excel"></i> Export</button>
+    <button type="button" class="btn btn-success"><i class="mdi mdi-microsoft-excel"></i> Export</button>
 </div>
 <form action="@Url.Action("LuuThongKe")" method="post">
     <div class="row">
@@ -31,6 +31,29 @@
     </div>
 </form>
 <br>
+<form action="@Url.Action("XuatThongKe")" method="post">
+    <div class="row">
+        <div class="col-2">
+            <select class="form-control" name="nganh">
+                @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
+                {
+                    <option value="@item.ID">@item.Nganh</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <select class="form-control" name="khoa">
+                @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
+                {
+                    <option value="@item.ID">@item.Khoa.ToString()</option>
+                }
+            </select>
+        </div>
+        <div class="col-1">
+            <input class="btn btn-success" type="submit" value="Export" />
+        </div>
+    </div>
+</form>
 @if (Session["thongke"] != null)
 {
     var hk = Session["listhk"] as List<string>;
