@@ -216,6 +216,7 @@ namespace Cap24Team3.Controllers
                     var tongsotinchi = 0;
                     var khoikienthuc = new List<string>();
                     var stcktt = new List<int>();
+                    var hp = new List<HocPhanDaoTao>();
                     foreach (var item in khoikienthucmoi)
                     {
                         var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
@@ -225,6 +226,7 @@ namespace Cap24Team3.Controllers
                                 tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
                             if (hocphan.MaHocPhan != null)
                                 check.Add(hocphan.MaHocPhan.Trim());
+                            hp.Add(hocphan);
                         }
                         khoikienthuc.Add(ktt.TenKhoiKienThuc);
                     }
@@ -252,6 +254,7 @@ namespace Cap24Team3.Controllers
                     TempData["soluong"] = "0:" + (khoikienthuc.Count() - 1) + ":1";
                     TempData["trong"] = trongct;
                     TempData["ngoai"] = ngoaict;
+                    TempData["hp"] = hp;
                 }
             }
             return View(listdiem);
