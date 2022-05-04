@@ -34,7 +34,7 @@
             overflow: visible;
         }
 
-        #profileImage {
+        #profileImage1 {
             font-family: Arial, Helvetica, sans-serif;
             width: 3rem;
             height: 3rem;
@@ -68,8 +68,8 @@
                             {
                                 @Html.AntiForgeryToken()
 
-                                <div id="profileImage" class="dropbtn" onclick="dropDownFunc()" style="cursor: pointer"></div>
-                                <span id="firstName" hidden>@User.Identity.Name</span>
+                                <div id="profileImage1" class="dropbtn" onclick="dropDownFunc()" style="cursor: pointer"></div>
+                                <span id="firstName1" hidden>@User.Identity.Name</span>
                                 <div id="dropdownbtn" class="dropdown-menu" style="right: 4px; left: auto; border-radius: 10px;">
                                     <hr style="width: 80%; margin: 0 auto;" />
                                     <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i> Đăng xuất</a>
@@ -331,10 +331,10 @@
     </script>
     <script>
         $(document).ready(function () {
-            var firstName = $('#firstName').text();
-            var lastName = $('#lastName').text();
-            var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
-            var profileImage = $('#profileImage').text(intials);
+            var firstName = $('#firstName1').text();
+            var lastName = $('#lastName1').text();
+            var intials = $('#firstName1').text().charAt(0) + $('#lastName1').text().charAt(0);
+            var profileImage = $('#profileImage1').text(intials);
         });
     </script>
     @RenderSection("scripts", required: false)
