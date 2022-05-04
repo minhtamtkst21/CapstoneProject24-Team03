@@ -41,7 +41,6 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             return ListLoi;
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult TaoMoiHocKy(string hocky)
         {
             if (ModelState.IsValid)

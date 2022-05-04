@@ -249,7 +249,7 @@ namespace Cap24Team3.Controllers
                     ViewData["DiemTBChung"] = diemtbchung;
                     ViewData["SoTC"] = sotinchi;
                     ViewData["Tongsotinchi"] = tongsotinchi;
-                    TempData["Khoikienthuc"] = khoikienthuc;
+                    TempData["khoikt"] = khoikienthuc;
                     TempData["sotc"] = stcktt;
                     TempData["soluong"] = "0:" + (khoikienthuc.Count() - 1) + ":1";
                     TempData["trong"] = trongct;
