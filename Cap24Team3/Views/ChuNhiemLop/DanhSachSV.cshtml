@@ -96,16 +96,30 @@
                                         </td>
                                         <td>@s.Email_1</td>
                                         <td>
-                                            <a href="@Url.Action("XemChiTietSV", new { id = s.ID })" style="color: cornflowerblue"><i class="fa fa-address-book" style="color:black"></i> Chi tiết</a>
-                                            <br />
-                                            <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"style="color: cornflowerblue"><i class="fa fa-clipboard" style="color:black"></i> Xem điểm</a>
-                                            <br />
-                                            <a href="@Url.Action("UpdateNoiDung", new { id = s.ID })"style="color: cornflowerblue"><i class="fa fa-sticky-note-o" style="color:black"></i> Note</a>
+                                            <div class="dropout">
+                                                <button class="more">
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </button>
+                                                <ul>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("XemChiTietSV", new { id = s.ID })" style="color: cornflowerblue"><i class="fa fa-address-book" style="color:black"></i> Chi tiết</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("XemDiemSinhVien", new { id = s.ID })" style="color: cornflowerblue"><i class="fa fa-clipboard" style="color:black"></i> Xem điểm</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="@Url.Action("UpdateNoiDung", new { id = s.ID })" style="color: cornflowerblue"><i class="fa fa-sticky-note-o" style="color:black"></i> Note</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+                        <br />
                     </div> <!-- end .table-responsive-->
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
@@ -728,4 +742,15 @@
         var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
         var profileImage = $('#profileImage').text(intials);
     });
+</script>
+<script>
+    document.querySelector('table').onclick = ({
+        target
+    }) => {
+        if (!target.classList.contains('more')) return
+        document.querySelectorAll('.dropout.active').forEach(
+            (d) => d !== target.parentElement && d.classList.remove('active')
+        )
+        target.parentElement.classList.toggle('active')
+    }
 </script>

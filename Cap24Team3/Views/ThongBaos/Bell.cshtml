@@ -35,8 +35,8 @@
     }
 </style>
 <div class="d-flex flex-wrap align-items-center">
-    <div class="nav-link waves-effect dropdown" style="width: max-content !important;">
-        <div id="dropdownbtn-bell" class="dropdown-content" style="right: 4px; left: auto; height: 300px; border-radius: 10px; background-color: #f2f2f2; width: 400px; overflow: auto;">
+    <div class="nav-link waves-effect dropdown dropbtn1" onclick="dropDownFunc1()" style="width: max-content !important;">
+        <div id="dropdownbtn1" class="dropdown-menu1" style="right: 4px; left: auto; height: 300px; border-radius: 10px; background-color: #f2f2f2; width: 400px; overflow: auto;">
             <div class="dropdown-header">
                 <h5 class="m-0" style=" font-family: 'Montserrat', bold; color: black; font-size:25px; text-align:center">
                     Thông báo
@@ -54,7 +54,7 @@
                 {
                     if (item.TrangThai == true)
                     {
-                        <a class="dropdown-item div-centerr item" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 350px;">
+                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 350px;">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe
@@ -65,7 +65,7 @@
                     else
                     {
                         countTB++;
-                        <a class="dropdown-item div-centerr item" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 350px; ">
+                        <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 350px; ">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
                             &emsp;
                             @item.TieuDe
@@ -92,12 +92,12 @@
         }
     </div>
 </div>
-@*<script>
-    function bellDropdown() {
-        document.getElementById("dropdownbtn-bell").classList.toggle("show");
+<script>
+    function dropDownFunc1() {
+        document.getElementById("dropdownbtn1").classList.toggle("show");
     }
     window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn-bell')) {
+        if (!event.target.matches('.dropbtn1')) {
             var dropdowns = document.getElementsByClassName("dropdown-menu1");
             var i;
             for (i = 0; i < dropdowns.length; i++) {
@@ -108,4 +108,4 @@
             }
         }
     }
-</script>*@
+</script>

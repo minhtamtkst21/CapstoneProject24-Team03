@@ -33,6 +33,20 @@
         body.modal-open {
             overflow: visible;
         }
+
+        #profileImage {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: #ffc107;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            line-height: 3rem;
+            margin: 1rem 0;
+        }
     </style>
     <!-- Begin page -->
     <div id="wrapper">
@@ -42,40 +56,27 @@
             <!-- Topbar Start -->
             <div class="navbar-custom">
                 <div class="container-fluid">
-                    <ul class="list-unstyled topnav-menu float-right mb-0">
-                        @*<li class="dropdown notification-list">
-                                <button>
-                                    <i class="fa fa-circ"></i>
-                                </button>
-                            </li>*@
-                        <li class="dropdown notification-list">
-                            <div class="row">
-                                @if (Request.IsAuthenticated)
-                                {
-                                    <a class="nav-link nav-user mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                        <img src="@Url.Content("~/Faculty_assets/images/users/user-1.jpg")" alt="user-image" class="rounded-circle">
-                                        <span class="pro-user-name ml-1">
-                                            @User.Identity.Name
-                                        </span>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <br />
-                                    <div class="social-links ml-auto">
-                                        <form action="@Url.Action("ExternalLogin","Account")" method="post">
-                                            <input name="__RequestVerificationToken" type="hidden" value="WFqN51U4-TMM4-vW8wag_5u0vY_spjiEYHZUwS-R4Ir1coATBVwyOv2Z8S-jXAIHzBptQWmTmEk5xCq27C67aewhuaQk7MgWy19PHr9UCCU1">
-                                            <div>
-                                                <p>
-                                                    <button type="submit" class="btn btn-danger" style="border-radius: 15px; width: 120px;" id="VanLang" name="provider" value="VanLang" title="Log in using your Văn Lang account">Login</button>
-                                                </p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                }
-                            </div>
-                        </li>
-                    </ul>
+                    @*<li class="dropdown notification-list">
+                            <button>
+                                <i class="fa fa-circ"></i>
+                            </button>
+                        </li>*@
+                    <div class="dropdown list-unstyled topnav-menu float-right mb-0">
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOffFa", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div id="profileImage" class="dropbtn" onclick="dropDownFunc()" style="cursor: pointer"></div>
+                                <span id="firstName" hidden>@User.Identity.Name</span>
+                                <div id="dropdownbtn" class="dropdown-menu" style="right: 4px; left: auto; border-radius: 10px;">
+                                    <hr style="width: 80%; margin: 0 auto;" />
+                                    <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit();" style="color: red; font-family: 'Montserrat'"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                </div>
+                            }
+                        }
+                    </div>
                     <div class="logo-box">
                         <a href="@Url.Action("ListCTDaoTao","ChuongTrinhDaoTao")" class="logo logo-light">
                             <span class="logo-lg">
@@ -144,7 +145,6 @@
                 <!-- end container -->
             </div>
             <!-- end navbar-custom -->
-
         </header>
         <!-- End Navigation Bar-->
         <!-- ============================================================== -->
@@ -312,7 +312,31 @@
             }
         });
     </script>
-
+    <script>
+        function dropDownFunc() {
+            document.getElementById("dropdownbtn").classList.toggle("show");
+        }
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            var firstName = $('#firstName').text();
+            var lastName = $('#lastName').text();
+            var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
+            var profileImage = $('#profileImage').text(intials);
+        });
+    </script>
     @RenderSection("scripts", required: false)
 
 </body>

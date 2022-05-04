@@ -37,14 +37,17 @@
                 <div class="navigation-bar d-flex flex-wrap align-items-center" style="width: 950px">
                     <nav>
                         <ul>
-                            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Home</a></li>
-                            <li>
-                                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Chương trình đào tạo</a>
-                                <ul style="width: 300px">
-                                    <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
-                                    <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Đăng ký kế hoạch học tập</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Trang chủ</a></li>
+                            @if (User.Identity.Name != "")
+                            {
+                                <li>
+                                    <a href="@Url.Action("XemHocPhanDT", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 35px;">Chương trình đào tạo</a>
+                                    <ul style="width: 300px">
+                                        <li><a href="@Url.Action("XemDiemSV", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
+                                        <li><a href="@Url.Action("DangKyKHDT", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Đăng ký kế hoạch học tập</a></li>
+                                    </ul>
+                                </li>
+                            }
                             @if (User.IsInRole("CN Lop"))
                             {
                                 <li>
@@ -127,7 +130,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-4">
                             <div class="newsz-ltr-text">
-                                <h2 style="font-family: 'DongLe3'; font-size: 50px" >Liên hệ <br /> với chúng tôi</h2>
+                                <h2 style="font-family: 'DongLe3'; font-size: 50px">Liên hệ <br /> với chúng tôi</h2>
                                 <a href="#" title="" class="btn-default" style="font-family: 'Montserrat'">Gửi<i class="fa fa-long-arrow-alt-right"></i></a>
                             </div><!--newsz-ltr-text end-->
                         </div>

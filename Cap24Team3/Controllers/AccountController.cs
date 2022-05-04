@@ -420,6 +420,13 @@ namespace Cap24Team3.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("NhanThongBao", "ThongBaos");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOffFa()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Login", "Account");
+        }
 
         //
         // GET: /Account/ExternalLoginFailure
