@@ -31,6 +31,7 @@
     var HocPhanDaoTao = Session["HocPhan"] as List<Cap24Team3.Models.HocPhanDaoTao>;
     var diemhp = Session["diemso"] as List<Cap24Team3.Models.DiemHocPhan>;
     var sinhvien = Session["sinhvien"] as Cap24Team3.Models.SinhVien;
+    var tongsotc = TempData["sotinchi"] as List<Cap24Team3.Controllers.Sotinchi>;
 }
 
 <section class="pager-section">
@@ -70,7 +71,7 @@
                                         <td>@s.Ho</td>
                                         <td>@s.Ten</td>
                                         <td>
-                                            @textdiemtb
+                                            @tongsotc.FirstOrDefault(t => t.mssv == s.MSSV).sotinchi
                                         </td>
                                         <td>
                                             <a href="@Url.Action("XemDiemSinhVien", new { id = s.ID })"><i class="fa fa-clipboard"></i> Xem điểm</a>
@@ -83,7 +84,7 @@
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>
-            <!-- Xem điểm-->
+        <!-- Xem điểm-->
         <div class="modal fade" id="XemDiemSo" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             @{ var Sinhvien = Session["sinhvien1"] as Cap24Team3.Models.SinhVien; }
             @if (Sinhvien != null)
@@ -259,8 +260,8 @@
                 </div>
             }
         </div>
-        </div>
     </div>
+</div>
 <!--Xem điểm và thống kê-->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
