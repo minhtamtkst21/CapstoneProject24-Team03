@@ -19,7 +19,7 @@
         <tbody>
             @foreach (var item in listtk)
             {
-                if (item.TenHP == TempData["tenhp"] as string)
+                if (item.TenHP == TempData["tenhp"] as string && item.HocKy == TempData["hk"] as string)
                 {
                     <tr>
                         <td>@item.MSSV</td>

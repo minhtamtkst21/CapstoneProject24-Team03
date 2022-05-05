@@ -81,7 +81,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     {
                         listthongke.Add(cttk);
                     }
-                }                
+                }
             }
             foreach (var item in listthongke)
             {
@@ -97,7 +97,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 if (!CheckTonTai(item.HocKy, listhk))
                 {
                     listhk.Add(item.HocKy);
-                }                
+                }
             }
             foreach (var hk in listhk)
             {
@@ -106,7 +106,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 row++;
                 foreach (var item in thongke)
                 {
-                    if(item.HocKy == hk)
+                    if (item.HocKy == hk)
                     {
                         sheet.Cells[string.Format("A{0}", row)].Value = item.TenHP;
                         sheet.Cells[string.Format("B{0}", row)].Value = item.soluong;
@@ -164,14 +164,14 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             }
             foreach (var item in listthongke)
             {
-                if (!CheckTonTai(item.TenHP, checkhp))
+                if (!CheckTonTai(item.TenHP + item.HocKy, checkhp))
                 {
                     var tk = new thongkehocphan();
                     tk.TenHP = item.TenHP;
                     tk.HocKy = item.HocKy;
-                    tk.soluong = listthongke.Where(s => s.TenHP == item.TenHP).Count();
+                    tk.soluong = listthongke.Where(s => s.TenHP == item.TenHP).Where(s=>s.HocKy==item.HocKy).Count();
                     thongke.Add(tk);
-                    checkhp.Add(item.TenHP);
+                    checkhp.Add(item.TenHP + item.HocKy);
                 }
                 if (!CheckTonTai(item.HocKy, listhk))
                 {
@@ -185,8 +185,9 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             Session["chitiet"] = listthongke;
             return Redirect(Request.UrlReferrer.ToString());
         }
-        public ActionResult XemChiTiet(string tenhp)
+        public ActionResult XemChiTiet(string tenhp, string hk)
         {
+            TempData["hk"] = hk;
             TempData["tenhp"] = tenhp;
             return View();
         }

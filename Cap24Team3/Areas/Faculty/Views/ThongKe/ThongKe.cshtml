@@ -18,7 +18,14 @@
             <select class="form-control" name="nganh">
                 @foreach (var item in TempData["nganh"] as List<Cap24Team3.Models.NganhDaoTao>)
                 {
-                    <option value="@item.ID">@item.Nganh</option>
+                    if (Session["Nganh"] != null && item.ID == (int)Session["Nganh"])
+                    {
+                        <option value="@item.ID" selected>@item.Nganh</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">@item.Nganh</option>
+                    }
                 }
             </select>
         </div>
@@ -26,7 +33,14 @@
             <select class="form-control" name="khoa">
                 @foreach (var item in TempData["khoa"] as List<Cap24Team3.Models.KhoaDaoTao>)
                 {
-                    <option value="@item.ID">@item.Khoa.ToString()</option>
+                    if (Session["Khoa"] != null && item.ID == (int)Session["Khoa"])
+                    {
+                        <option value="@item.ID" selected>@item.Khoa.ToString()</option>
+                    }
+                    else
+                    {
+                        <option value="@item.ID">@item.Khoa.ToString()</option>
+                    }
                 }
             </select>
         </div>
@@ -60,7 +74,7 @@
                             {
                                 <tr>
                                     <td>@item.TenHP</td>
-                                    <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP })" style="color: blue;">&emsp; Xem chi tiết</a></td>
+                                    <td>@item.soluong &emsp;<a href="@Url.Action("XemChiTiet", new { tenhp = item.TenHP, hk = item.HocKy })" style="color: blue;">&emsp; Xem chi tiết</a></td>
                                 </tr>
                             }
                         }
