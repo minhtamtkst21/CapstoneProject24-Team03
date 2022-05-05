@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive text-nowrap">
-                    <table class="table table-striped mb-0 dt-responsive dataTable" id="table">
+                    <table class="table table-striped mb-0 dt-responsive dataTable" id="tbSv">
                         <thead>
                             <tr>
                                 <th>STT</th>
@@ -285,7 +285,7 @@
     </script>
     Session["sinhvien1"] = null;
 }
-<script>
+@*<script>
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
@@ -300,13 +300,18 @@
         }
     }
     function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
-</script>
+</script>*@
 <script>
     $(document).ready(function () {
         var firstName = $('#firstName').text();
         var lastName = $('#lastName').text();
         var intials = $('#firstName').text().charAt(0) + $('#lastName').text().charAt(0);
         var profileImage = $('#profileImage').text(intials);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#tbSv').DataTable();
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

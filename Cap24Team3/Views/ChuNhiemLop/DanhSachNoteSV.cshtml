@@ -25,7 +25,7 @@
                 <div class="card-box">
                     @*<h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Danh sách sinh viên cần theo dõi</h4>*@
                     <div class="table-responsive ">
-                        <table id="t_draggable1" class="table table-hover mb-0">
+                        <table id="tbSv" class="table table-hover mb-0">
                             <thead>
                                 <tr>
                                     <th>MSSV</th>
@@ -100,3 +100,8 @@
     </script>
     Session["Note"] = null;
 }
+<script>
+    $(document).ready(function () {
+        $('#tbSv').DataTable();
+    });
+</script>

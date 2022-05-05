@@ -73,10 +73,10 @@ namespace Cap24Team3.Controllers
                     thongtin.DotChinhSuaThongTin = db.DotChinhSuaThongTins.Find(capnhat);
                     db.Entry(thongtin).State = EntityState.Added;
                     db.SaveChanges();
-                    return RedirectToAction("XemHocPhanDT");
+                    return RedirectToAction("NhanThongBao","ThongBaos");
                 }
             }
-            return RedirectToAction("XemHocPhanDT");
+            return RedirectToAction("NhanThongBao", "ThongBaos");
         }
         public ActionResult XemHocPhanDT()
         {

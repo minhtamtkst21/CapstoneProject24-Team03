@@ -425,7 +425,7 @@ namespace Cap24Team3.Controllers
         public ActionResult LogOffFa()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("trangchu");
         }
 
         //
