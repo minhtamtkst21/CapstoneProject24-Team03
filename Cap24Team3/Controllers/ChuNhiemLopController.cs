@@ -329,7 +329,7 @@ namespace Cap24Team3.Controllers
         public ActionResult XemDiemThongKe(string idLop)
         {
             var listsv = db.SinhViens.Where(s => s.LopQuanLy.TenLop == idLop).OrderBy(s => s.ID_TinhTrang).ToList();
-            var sotinchi = new List<Sotinchi>();
+            var sotinchi = new List<Class>();
             int stc = 0;
             var tongsotinchi = 0;
             foreach (var itemsv in listsv)
@@ -365,7 +365,7 @@ namespace Cap24Team3.Controllers
                     ViewData["Tongsotinchi"] = tongsotinchi;
                     ViewData["DSTT"] = db.TinhTrangs.ToList();
                 }
-                var sotc = new Sotinchi();
+                var sotc = new Class();
                 sotc.mssv = itemsv.MSSV;
                 sotc.sotinchi = (stc * 100 / tongsotinchi > 100) ? "100%" : (stc * 100 / tongsotinchi) + "%";
                 sotinchi.Add(sotc);

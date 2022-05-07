@@ -73,7 +73,7 @@ namespace Cap24Team3.Controllers
                     thongtin.DotChinhSuaThongTin = db.DotChinhSuaThongTins.Find(capnhat);
                     db.Entry(thongtin).State = EntityState.Added;
                     db.SaveChanges();
-                    return RedirectToAction("NhanThongBao","ThongBaos");
+                    return RedirectToAction("NhanThongBao", "ThongBaos");
                 }
             }
             return RedirectToAction("NhanThongBao", "ThongBaos");
@@ -209,17 +209,25 @@ namespace Cap24Team3.Controllers
                     var ngoaict = new List<DiemHocPhan>();
                     var check = new List<string>();
                     var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
-                    var khoikienthucmoi = new List<string>();
+                    var khoikienthuc = new List<khoikt>();
                     foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
-                        if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthucmoi))
-                            khoikienthucmoi.Add(item.MaKhoiKienThuc);
+                    {
+                        if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthuc.Select(s => s.makhoikt).ToList()))
+                        {
+                            var Khoikt = new khoikt();
+                            Khoikt.id = item.ID;
+                            Khoikt.makhoikt = item.MaKhoiKienThuc;
+                            Khoikt.tenkhoikt = item.TenKhoiKienThuc;
+                            Khoikt.sotc = 0;
+                            khoikienthuc.Add(Khoikt);
+                        }
+                    }
                     var tongsotinchi = 0;
-                    var khoikienthuc = new List<string>();
                     var stcktt = new List<int>();
                     var hp = new List<HocPhanDaoTao>();
-                    foreach (var item in khoikienthucmoi)
+                    foreach (var item in khoikienthuc)
                     {
-                        var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.MaKhoiKienThuc == item);
+                        var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.ID == item.id);
                         foreach (var hocphan in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == ktt.ID).ToList())
                         {
                             if (hocphan.ID_HocPhanTuChon == null)
@@ -228,7 +236,6 @@ namespace Cap24Team3.Controllers
                                 check.Add(hocphan.MaHocPhan.Trim());
                             hp.Add(hocphan);
                         }
-                        khoikienthuc.Add(ktt.TenKhoiKienThuc);
                     }
                     foreach (var item in listdiem)
                     {
@@ -241,16 +248,22 @@ namespace Cap24Team3.Controllers
                     }
                     foreach (var item in khoikienthuc)
                     {
-                        int sl = db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.TenKhoiKienThuc == item).Count();
-                        stcktt.Add(sl);
+                        foreach (var hphan in db.HocPhanDaoTaos.Where(s => s.KhoiKienThuc.ID == item.id).ToList())
+                        {
+                            if (hphan != null && hphan.MaHocPhan != null && CheckTonTai(hphan.MaHocPhan.Trim(), listdiem.Where(s => s.QuaMon == true).Select(s => s.HocPhan).ToList()))
+                            {
+                                item.sotc += int.Parse(hphan.SoTinChi.Split('T')[0]);
+                            }
+                        }
                     }
                     ViewData["listHK"] = listHK;
                     ViewData["DiemTB"] = diemtb;
                     ViewData["DiemTBChung"] = diemtbchung;
                     ViewData["SoTC"] = sotinchi;
                     ViewData["Tongsotinchi"] = tongsotinchi;
-                    TempData["khoikt"] = khoikienthuc;
-                    TempData["sotc"] = stcktt;
+                    TempData["Khoikienthuc"] = khoikienthuc;
+                    TempData["Khoikienthuc1"] = khoikienthuc.Select(s => s.tenkhoikt);
+                    TempData["sotc"] = khoikienthuc.Select(s => s.sotc);
                     TempData["soluong"] = "0:" + (khoikienthuc.Count() - 1) + ":1";
                     TempData["trong"] = trongct;
                     TempData["ngoai"] = ngoaict;

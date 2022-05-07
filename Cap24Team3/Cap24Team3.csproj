@@ -216,7 +216,7 @@
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChuNhiemLopController.cs" />
-    <Compile Include="Controllers\Sotinchi.cs" />
+    <Compile Include="Controllers\Class.cs" />
     <Compile Include="Models\hk.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

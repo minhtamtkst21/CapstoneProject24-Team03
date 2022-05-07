@@ -138,13 +138,13 @@
                         },
                         scaleK: {
                             values: @Html.Raw(Json.Encode(TempData["soluong"])),
-                            labels: @Html.Raw(Json.Encode(TempData["Khoikienthuc"])),
-                                guide: {
-                                    alpha: 0.3,
-                                    backgroundColor: '#c5c5c5 #718eb4',
-                                    lineColor: '#607D8B',
-                                    lineStyle: 'solid',
-                                },
+                            labels: @Html.Raw(Json.Encode(TempData["Khoikienthuc1"])),
+                            guide: {
+                                alpha: 0.3,
+                                backgroundColor: '#c5c5c5 #718eb4',
+                                lineColor: '#607D8B',
+                                lineStyle: 'solid',
+                            },
                         item: {
                             backgroundColor: 'white',
                             borderColor: '#aeaeae',
@@ -162,13 +162,18 @@
                             lineStyle: 'dotted',
                             size: 20,
                         },
-                                        },
+                    },
                     series: [{
                         values: @Html.Raw(Json.Encode(TempData["sotc"])),
                         text: 'farm',
                     },
+                    {
+                        values: @Html.Raw(Json.Encode(TempData["sotcmax"])),
+                        backgroundColor: '#689F38',
+                        lineColor: '#53a534',
+                    },
                     ],
-                                    };
+                    };
 
                     zingchart.render({
                         id: 'myChart',
@@ -268,7 +273,7 @@
                     @{ STT = 0;}
                     <div class="col-xl-12">
                         <div class="card-box">
-                            @foreach (var kkt in TempData["khoikt"] as List<string>)
+                            @foreach (var kkt in TempData["Khoikienthuc"] as List<Cap24Team3.Controllers.khoikt>)
                             {
                                 <div class="table-responsive" style="overflow: auto">
                                     <table class="table table-centered mb-0">
@@ -289,7 +294,7 @@
                                             <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">@kkt</h4>
                                             @foreach (var item in TempData["hp"] as List<Cap24Team3.Models.HocPhanDaoTao>)
                                             {
-                                                if (item.KhoiKienThuc.TenKhoiKienThuc == kkt)
+                                                if (item.KhoiKienThuc.TenKhoiKienThuc == kkt.tenkhoikt)
                                                 {
                                                     STT++;
                                                     <tr>
