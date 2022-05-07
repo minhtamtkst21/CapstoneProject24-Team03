@@ -792,6 +792,8 @@
     <Content Include="Student_assets\img\VLU4.png" />
     <Content Include="Student_assets\img\VLU5.png" />
     <Content Include="Student_assets\img\VLU6.png" />
+    <Content Include="Student_assets\img\VLU7.png" />
+    <Content Include="Student_assets\img\VLU8.png" />
     <Content Include="Student_assets\js\app.js" />
     <Content Include="Student_assets\js\app.min.js" />
     <Content Include="Student_assets\js\bootstrap.js" />

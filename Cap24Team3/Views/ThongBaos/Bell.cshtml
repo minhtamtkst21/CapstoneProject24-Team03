@@ -55,10 +55,17 @@
                     if (item.TrangThai == true)
                     {
                         <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #e6e6e6; border-radius: 5px; width: 350px;">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
-                            &emsp;
-                            @item.TieuDe
-                            <p class="text" style="text-align: left">@item.NoiDung</p>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div id="profileImage2"></div>
+                                    <span id="firstName2" hidden>@item.NguoiGui</span>
+                                </div>
+                                <div class="col-6">
+                                    <span>@item.TieuDe</span>
+                                    
+                                    <p class="text" style="text-align: left">@item.NoiDung</p>
+                                </div>
+                            </div>
                         </a>
                         <hr style="width: 85%" />
                     }
@@ -66,11 +73,18 @@
                     {
                         countTB++;
                         <a class="dropdown-item div-centerr" href="@Url.Action("XemThongBao", new { idTB = item.ID })" style="font-family: 'Montserrat'; color: black; background-color: #ffd966; border-radius: 5px; width: 350px; ">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="30">
-                            &emsp;
-                            @item.TieuDe
-                            <i class="fa fa-eye-slash float-right"></i>
-                            <p class="text" style="text-align: left">@item.NoiDung</p>
+                            <div class="row">
+                                <div class="col-2">
+                                    <div id="profileImage3"></div>
+                                    <span id="firstName3" hidden>@item.NguoiGui</span>
+                                </div>
+                                <div class="col-10">
+                                    <span>@item.TieuDe</span>
+
+                                    <p class="text" style="text-align: left">@item.NoiDung</p>
+                                    <i class="fa fa-eye-slash float-right"></i>
+                                </div>
+                            </div>
                         </a>
                         <hr style="width: 85%" />
                     }
@@ -108,4 +122,21 @@
             }
         }
     }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var firstName = $('#firstName2').text();
+        var lastName = $('#lastName2').text();
+        var intials = $('#firstName2').text().charAt(0) + $('#lastName2').text().charAt(0);
+        var profileImage = $('#profileImage2').text(intials);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var firstName = $('#firstName3').text();
+        var lastName = $('#lastName3').text();
+        var intials = $('#firstName3').text().charAt(0) + $('#lastName3').text().charAt(0);
+        var profileImage = $('#profileImage3').text(intials);
+    });
 </script>
