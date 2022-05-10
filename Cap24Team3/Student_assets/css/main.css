@@ -51,6 +51,13 @@
     font-style: normal;
     font-display: fallback;
 }
+@font-face {
+    font-family: 'SVN';
+    src: url('../webfonts/SVN-Nexa Rust Slab Black Shadow.woff2') format('woff2'), url('../webfonts/SVN-Nexa-Rust-Slab-Black-Shadow.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
 a,
 abbr,
 acronym,
@@ -425,7 +432,7 @@ header .navigation-bar nav ul ul {
 header .navigation-bar nav ul ul li {
     margin-right: 0;
     display: block;
-    margin-bottom: 10px;
+    
 }
 header .navigation-bar nav ul ul li a {
     display: block;
@@ -481,14 +488,14 @@ header .navigation-bar nav ul ul ul {
 .main-banner .banner-text > h2 {
     color: #2b2b2b;
     font-size: 65.03px;
-    line-height: 81.29px;
+    line-height: 120px;
     font-weight: 600;
-    margin-bottom: 26px;
+    margin-bottom: 45px;
 }
 .main-banner .banner-text > h2 span {
     display: inline-block;
     color: #ff3333;
-    position: relative;
+/*    position: relative;*/
 }
 .main-banner .banner-text > h2 span:hover:before {
     opacity: 1;

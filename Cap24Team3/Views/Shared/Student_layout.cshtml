@@ -22,11 +22,11 @@
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header navbar-change">
         <div class="container-fluid">
             <div class="header-content d-flex flex-wrap align-items-center" style="padding: 0 0 0;">
                 <div class="logo" style="flex: 0 0 25%">
-                    <a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 2.5vw;">
+                    <a class="text-shadow-title" href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'GS'; color: #ff3333; font-size: 2.5vw;">
                         E-Profile
                     </a>
                 </div><!--logo end-->
@@ -39,7 +39,7 @@
                 </div><!--menu-btn end-->
                 <div class="navigation-bar d-flex flex-wrap align-items-center" style="width: 60vw; height: auto">
                     <nav>
-                        <ul>
+                        <ul class="text-shadow-title">
                             <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 2.5vw;">Trang chủ</a></li>
                             @if (User.Identity.Name != "")
                             {
@@ -132,33 +132,14 @@
             <div class="container">
                 <div class="newsletter-sec">
                     <div class="row align-items-center">
-                        <div class="col-lg-4">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
                             <div class="newsz-ltr-text">
-                                <h2 style="font-family: 'DongLe3'; font-size: 50px">Liên hệ <br /> với chúng tôi</h2>
-                                <a href="#" title="" class="btn-default" style="font-family: 'Montserrat'">Gửi<i class="fa fa-long-arrow-alt-right"></i></a>
+                                <h2 style="font-family: 'DongLe3'; font-size: 50px;text-transform:uppercase">Khảo sát và đánh giá website</h2>
+                                <button onclick="window.open('https://forms.office.com/Pages/ResponsePage.aspx?id=S6URMF0KKUm_AqAHh4d8aqWG2X5_UQRIgf5v8trYvvNUNjNOWVRBN0I2TVVVMEUwOVVHUFZUOFBRMC4u')" title="" class="btn-default" style="font-family: 'Montserrat'">Gửi đánh giá<i class="fa fa-long-arrow-alt-right"></i></button>
                             </div><!--newsz-ltr-text end-->
                         </div>
-                        <div class="col-lg-8">
-                            <form class="newsletter-form">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="name" placeholder="Tên">
-                                        </div><!--form-group end-->
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="email" name="email" placeholder="Email">
-                                        </div><!--form-group end-->
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea name="message" placeholder="Nội dung tin nhắn"></textarea>
-                                        </div><!--form-group end-->
-                                    </div>
-                                </div>
-                            </form><!--newsletter-form end-->
-                        </div>
+                        <div class="col-lg-2"></div>
                     </div>
                 </div><!--newsletter-sec end-->
             </div>
@@ -277,6 +258,15 @@
         </script>
         TempData["Alert3"] = null;
     }
+    <script>
+        $(window).scroll(function () {
+            if ($(document).scrollTop() > 100) {
+                $('.navbar-change').addClass('color-change');
+            } else {
+                $('.navbar-change').removeClass('color-change');
+            }
+        });
+    </script>
 </body>
 
 </html>

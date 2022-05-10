@@ -94,13 +94,13 @@
         @if (countTB == 0)
         {
             <div class="dropbtn-bell" onclick="bellDropdown()" style="font-size: 23px; color: black; cursor: pointer">
-                <i class="fas fa fa-bell noti-icon"></i>
+                <i class="fas fa fa-bell noti-icon text-shadow-title"></i>
             </div>
         }
         else
         {
             <div class="dropbtn-bell" onclick="bellDropdown()" style="font-size: 23px; color: black; cursor: pointer ">
-                <i class="fas fa fa-bell noti-icon"></i>
+                <i class="fas fa fa-bell noti-icon text-shadow-title"></i>
                 <span class="noti_bubble">@countTB</span>
             </div>
         }
@@ -138,5 +138,14 @@
         var lastName = $('#lastName3').text();
         var intials = $('#firstName3').text().charAt(0) + $('#lastName3').text().charAt(0);
         var profileImage = $('#profileImage3').text(intials);
+    });
+</script>
+<script>
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 100) {
+            $('.noti-icon').addClass('bellco-change');
+        } else {
+            $('.noti-icon').removeClass('bellco-change');
+        }
     });
 </script>

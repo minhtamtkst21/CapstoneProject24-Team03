@@ -21,37 +21,37 @@
         background: #f3f3f3;
     }
 </style>
-<section class="main-banner">
+<section class="main-banner demo" id="section10">
     <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-lg-7 col-md-7">
-                <div class="banner-text wow fadeInLeft text-right" data-wow-duration="1000ms">
-                    <h2 style="font-family: 'Montserrat';font-size: 4.5vw">HỒ SƠ ĐIỆN TỬ ONLINE<span>VAN LANG E-PROFILE</span></h2>
-                    <span style="color:black; font-size: 1.25vw">Trang quản lý kế hoạch học tập dành riêng cho khoa CNTT trường đại học Văn Lang</span>
-                </div>
-                <br />
-                <a href="#noidung" class="btn btn-danger float-right" style="z-index:10">Xem thêm...</a>
+        <div class="row align-items-center hero-nav">
+            <div class="banner-text wow fadeInLeft text-center hero-nav__inner title-ch" data-wow-duration="1000ms">
+                <h2 class="text-shadow" style="font-family: 'Montserrat'; font-size: 6vw; margin-bottom:150px">HỒ SƠ ĐIỆN TỬ ONLINE<span class="text-shadow title-ch" style="font-family: 'FZ2';"> Van Lang E-Profile</span></h2>
+                <a href="#" class="scroll-down text-shadow scroll-ch" address="true" style="z-index:1000;cursor:pointer;"><span class="scroll-ch"></span></a>
+                @*<a href="#" class="btn btn-danger scroll-down text-center title-ch" address="true" style="z-index:1000">Xem thêm...</a>*@
             </div>
-            <div class="col-lg-5 col-md-5">
+            <br />
+
+            <!--<div class="col-lg-5 col-md-5">
                 <div class="banner-img wow zoomIn" data-wow-duration="1000ms">
                     <img src="@Url.Content("~/Student_assets/img/edu7.png")" alt="" style="height: auto; width:100%">
-                </div><!--banner-img end-->
-                <div class="elements-bg wow zoomIn" data-wow-duration="1000ms"></div>
-            </div>
+                </div>-->
+            <!--banner-img end-->
+            <!--<div class="elements-bg wow zoomIn" data-wow-duration="1000ms"></div>
+            </div>-->
         </div>
     </div>
 </section><!--main-banner end-->
 <h2 class="main-title">E-Profile</h2>
-<section class="about-us-section" id="noidung">
+<section class="about-us-section">
     <div class="container">
         <div class="section-title text-center">
             <h2 style="font-family: 'Montserrat'; font-size: 3em">Get Knowledge - <span> Up your skills</span></h2>
         </div><!--section-title end-->
-            <div class="banner-img wow zoomIn text-center" data-wow-duration="1000ms">
-                <img src="@Url.Content("~/Student_assets/img/edu3.png")" alt="" style="height: auto; width:45vw">
-            </div><!--banner-img end-->
-            <div class="elements-bg wow zoomIn" data-wow-duration="1000ms" hidden></div>
-        <div class="section-title text-center">
+        <div class="banner-img wow zoomIn text-center" data-wow-duration="1000ms">
+            <img src="@Url.Content("~/Student_assets/img/edu3.png")" alt="" style="height: auto; width:45vw">
+        </div><!--banner-img end-->
+        <div class="elements-bg wow zoomIn" data-wow-duration="1000ms" hidden></div>
+        <div class="section-title text-center ok">
             <h2 style="font-family: 'Montserrat';">Các chức<span> năng chính</span></h2>
         </div><!--section-title end-->
         <div class="about-sec">
@@ -93,6 +93,65 @@
         </div><!-- abt-img end-->
     </div>
 </section><!--about-us-section end-->
+<script>
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 950) {
+            $('.title-ch').addClass('title-change');
+        } else {
+            $('.title-ch').removeClass('title-change');
+        }
+    });
+</script>
+<script>
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 750) {
+            $('.scroll-ch').addClass('scroll-change');
+        } else {
+            $('.scroll-ch').removeClass('scroll-change');
+        }
+    });
+</script>
+<script>
+    $(function () {
+        $('.scroll-down').click(function (e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: $('div.ok').offset().top }, 500, 'linear');
+            return false;
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(window).scroll(function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 100) {
+                $("#masthead").addClass("scrolled");
+            } else {
+                $("#masthead").removeClass("scrolled");
+            }
+        });
+    });
+</script>
+<script>
+    var heroShinker = function () {
+        var hero = $('.hero-nav'),
+            heroHeight = $('.hero-nav').outerHeight(true);
+        $(hero).parent().css('padding-top', heroHeight);
+        $(window).scroll(function () {
+            var scrollOffset = $(window).scrollTop();
+            if (scrollOffset < heroHeight) {
+                $(hero).css('height', (heroHeight - scrollOffset));
+            }
+            if (scrollOffset > (heroHeight - 215)) {
+                hero.addClass('fixme');
+            } else {
+                hero.removeClass('fixme');
+            };
+        });
+    }
+    heroShinker();
+</script>
 @*<div class="mdp-pagiation">
         <nav aria-label="Page navigation example">
             <div id="listingTable"></div>
