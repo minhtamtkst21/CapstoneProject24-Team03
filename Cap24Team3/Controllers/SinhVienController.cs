@@ -212,15 +212,12 @@ namespace Cap24Team3.Controllers
                     var khoikienthuc = new List<khoikt>();
                     foreach (var item in db.KhoiKienThucs.Where(s => s.ID_ChuongTrinhDaoTao == ctdt.ID).ToList())
                     {
-                        if (!CheckTonTai(item.MaKhoiKienThuc, khoikienthuc.Select(s => s.makhoikt).ToList()))
-                        {
-                            var Khoikt = new khoikt();
-                            Khoikt.id = item.ID;
-                            Khoikt.makhoikt = item.MaKhoiKienThuc;
-                            Khoikt.tenkhoikt = item.TenKhoiKienThuc;
-                            Khoikt.sotc = 0;
-                            khoikienthuc.Add(Khoikt);
-                        }
+                        var Khoikt = new khoikt();
+                        Khoikt.id = item.ID;
+                        Khoikt.makhoikt = item.MaKhoiKienThuc;
+                        Khoikt.tenkhoikt = item.TenKhoiKienThuc;
+                        Khoikt.sotc = 0;
+                        khoikienthuc.Add(Khoikt);
                     }
                     var tongsotinchi = 0;
                     var stcktt = new List<int>();
