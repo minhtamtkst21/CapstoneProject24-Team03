@@ -398,7 +398,7 @@
 </script>
     Session["sinhvien1"] = null;
 }
-<script>
+@*<script>
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
@@ -413,7 +413,7 @@
         }
     }
     function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
-</script>
+</script>*@
 <script>
     $(document).ready(function () {
         var firstName = $('#firstName').text();
@@ -423,3 +423,8 @@
     });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table').DataTable();
+    });
+</script>

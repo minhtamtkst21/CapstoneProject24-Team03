@@ -159,7 +159,7 @@
                                                                 {
                                                                     if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
                                                                     {
-                                                                        <td><a href="@Url.Action("SuaHK", new { id = item.ID })"><i class="fa fa-edit"></i></a></td>
+                                                                        <td><a href="@Url.Action("SuaHK", new { id = item.ID })" class="btn btn-danger"><i class="fa fa-edit"></i></a></td>
                                                                     }
                                                                     else
                                                                     {
@@ -172,7 +172,7 @@
                                                                 <td><i class="fa fa-times" style="color: red; font-size: 20px;"></i></td>
                                                                 if (item.HocKyDangKy > (int)ViewData["HocKyHienTai"])
                                                                 {
-                                                                    <td><a href="@Url.Action("SuaHK", new { id = item.ID })"class="btn btn-danger"><i class="fa fa-edit"></i></a></td>
+                                                                    <td><a href="@Url.Action("SuaHK", new { id = item.ID })" class="btn btn-danger"><i class="fa fa-edit"></i></a></td>
                                                                 }
                                                                 else
                                                                 {
@@ -337,7 +337,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <input type="submit" class="btn btn-primary" value="Lưu" />
+                        <input type="submit" class="btn btn-success" value="Lưu" />
                     </div>
                 </form>
             </div>
@@ -356,3 +356,10 @@
         });
     </script>
 }
+@*@if (TempData["Alert-dkkhht"] != null)
+{
+    <script>
+        alert("Đăng ký thành công.");
+    </script>
+    TempData["Alert-dkkhht"] = null;
+}*@

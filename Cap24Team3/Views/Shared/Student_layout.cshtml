@@ -97,16 +97,19 @@
         </div>
     </header><!--header end-->
     <div class="responsive-menu">
-    <br />
+        <br />
         <ul>
             <li><a href="@Url.Action("NhanThongBao","ThongBaos")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Home</a></li>
-            <li>
-                <a href="@Url.Action("XemHocPhanDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
-                <ul>
-                    <li><a href="@Url.Action("XemDiemSV","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
-                    <li><a href="@Url.Action("DangKyKHDT","SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
-                </ul>
-            </li>
+            @if (User.Identity.Name != "")
+            {
+                <li>
+                    <a href="@Url.Action("XemHocPhanDT", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 40px;">Chương trình đào tạo</a>
+                    <ul>
+                        <li><a href="@Url.Action("XemDiemSV", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Xem điểm</a></li>
+                        <li><a href="@Url.Action("DangKyKHDT", "SinhVien")" title="" style="font-family: 'Dongle3'; font-size: 30px;">Kế hoạch học tập</a></li>
+                    </ul>
+                </li>
+            }
             @if (User.IsInRole("CN Lop"))
             {
                 <li>
@@ -257,6 +260,13 @@
             alert("Chưa đến thời gian chỉnh sửa thông tin!!!");
         </script>
         TempData["Alert3"] = null;
+    }
+    @if (TempData["Alert-cntt"] != null)
+    {
+        <script>
+            alert("Cập nhật thông tin thành công.");
+        </script>
+        TempData["Alert-cntt"] = null;
     }
     <script>
         $(window).scroll(function () {

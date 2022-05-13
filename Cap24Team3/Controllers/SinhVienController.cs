@@ -73,6 +73,7 @@ namespace Cap24Team3.Controllers
                     thongtin.DotChinhSuaThongTin = db.DotChinhSuaThongTins.Find(capnhat);
                     db.Entry(thongtin).State = EntityState.Added;
                     db.SaveChanges();
+                    TempData["Alert-cntt"] = "Cập nhật thông tin thành công!";
                     return RedirectToAction("NhanThongBao", "ThongBaos");
                 }
             }
@@ -325,6 +326,7 @@ namespace Cap24Team3.Controllers
                         if (CheckTonTai(check, listDiem))
                         {
                             db.DiemHocPhans.Remove(item);
+                            TempData["Alert-dkkhht"] = "Đăng ký thành công.";
                             db.SaveChanges();
                         }
                         else
@@ -361,6 +363,7 @@ namespace Cap24Team3.Controllers
                                 dhp.LichSu = db.LichSuUpLoads.OrderByDescending(s => s.ID).First().ID;
                                 dhp.QuaMon = false;
                                 db.DiemHocPhans.Add(dhp);
+                                TempData["Alert-dkkhht"] = "Đăng ký thành công.";
                                 db.SaveChanges();
                             }
                     }
