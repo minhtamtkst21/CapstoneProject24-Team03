@@ -559,11 +559,6 @@
     <Content Include="Areas\Faculty\Views\web.config" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ChiTietCTDaoTao.cshtml" />
     <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListCTDaoTao.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\ListHocKyDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\TaoMoiHocKy.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaHocKyDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaKhoaDT.cshtml" />
-    <Content Include="Areas\Faculty\Views\ChuongTrinhDaoTao\XoaNganhDT.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\KhoaSinhVien.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\ListLop.cshtml" />
     <Content Include="Areas\Faculty\Views\DanhSachSinhVien\ListSinhVien.cshtml" />
@@ -1073,7 +1068,6 @@
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\SinhVien\UserName.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
-    <Content Include="Student_assets\css\updateScss.scss" />
     <Content Include="Student_assets\webfonts\SVN-Nexa Rust Slab Black Shadow.woff2" />
     <Content Include="Student_assets\webfonts\SVN-Nexa-Rust-Slab-Black-Shadow.woff" />
   </ItemGroup>
