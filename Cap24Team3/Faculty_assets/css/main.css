@@ -55,3 +55,61 @@
     font-style: normal;
     font-display: fallback;
 }
+
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    border-radius: 30px;
+}
+
+.more {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+}
+
+    .more span {
+        display: block;
+        width: .25rem;
+        height: .25rem;
+        background: #363636;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+        .more span:not(:last-child) {
+            margin-bottom: .125rem;
+        }
+
+.dropout {
+    width: fit-content;
+    position: relative;
+    margin-left: 26px;
+    margin-right: auto;
+}
+
+    .dropout ul {
+        position: absolute;
+        top: 0.5rem;
+        right: 1.5rem;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.12s ease;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 10px 10px 10px;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+    }
+
+    .dropout.active ul {
+        transform: scaleX(1);
+    }
+
+    .dropout a:hover {
+        background-color: #ffecb3;
+        border-radius: 10px;
+    }

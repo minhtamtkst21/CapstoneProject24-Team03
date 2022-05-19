@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Bootstrap Css -->
     <link href="@Url.Content("~/Faculty_assets/css/bootstrap.min.css")" id="bootstrap-stylesheet" rel="stylesheet" type="text/css" />
@@ -229,6 +230,11 @@
             </div>
         </div> <!-- end slimscroll-menu-->
     </div>
+    <button type="button"
+            class="btn btn-danger btn-floating btn-lg"
+            id="btn-back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
     <!-- /Right-bar -->
     <!-- Right bar overlay-->
     <!-- Vendor js -->
@@ -260,6 +266,32 @@
         function thisFileUpload() {
             document.getElementById("file").click();
         };
+    </script>
+    <script>
+
+        let mybutton = document.getElementById("btn-back-to-top");
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            if (
+                document.body.scrollTop > 20 ||
+                document.documentElement.scrollTop > 20
+            ) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        mybutton.addEventListener("click", backToTop);
+
+        function backToTop() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
     </script>
     <script>
         $('#exampleModal').on('show.bs.modal', function (event) {
