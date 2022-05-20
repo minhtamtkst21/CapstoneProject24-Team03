@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Cap24Team3.Models.SinhVien>
 @{
     int STT = 0;
-    var listHK = Session["listHK"] as List<string>;
+    var listHK = Session["listHK"] as List<Cap24Team3.Areas.Faculty.Controllers.ClassFaculty>;
     var diemhp = Session["diemso"] as List<Cap24Team3.Models.DiemHocPhan>;
     var HocPhanDaoTao = Session["HocPhan"] as List<Cap24Team3.Models.HocPhanDaoTao>;
 
@@ -234,7 +234,7 @@
                     {
                         <div class="col-xl-12">
                             <div class="card-box">
-                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                                <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i].hkchu</h4>
                                 <div class="table-responsive ">
                                     <table class="table table-hover mb-0">
                                         <thead>
@@ -252,7 +252,7 @@
                                         <tbody>
                                             @foreach (var item in diemhp)
                                             {
-                                                if (item.HocKyKeHoach.ToString() == listHK[i])
+                                                if (item.HocKyKeHoach == listHK.Select(h => h.hkso).ToList()[i])
                                                 {
                                                     STT++;
                                                     <tr>
@@ -286,13 +286,13 @@
                     {
                         <div class="col-xl-12">
                             <div class="card-box">
-                                @if (hk == "")
+                                @if (hk.hkso == 0)
                                 {
                                     <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
                                 }
                                 else
                                 {
-                                    <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hk</h4>
+                                    <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hk.hkchu</h4>
                                 }
                                 <div class="table-responsive">
                                     <table class="table table-hover mb-0">
@@ -311,7 +311,7 @@
                                         <tbody>
                                             @foreach (var item in HocPhanDaoTao)
                                             {
-                                                if (item.HocKy.ToString() == hk)
+                                                if (item.HocKy == hk.hkso)
                                                 {
                                                     <tr>
                                                         @if (item.ID_HocPhanTuChon == null)

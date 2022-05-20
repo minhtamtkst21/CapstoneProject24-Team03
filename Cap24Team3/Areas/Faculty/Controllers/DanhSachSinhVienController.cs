@@ -818,14 +818,21 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var list = new List<DiemHocPhan>();
             if (db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
                 list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
-            var listHK = new List<string>();
+            var listHK = new List<ClassFaculty>();
+
             var listHP = db.HocPhanDaoTaos.ToList();
             var diemso2 = new List<DiemHocPhan>();
             var l = new List<string>();
             foreach (var item in list.OrderByDescending(s => s.ID))
             {
-                if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK))
-                    listHK.Add(item.HocKyKeHoach.ToString());
+                if (!CheckTonTai(item.HocKyKeHoach.ToString(), listHK.Select(k => k.hkchu).ToList()))
+                {
+                    ClassFaculty classFaculty = new ClassFaculty();
+                    classFaculty.hkso = item.HocKyDangKy;
+                    classFaculty.hkchu = item.HocKyDangKy.ToString();
+                    listHK.Add(classFaculty);
+                }
+
                 string s = item.HocPhan + item.MSSV + item.HocKyKeHoach;
                 if (!CheckTonTai(s, l))
                 {
@@ -849,11 +856,11 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 sotinchi[i] = 0;
                 somon[i] = 0;
             }
-            for (int i = 0; i < listHK.Count; i++)
+            for (int i = 0; i < listHK.Select(k => k.hkchu).ToList().Count; i++)
             {
                 foreach (var item in diemso2)
                 {
-                    if (item.HocKyKeHoach.ToString() == listHK[i])
+                    if (item.HocKyKeHoach == listHK.Select(h => h.hkso).ToList()[i])
                     {
                         if (double.TryParse(item.Diem10, out double diem10))
                         {
@@ -891,7 +898,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
                 }
             }
-            Session["listHK"] = listHK;
+            Session["listHK"] = listHK.OrderBy(f => f.hkso).ToList();
             ViewData["DiemTB"] = diemtb;
             ViewData["DiemTBChung"] = diemtbchung;
             Session["SoTC"] = sotinchi;

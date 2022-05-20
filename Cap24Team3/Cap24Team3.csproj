@@ -208,6 +208,7 @@
     <Compile Include="Areas\Faculty\Controllers\AspNetUserFacultysController.cs" />
     <Compile Include="Areas\Faculty\Controllers\AspNetUserRoleFacultysController.cs" />
     <Compile Include="Areas\Faculty\Controllers\ChuongTrinhDaoTaoController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\Class.cs" />
     <Compile Include="Areas\Faculty\Controllers\DanhSachSinhVienController.cs" />
     <Compile Include="Areas\Faculty\Controllers\DiemHocPhansController.cs" />
     <Compile Include="Areas\Faculty\Controllers\ThongBaoController.cs" />
