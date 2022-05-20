@@ -24,13 +24,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 {
                     ListLoi += "<p> Học kỳ phải có 3 chữ số </p>";
                 }
-                var listDBHK = db.HocKyDaoTaos.ToList();
-                var listHK = new List<string>();
-                foreach (var item in listDBHK)
-                {
-                    listHK.Add(item.HocKy.ToString());
-                }
-                if (CheckTonTai(HK.ToString(), listHK))
+                if (CheckTonTai(HK.ToString(), db.HocKyDaoTaos.Select(s=>s.HocKy.ToString()).ToList()))
                 {
                     ListLoi += "<p> Học kỳ đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
                 }
@@ -97,13 +91,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                 {
                     ListLoi += "<p> Khóa đào tạo phải là số nguyên dương lớn hơn 0, khóa đào tạo bạn nhập là: " + khoa + "</p>";
                 }
-                var listDBKhoa = db.KhoaDaoTaos.ToList();
-                var listKhoa = new List<string>();
-                foreach (var item in listDBKhoa)
-                {
-                    listKhoa.Add(item.Khoa.ToString());
-                }
-                if (CheckTonTai(khoa.ToString(), listKhoa))
+                if (CheckTonTai(khoa.ToString(), db.KhoaDaoTaos.Select(s=>s.Khoa.ToString()).ToList()))
                 {
                     ListLoi += "<p> Khóa đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
                 }
@@ -167,15 +155,16 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             {
                 ListLoi += "<p> Ngành đào tạo không được lớn hơn 100 ký tự, số ký tự của ngành đào tạo bạn nhập là: " + nganh.Length + "</p>";
             }
-            var listDBNganh = db.NganhDaoTaos.ToList();
-            var listNganh = new List<string>();
-            foreach (var item in listDBNganh)
-            {
-                listNganh.Add(item.Nganh);
-            }
-            if (CheckTonTai(nganh, listNganh))
+            if (CheckTonTai(nganh, db.NganhDaoTaos.Select(s => s.MaNganh.ToString()).ToList()))
             {
                 ListLoi += "<p> Ngành đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+            }
+            else
+            {
+                if (CheckTonTai(nganh, db.NganhDaoTaos.Select(s => s.Nganh.ToString()).ToList()))
+                {
+                    ListLoi += "<p> Ngành đào tạo đã tồn tại trong hệ thống, vui lòng thử lại!</p>";
+                }
             }
             return ListLoi;
         }
@@ -258,7 +247,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                         }
                         for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
                         {
-                            if (workSheet.Cells[rowIterator, 2].Value != null)
+                            if (workSheet.Cells[rowIterator, 2].Value != null && workSheet.Cells[rowIterator, 2].Value != "")
                             {
                                 var item = workSheet.Cells[rowIterator, 2].Value.ToString();
                                 if (workSheet.Cells[rowIterator, 1].Value != null)
