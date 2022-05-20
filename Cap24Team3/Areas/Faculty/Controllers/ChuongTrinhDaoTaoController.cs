@@ -441,7 +441,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             var ListChuongTrinhDaoTao = db.ChuongTrinhDaoTaos.OrderByDescending(h => h.KhoaDaoTao.Khoa).Include(h => h.NganhDaoTao).Include(h => h.KhoaDaoTao).Include(h => h.HocKyDaoTao);
             ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
-            ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+            ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.OrderBy(s=>s.STT).ToList();
             return View(ListChuongTrinhDaoTao.ToList());
         }
         [HttpPost]
