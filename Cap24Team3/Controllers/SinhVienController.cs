@@ -367,6 +367,7 @@ namespace Cap24Team3.Controllers
                                 db.SaveChanges();
                             }
                     }
+                    diemhp = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
                     ViewData["listHK"] = listHK.OrderBy(s => s.stt).ToList();
                     ViewData["HocKyHienTai"] = hockyhientai;
                     TempData["ListHKDK"] = ListHKDK.ToArray();
