@@ -789,7 +789,7 @@ namespace Cap24Team3.Areas.Faculty.Controllers
                     Session["ThongBao"] = thongbao;
                 }
                 return Redirect(Request.UrlReferrer.ToString());
-            }           
+            }
             //catch (Exception e)
             //{
             //    TempData["Alert"] = "Có lỗi" + e.Message;
@@ -814,10 +814,26 @@ namespace Cap24Team3.Areas.Faculty.Controllers
             ViewData["NganhDaoTao"] = db.NganhDaoTaos.ToList();
             ViewData["KhoaDaoTao"] = db.KhoaDaoTaos.ToList();
             ViewData["HocKyDaoTao"] = db.HocKyDaoTaos.ToList();
+            TempData["khoikt1"] = db.KhoiKienThucs.Where(s => s.ChuongTrinhDaoTao.ID == ctdt.ID).ToList();
             Session["HocPhan"] = db.HocPhanDaoTaos.ToList();
             var list = new List<DiemHocPhan>();
             if (db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).Count() > 0)
                 list = db.DiemHocPhans.Where(s => s.MSSV == sinhvien.MSSV).ToList();
+            var listDiem = new List<string>();
+            foreach (var item in list)
+            {
+                string check = item.HocPhan.Trim() + item.HocKyDangKy.ToString();
+                if (CheckTonTai(check, listDiem))
+                {
+                    db.DiemHocPhans.Remove(item);
+                    TempData["Alert-dkkhht"] = "Đăng ký thành công.";
+                    db.SaveChanges();
+                }
+                else
+                {
+                    listDiem.Add(check);
+                }
+            }
             var listHK = new List<ClassFaculty>();
 
             var listHP = db.HocPhanDaoTaos.ToList();
