@@ -6,7 +6,7 @@
     int STT = 0;
     var diemtb = ViewData["DiemTB"] as double[];
     var diemtbchung = ViewData["DiemTBChung"] as double[];
-    var listHK = Session["listHK"] as List<string>;
+    var listHK = Session["listHK"] as List<Cap24Team3.Areas.Faculty.Controllers.ClassFaculty>;
     int tongtinchi = 0;
     if (listHK != null)
     {
@@ -106,9 +106,9 @@
                             {
                                 <div class="col-xl-12">
                                     <div class="card-box">
-                                        <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i]</h4>
+                                        <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK[i].hkchu</h4>
                                         <div class="table-responsive ">
-                                            <table class="table table-hover mb-0" id="tbSv">
+                                            <table class="table table-hover mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th>STT</th>
@@ -124,7 +124,7 @@
                                                 <tbody>
                                                     @foreach (var item in diemhp)
                                                     {
-                                                        if (item.HocKyKeHoach.ToString() == listHK[i])
+                                                        if (item.HocKyKeHoach == listHK.Select(h => h.hkso).ToList()[i])
                                                         {
                                                             STT++;
                                                             <tr>
@@ -154,75 +154,79 @@
                             }
                         </div>
                         <div id="results" class="hidden">
-                            @foreach (var hk in listHK)
+                            @{ STT = 0;}
+                            @if (TempData["khoikt1"] != null)
                             {
-                                <div class="col-xl-12">
-                                    <div class="card-box">
-                                        @if (hk == "")
-                                        {
-                                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
-                                        }
-                                        else
-                                        {
-                                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @hk</h4>
-                                        }
-                                        <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>STT</th>
-                                                        <th>Mã học phần</th>
-                                                        <th>Tên học phần</th>
-                                                        <th>Số tín chỉ</th>
-                                                        <th>Điểm 10/10</th>
-                                                        <th>Điểm 4/10</th>
-                                                        <th>Điểm Chữ</th>
-                                                        <th>Kết quả</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var item in HocPhanDaoTao)
-                                                    {
-                                                        if (item.HocKy.ToString() == hk)
+                                foreach (var khoikt in TempData["khoikt1"] as List<Cap24Team3.Models.KhoiKienThuc>)
+                                {
+                                    <div class="col-xl-12">
+                                        <div class="card-box">
+                                            <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @khoikt.TenKhoiKienThuc</h4>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Mã học phần</th>
+                                                            <th>Tên học phần</th>
+                                                            <th>Số tín chỉ</th>
+                                                            <th>Điểm 10/10</th>
+                                                            <th>Điểm 4/10</th>
+                                                            <th>Điểm Chữ</th>
+                                                            <th>Kết quả</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in HocPhanDaoTao)
                                                         {
-                                                            <tr>
-                                                                @if (item.ID_HocPhanTuChon == null)
-                                                                {
-                                                                    STT++;
-                                                                    <td>@STT</td>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td></td>
-                                                                }
-                                                                <td>@item.MaHocPhan</td>
-                                                                <td>@item.TenHocPhan</td>
-                                                                <td>@item.SoTinChi</td>
-                                                                @foreach (var diem in diemhp)
-                                                                {
-                                                                    if (diem.HocPhan == item.MaHocPhan)
+                                                            if (item.ID_KhoiKienThuc == khoikt.ID)
+                                                            {
+                                                                <tr>
+                                                                    @if (item.ID_HocPhanTuChon == null)
                                                                     {
-                                                                        <td>@diem.Diem10</td>
-                                                                        <td>@diem.Diem4</td>
-                                                                        <td>@diem.DiemChu</td>
-                                                                        if (diem.QuaMon == true)
+                                                                        STT++;
+                                                                        <td>@STT</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td></td>
+                                                                    }
+                                                                    <td>@item.MaHocPhan</td>
+                                                                    <td>@item.TenHocPhan</td>
+                                                                    <td>@item.SoTinChi</td>
+                                                                    @{
+                                                                        var diem = diemhp.OrderByDescending(s => s.ID).FirstOrDefault(s => s.HocPhan == item.MaHocPhan);
+                                                                        if (diem != null)
                                                                         {
-                                                                            <td>Đạt</td>
+                                                                            <td>@diem.Diem10</td>
+                                                                            <td>@diem.Diem4</td>
+                                                                            <td>@diem.DiemChu</td>
+                                                                            if (diem.QuaMon == true)
+                                                                            {
+                                                                                <td>Đạt</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Rớt</td>
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
-                                                                            <td>Rớt</td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
                                                                         }
                                                                     }
-                                                                }
-                                                            </tr>
+                                                                </tr>
+                                                            }
                                                         }
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div><!-- end col -->
+                                    </div><!-- end col -->
+                                }
                             }
                         </div>
                         <div class="modal-footer">

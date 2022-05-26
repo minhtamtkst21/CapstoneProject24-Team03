@@ -206,8 +206,6 @@ namespace Cap24Team3.Controllers
                     }
                     var nganh = db.NganhDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Nganh);
                     var khoa = db.KhoaDaoTaos.FirstOrDefault(s => s.ID == sinhvien.ID_Khoa);
-                    var trongct = new List<DiemHocPhan>();
-                    var ngoaict = new List<DiemHocPhan>();
                     var check = new List<string>();
                     var ctdt = db.ChuongTrinhDaoTaos.Where(s => s.ID_Nganh == nganh.ID).FirstOrDefault(s => s.ID_Khoa == khoa.ID);
                     var khoikienthuc = new List<khoikt>();
@@ -225,8 +223,7 @@ namespace Cap24Team3.Controllers
                     var hp = new List<HocPhanDaoTao>();
                     foreach (var item in khoikienthuc)
                     {
-                        var ktt = db.KhoiKienThucs.FirstOrDefault(s => s.ID == item.id);
-                        foreach (var hocphan in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == ktt.ID).ToList())
+                        foreach (var hocphan in db.HocPhanDaoTaos.Where(s => s.ID_KhoiKienThuc == item.id).ToList())
                         {
                             if (hocphan.ID_HocPhanTuChon == null)
                                 tongsotinchi += int.Parse(hocphan.SoTinChi.Split('T')[0]);
@@ -234,15 +231,6 @@ namespace Cap24Team3.Controllers
                                 check.Add(hocphan.MaHocPhan.Trim());
                             hp.Add(hocphan);
                         }
-                    }
-                    foreach (var item in listdiem)
-                    {
-                        if (item.HocPhan != null)
-                            if (CheckTonTai(item.HocPhan.Trim(), check))
-                                trongct.Add(item);
-                            else
-                                ngoaict.Add(item);
-                        else trongct.Add(item);
                     }
                     foreach (var item in khoikienthuc)
                     {
@@ -263,8 +251,6 @@ namespace Cap24Team3.Controllers
                     TempData["Khoikienthuc1"] = khoikienthuc.Select(s => s.tenkhoikt);
                     TempData["sotc"] = khoikienthuc.Select(s => s.sotc);
                     TempData["soluong"] = "0:" + (khoikienthuc.Count() - 1) + ":1";
-                    TempData["trong"] = trongct;
-                    TempData["ngoai"] = ngoaict;
                     TempData["hp"] = hp;
                 }
             }

@@ -44,9 +44,9 @@
                             <div class="card-box">
                                 @if (int.Parse(listHK.HocKy) > (int)ViewData["HocKyHienTai"])
                                 {
-                                    <h3 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Học kỳ @listHK.HocKy (@listHK.HocKy1)</h3>
+                                    <h3 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Chưa học</h3>
                                 }
-                                if (listHK.HocKy1 == "")
+                                @if (listHK.HocKy1 == "")
                                 {
                                 <h4 class="header-title mt-0 mb-3" style="font-family: 'Dongle2'; color: black; font-size: 30px;">Tự chọn</h4>
                                 }
